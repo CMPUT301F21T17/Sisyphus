@@ -1,2 +1,2 @@
 # Sisyphus
-Class project for cmput 301
+Class project for Cmput 301 Fall Semester of 2021
