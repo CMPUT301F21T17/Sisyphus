@@ -4,8 +4,11 @@ package com.example.sisyphus;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,6 +27,15 @@ public class MainActivity extends AppCompatActivity {
         final String TAG = "Sample";
         addHabitEvent(TAG);
 
+        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
+        button_allHabitList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,AllHabitListView.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -39,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Date testDate = new Date();
         HabitEvent newEvent = new HabitEvent("Testing", testDate);
         User testUser = new User("Not Sean", "Not Paetz", testDate);
-        Habit testHabit = new Habit("Testing Firebase", "Please work!", 1234567, testDate);
+        //Habit testHabit = new Habit("Testing Firebase", "Please work!", 1234567, testDate);
         collectionReference
                 //.document(userID).collection("Habits").document(habitID).collection("HabitEvent").document("temp").set(newEvent)
                 //.document("Temp User").set(testUser)
