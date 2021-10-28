@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <ListView
-        android:id="@+id/habit_list"
+        android:id="@+id/allhabit_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="9">

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -13,7 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public class AllHabitListView extends AppCompatActivity {
-    ListView habitList;
+    ListView allhabitListView;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
 
@@ -23,7 +24,7 @@ public class AllHabitListView extends AppCompatActivity {
         setContentView(R.layout.activity_all_habit_list);
 
         Intent intent = getIntent();
-        habitList = findViewById(R.id.habit_list);
+        allhabitListView= findViewById(R.id.allhabit_list);
 
         String []habit_title ={"Swimming","Working out","Sleeping","Flying","Studying"};
         String []habit_date ={"2000/12/03","2000/12/04","2000/12/05","2000/12/06","2000/12/07"};
@@ -37,9 +38,18 @@ public class AllHabitListView extends AppCompatActivity {
 
         habitAdapter = new AllHabitList_Adapter(this, habitDataList);
 
-        habitList.setAdapter(habitAdapter);
+        allhabitListView.setAdapter(habitAdapter);
 
-
+        allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent (AllHabitListView.this,ViewHabit.class);
+                intent.putExtra("title",habit_title[i]);
+                intent.putExtra("date",habit_date[i]);
+                intent.putExtra("reason",habit_reason[i]);
+                startActivity(intent);
+            }
+        });
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override

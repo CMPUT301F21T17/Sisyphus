@@ -13,6 +13,9 @@
             android:name=".AllHabitListView"
             android:exported="true" />
         <activity
+            android:name=".ViewHabit"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
