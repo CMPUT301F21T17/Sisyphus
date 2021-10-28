@@ -49,7 +49,8 @@ public class ViewHabit extends AppCompatActivity {
         deleteHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //do something
+                deleteHabit dialog = new deleteHabit();
+                dialog.show(getSupportFragmentManager(), "DELETE");
             }
         });
     }
