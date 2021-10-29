@@ -29,11 +29,13 @@ public class AllHabitListView extends AppCompatActivity {
     ListView allhabitListView;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
-    FirebaseFirestore db;
     final String TAG = "Sample";
     String []habit_title ={"Swimming","Working out","Sleeping","Flying","Studying"};
     String []habit_date ={"2000/12/03","2000/12/04","2000/12/05","2000/12/06","2000/12/07"};
     String []habit_reason ={"Swimming","Working out","Sleeping","Flying","Studying"};
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final CollectionReference collectionReference = db.collection("Users");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,17 @@ public class AllHabitListView extends AppCompatActivity {
         for(int i = 0;i<habit_title.length;i++){
             addHabit(TAG,i);
         }
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                habitDataList.clear();
+                for(QueryDocumentSnapshot doc:value){
+                    Log.d(TAG,String.valueOf(doc.getData()));
+                    String habit = doc.getId();
+                    //String province = (String) doc.getData()
+                }
+            }
+        });
 
         /*---------------------------------------------------------------------------------------------------*/
 
