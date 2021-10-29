@@ -11,9 +11,27 @@ public class Habit {
         this.date = date;
     }
 
-    String getHabitTitle(){ return this.title; }
+    public String getTitle() {
+        return title;
+    }
 
-    String getHabitReason(){ return this.reason; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    String getHabitDate(){return this.date; }
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

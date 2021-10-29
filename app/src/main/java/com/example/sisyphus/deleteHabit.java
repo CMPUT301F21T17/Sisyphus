@@ -21,6 +21,7 @@ public class deleteHabit extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Do something
+
                     }
                 })
                 .setNegativeButton("No", null)

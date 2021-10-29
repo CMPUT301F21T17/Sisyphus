@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final String TAG = "Sample";
-        addHabitEvent(TAG);
+        //addHabitEvent(TAG);
 
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public void addHabitEvent(String TAG) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Users");
-        String userID = "JuruiTest";
+        /*String userID = "JuruiTest";
         String habitID = "Swimming";
         Date testDate = new Date();
         HabitEvent newEvent = new HabitEvent("Testing", testDate);
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "Data could not be added!" + e.toString());
                     }
 
-                });
+                });*/
     }
 
 }

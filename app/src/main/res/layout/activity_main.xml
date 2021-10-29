@@ -7,12 +7,16 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <ListView
-        android:id="@+id/some_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="9">
-    </ListView>
+    <TextView
+        android:id="@+id/homepagetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="9"
+        android:text="Homepage"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="90dp"
+        android:textSize="50dp">
+    </TextView>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/botbar"

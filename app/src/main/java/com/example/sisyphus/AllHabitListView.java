@@ -1,22 +1,39 @@
 package com.example.sisyphus;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+
 
 public class AllHabitListView extends AppCompatActivity {
     ListView allhabitListView;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
+    FirebaseFirestore db;
+    final String TAG = "Sample";
+    String []habit_title ={"Swimming","Working out","Sleeping","Flying","Studying"};
+    String []habit_date ={"2000/12/03","2000/12/04","2000/12/05","2000/12/06","2000/12/07"};
+    String []habit_reason ={"Swimming","Working out","Sleeping","Flying","Studying"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +43,6 @@ public class AllHabitListView extends AppCompatActivity {
         Intent intent = getIntent();
         allhabitListView= findViewById(R.id.allhabit_list);
 
-        String []habit_title ={"Swimming","Working out","Sleeping","Flying","Studying"};
-        String []habit_date ={"2000/12/03","2000/12/04","2000/12/05","2000/12/06","2000/12/07"};
-        String []habit_reason ={"Swimming","Working out","Sleeping","Flying","Studying"};
-
         habitDataList = new ArrayList<>();
 
         for(int i=0;i<habit_title.length;i++){
@@ -37,8 +50,15 @@ public class AllHabitListView extends AppCompatActivity {
         }
 
         habitAdapter = new AllHabitList_Adapter(this, habitDataList);
-
         allhabitListView.setAdapter(habitAdapter);
+
+        /*-----------------------------------Test searching--------------------------------------------------*/
+        //Add some habits for test
+        for(int i = 0;i<habit_title.length;i++){
+            addHabit(TAG,i);
+        }
+
+        /*---------------------------------------------------------------------------------------------------*/
 
         allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -50,6 +70,8 @@ public class AllHabitListView extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +79,22 @@ public class AllHabitListView extends AppCompatActivity {
                 //startActivity(new Intent);
             }
         });
+    }
+
+    public void addHabit(String TAG,int index) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("Users");
+        String userID = "Junrui's Test";
+        Habit testHabit = new Habit(habit_title[index],habit_reason[index],habit_date[index]);
+        collectionReference
+                .document(userID).collection("Habits").document(habit_title[index])
+                .set(testHabit)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG,"Habit has been added successfully");
+                    }
+                });
     }
 
 

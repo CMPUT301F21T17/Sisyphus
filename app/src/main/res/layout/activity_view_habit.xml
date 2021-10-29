@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/habitTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,10 +34,11 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:text="Name"
+        android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habitTitle" />
 
-    <EditText
+    <TextView
         android:id="@+id/startDateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,6 +47,7 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:text="Name"
+        android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startDate" />
 
@@ -58,7 +60,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startDateText" />
 
-    <EditText
+    <TextView
         android:id="@+id/frequencyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +68,8 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Name"
+        android:text="Frequency"
+        android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frequency" />
 
@@ -79,7 +82,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frequencyText" />
 
-    <EditText
+    <TextView
         android:id="@+id/habitReasonText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,6 +91,7 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:text="Name"
+        android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habitReason" />
 
