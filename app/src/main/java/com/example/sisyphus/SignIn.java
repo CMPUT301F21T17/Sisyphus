@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignIn extends AppCompatActivity {
 
@@ -81,6 +83,25 @@ public class SignIn extends AppCompatActivity {
                 String passStore;
                 emailStore = email.getText().toString();
                 passStore = password.getText().toString();
+
+
+                //getting data entry fields
+                //TO-DO once UI complete!
+
+
+
+
+                //Validating data entry fields
+                //TO-DO once UI complete
+
+
+
+
+                //creating user with valid data
+
+
+
+
 
                 //if username and password non-null
                 //can be modified to add security constraints in future

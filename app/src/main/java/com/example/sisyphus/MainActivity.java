@@ -23,10 +23,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
         final String TAG = "Sample";
         //addHabitEvent(TAG);
-        Intent testSignIn = new Intent(this, SignIn.class);
-        startActivity(testSignIn);
+        
+
+
+        Date testDate = new Date();
+        FirebaseStore store = new FirebaseStore();
+        String dummyUID = "111111111";
+        User testUser = new User("New user", "New user last", testDate);
+        Habit testHabit = new Habit("Testing automated add class", "To see if it works", 1, testDate);
+        HabitEvent testEvent = new HabitEvent("did this work?", testDate);
+        store.storeUser(dummyUID, testUser);
+        store.storeHabit(dummyUID, testHabit);
+        store.storeHabitEvent(dummyUID, testHabit.getName(), testEvent);
+
+
+
+
+
+        //Intent testSignIn = new Intent(this, SignIn.class);
+        //startActivity(testSignIn);
 
     }
 
