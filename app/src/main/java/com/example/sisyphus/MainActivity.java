@@ -20,62 +20,47 @@ import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
+    final String TAG = "Sample";
+    String userID = "Junrui's Test";
+    String []habit_title ={"Eating","Working out","Sleeping","Flying","Studying"};
+    String []habit_date ={"2000/12/03","2000/12/04","2000/12/05","2000/12/06","2000/12/07"};
+    String []habit_reason ={"Eating","Working out","Sleeping","Flying","Studying"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final String TAG = "Sample";
-        //addHabitEvent(TAG);
+        for(int i = 0;i<habit_title.length;i++){
+            addHabit(TAG,i);
+        }
 
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,AllHabitListView.class);
+                intent.putExtra("currentUserID",userID);
+                intent.putExtra("currentTag",TAG);
                 startActivity(intent);
             }
         });
 
-        //addHabitEvent(TAG);
-        /*Intent testSignIn = new Intent(this, SignIn.class);
-        startActivity(testSignIn);*/
-
     }
 
-    /**
-     * A dummy function meant to test if firebase is capable of adding to the deepest nested
-     * strucutre in the current database layout
-     */
-    public void addHabitEvent(String TAG) {
+
+    public void addHabit(String TAG,int index) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Users");
-        /*String userID = "JuruiTest";
-        String habitID = "Swimming";
-        Date testDate = new Date();
-        HabitEvent newEvent = new HabitEvent("Testing", testDate);
-        //User testUser = new User("Not Sean", "Not Paetz", testDate);
-        //Habit testHabit = new Habit("Testing Firebase", "Please work!", 1234567, testDate);
+        Habit testHabit = new Habit(habit_title[index],habit_date[index],habit_reason[index]);
         collectionReference
-                //.document(userID).collection("Habits").document(habitID).collection("HabitEvent").document("temp").set(newEvent)
-                //.document("Temp User").set(testUser)
-                //.document(userID).collection("Habits").document("TestHabit").set(testHabit)
-                .document(userID).collection("Habits").document(habitID).collection("HabitEvent").document("NestedTest").set(newEvent)
+                .document(userID).collection("Habits").document(habit_title[index])
+                .set(testHabit)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                    // These are a method which gets executed when the task is succeeded
-                        Log.d(TAG, "Data has been added successfully!");
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG,"Habit has been added successfully");
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // These are a method which gets executed if there’s any problem
-                        Log.d(TAG, "Data could not be added!" + e.toString());
-                    }
-
-                });*/
+                });
     }
-
 }

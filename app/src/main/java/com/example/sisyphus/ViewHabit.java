@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class ViewHabit extends AppCompatActivity {
 
     TextView habitTitleText, startDateText, frequencyText, habitReasonText;
@@ -24,10 +26,13 @@ public class ViewHabit extends AppCompatActivity {
         habitReasonText = findViewById(R.id.habitReasonText);
 
         Intent intent = getIntent();
+        final String TAG = intent.getStringExtra("tag");
+        String receivedUser = intent.getStringExtra("user");
         Habit receivedHabit = (Habit) intent.getSerializableExtra("habit");
         String receivedTitle = receivedHabit.getTitle();
         String receivedDate = receivedHabit.getDate();
         String receivedReason = receivedHabit.getReason();
+
 
         habitTitleText.setText(receivedTitle);
         startDateText.setText(receivedDate);
@@ -62,8 +67,15 @@ public class ViewHabit extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 deleteHabit dialog = new deleteHabit();
+                Bundle bundle = new Bundle();
+                bundle.putString("selectedTitle",receivedTitle);
+                bundle.putString("selectedUser",receivedUser);
+                bundle.putString("selectedTag",TAG);
+                dialog.setArguments(bundle);
                 dialog.show(getSupportFragmentManager(), "DELETE");
             }
         });
+
+
     }
 }

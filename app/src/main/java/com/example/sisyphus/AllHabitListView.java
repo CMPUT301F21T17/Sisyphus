@@ -32,10 +32,6 @@ public class AllHabitListView extends AppCompatActivity {
     ListView allhabitListView;
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
-    final String TAG = "Sample";
-    String []habit_title ={"Eating","Working out","Sleeping","Flying","Studying"};
-    String []habit_date ={"2000/12/03","2000/12/04","2000/12/05","2000/12/06","2000/12/07"};
-    String []habit_reason ={"Eating","Working out","Sleeping","Flying","Studying"};
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");
 
@@ -46,6 +42,8 @@ public class AllHabitListView extends AppCompatActivity {
         setContentView(R.layout.activity_all_habit_list);
 
         Intent intent = getIntent();
+        String currentUserID = intent.getStringExtra("currentUserID");
+        String currentTag = intent.getStringExtra("currentTag");
         allhabitListView= findViewById(R.id.allhabit_list);
 
         habitDataList = new ArrayList<>();
@@ -56,13 +54,9 @@ public class AllHabitListView extends AppCompatActivity {
         habitAdapter = new AllHabitList_Adapter(this, habitDataList);
         allhabitListView.setAdapter(habitAdapter);
 
-        /*-----------------------------------Test searching--------------------------------------------------*/
-        //Add some habits for test
-        for(int i = 0;i<habit_title.length;i++){
-            addHabit(TAG,i);
-        }
+//-----------------------------------------Test searching-----------------------------------------------------------------------------------
 
-        final CollectionReference habitRef = db.collection("Users").document("Junrui's Test").collection("Habits");
+        final CollectionReference habitRef = db.collection("Users").document(currentUserID).collection("Habits");
         habitRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -74,7 +68,7 @@ public class AllHabitListView extends AppCompatActivity {
                 habitAdapter.notifyDataSetChanged();
             }
         });
-        /*---------------------------------------------------------------------------------------------------*/
+//------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -86,6 +80,8 @@ public class AllHabitListView extends AppCompatActivity {
                 Intent intent = new Intent (AllHabitListView.this,ViewHabit.class);
                 Habit clickedHabit = habitDataList.get(i);
                 intent.putExtra("habit",clickedHabit);
+                intent.putExtra("tag",currentTag);
+                intent.putExtra("user",currentUserID);
                 startActivity(intent);
             }
         });
@@ -98,22 +94,6 @@ public class AllHabitListView extends AppCompatActivity {
                 //startActivity(new Intent);
             }
         });
-    }
-
-    public void addHabit(String TAG,int index) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("Users");
-        String userID = "Junrui's Test";
-        Habit testHabit = new Habit(habit_title[index],habit_date[index],habit_reason[index]);
-        collectionReference
-                .document(userID).collection("Habits").document(habit_title[index])
-                .set(testHabit)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG,"Habit has been added successfully");
-                    }
-                });
     }
 
 
