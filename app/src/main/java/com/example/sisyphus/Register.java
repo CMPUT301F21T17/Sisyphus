@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 public class Register extends AppCompatActivity {
 
+    EditText registerFirstName;
+    EditText registerLastName;
     EditText registerEmail;
     EditText registerPassword;
     EditText registerPasswordConfirm;
@@ -19,6 +21,8 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
+        EditText registerFirstName = findViewById(R.id.registerFirstName);
+        EditText registerLastName = findViewById(R.id.registerLastName);
         EditText registerEmail = findViewById(R.id.registerEmail);
         EditText registerPassword = findViewById(R.id.registerPassword);
         EditText registerPasswordConfirm = findViewById(R.id.registerPasswordConfirm);
