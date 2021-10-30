@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //addHabitEvent(TAG);
+        Intent testSignIn = new Intent(this, SignIn.class);
+        startActivity(testSignIn);
 
     }
 

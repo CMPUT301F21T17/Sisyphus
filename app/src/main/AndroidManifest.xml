@@ -16,6 +16,9 @@
             android:name=".ViewHabit"
             android:exported="false" />
         <activity
+            android:name=".SignIn"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
