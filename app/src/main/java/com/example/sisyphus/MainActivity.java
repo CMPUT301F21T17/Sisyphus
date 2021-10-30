@@ -4,8 +4,10 @@ package com.example.sisyphus;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final String TAG = "Sample";
-        addHabitEvent(TAG);
-
+        //addHabitEvent(TAG);
+        Intent testSignIn = new Intent(this, SignIn.class);
+        startActivity(testSignIn);
 
     }
 
