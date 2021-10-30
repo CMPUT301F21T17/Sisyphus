@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //addHabitEvent(TAG);
-        Intent testSignIn = new Intent(this, SignIn.class);
-        startActivity(testSignIn);
+        /*Intent testSignIn = new Intent(this, SignIn.class);
+        startActivity(testSignIn);*/
 
     }
 
