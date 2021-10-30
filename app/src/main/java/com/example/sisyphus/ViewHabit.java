@@ -24,9 +24,10 @@ public class ViewHabit extends AppCompatActivity {
         habitReasonText = findViewById(R.id.habitReasonText);
 
         Intent intent = getIntent();
-        String receivedTitle = intent.getStringExtra("title");
-        String receivedDate = intent.getStringExtra("date");
-        String receivedReason = intent.getStringExtra("reason");
+        Habit receivedHabit = (Habit) intent.getSerializableExtra("habit");
+        String receivedTitle = receivedHabit.getTitle();
+        String receivedDate = receivedHabit.getDate();
+        String receivedReason = receivedHabit.getReason();
 
         habitTitleText.setText(receivedTitle);
         startDateText.setText(receivedDate);

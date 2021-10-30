@@ -12,8 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class AllHabitListView extends AppCompatActivity {
@@ -30,9 +33,9 @@ public class AllHabitListView extends AppCompatActivity {
     ArrayAdapter<Habit> habitAdapter;
     ArrayList<Habit> habitDataList;
     final String TAG = "Sample";
-    String []habit_title ={"Swimming","Working out","Sleeping","Flying","Studying"};
+    String []habit_title ={"Eating","Working out","Sleeping","Flying","Studying"};
     String []habit_date ={"2000/12/03","2000/12/04","2000/12/05","2000/12/06","2000/12/07"};
-    String []habit_reason ={"Swimming","Working out","Sleeping","Flying","Studying"};
+    String []habit_reason ={"Eating","Working out","Sleeping","Flying","Studying"};
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");
 
@@ -47,10 +50,9 @@ public class AllHabitListView extends AppCompatActivity {
 
         habitDataList = new ArrayList<>();
 
-        for(int i=0;i<habit_title.length;i++){
+        /*for(int i=0;i<habit_title.length;i++){
             habitDataList.add((new Habit(habit_title[i], habit_date[i],habit_reason[i])));
-        }
-
+        }*/
         habitAdapter = new AllHabitList_Adapter(this, habitDataList);
         allhabitListView.setAdapter(habitAdapter);
 
@@ -59,26 +61,31 @@ public class AllHabitListView extends AppCompatActivity {
         for(int i = 0;i<habit_title.length;i++){
             addHabit(TAG,i);
         }
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+        final CollectionReference habitRef = db.collection("Users").document("Junrui's Test").collection("Habits");
+        habitRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 habitDataList.clear();
                 for(QueryDocumentSnapshot doc:value){
-                    Log.d(TAG,String.valueOf(doc.getData()));
-                    String habit = doc.getId();
+                    Habit result = doc.toObject(Habit.class);
+                    habitDataList.add(result);
                 }
+                habitAdapter.notifyDataSetChanged();
             }
         });
-
         /*---------------------------------------------------------------------------------------------------*/
+
+
+
+
 
         allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent (AllHabitListView.this,ViewHabit.class);
-                intent.putExtra("title",habit_title[i]);
-                intent.putExtra("date",habit_date[i]);
-                intent.putExtra("reason",habit_reason[i]);
+                Habit clickedHabit = habitDataList.get(i);
+                intent.putExtra("habit",clickedHabit);
                 startActivity(intent);
             }
         });
@@ -97,7 +104,7 @@ public class AllHabitListView extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Users");
         String userID = "Junrui's Test";
-        Habit testHabit = new Habit(habit_title[index],habit_reason[index],habit_date[index]);
+        Habit testHabit = new Habit(habit_title[index],habit_date[index],habit_reason[index]);
         collectionReference
                 .document(userID).collection("Habits").document(habit_title[index])
                 .set(testHabit)

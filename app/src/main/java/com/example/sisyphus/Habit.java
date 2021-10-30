@@ -1,9 +1,13 @@
 package com.example.sisyphus;
+import java.io.Serializable;
 
-public class Habit {
+public class Habit implements Serializable {
     private String title;
     private String reason;
     private String date;
+
+    public Habit(){
+    }
 
     public Habit(String title,String date,String reason){
         this.title = title;
