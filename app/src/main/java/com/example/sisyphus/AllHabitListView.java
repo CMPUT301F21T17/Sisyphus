@@ -66,7 +66,6 @@ public class AllHabitListView extends AppCompatActivity {
                 for(QueryDocumentSnapshot doc:value){
                     Log.d(TAG,String.valueOf(doc.getData()));
                     String habit = doc.getId();
-                    //String province = (String) doc.getData()
                 }
             }
         });
