@@ -94,4 +94,6 @@ public class MainActivity extends AppCompatActivity {
     //        Intent intent = new Intent(getApplicationContext(), Entry.class);
     //        startActivity(intent);
 
+    //New thing that I added for testing push now!
+
 }
