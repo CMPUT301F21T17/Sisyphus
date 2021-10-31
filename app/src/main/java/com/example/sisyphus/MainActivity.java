@@ -25,33 +25,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        Intent intent = new Intent(getApplicationContext(), Entry.class);
+        startActivity(intent);
 
 
-
-        final String TAG = "Sample";
+        //final String TAG = "Sample";
         //addHabitEvent(TAG);
 
 
 
-        Date testDate = new Date();
-        FirebaseStore store = new FirebaseStore();
-        String dummyUID = "111111111";
-        User testUser = new User("New user", "New user last", testDate);
-        Habit testHabit = new Habit("Testing automated add class", "To see if it works", 1, testDate);
-        HabitEvent testEvent = new HabitEvent("did this work?", testDate);
+        //Date testDate = new Date();
+        //FirebaseStore store = new FirebaseStore();
+        //String dummyUID = "111111111";
+       // User testUser = new User("New user", "New user last", testDate);
+        //Habit testHabit = new Habit("Testing automated add class", "To see if it works", 1, testDate);
+        //HabitEvent testEvent = new HabitEvent("did this work?", testDate);
 
 
 
-        store.storeUser(dummyUID, testUser);
-        store.storeHabit(dummyUID, testHabit);
-        store.storeHabitEvent(dummyUID, testHabit.getName(), testEvent);
+        //store.storeUser(dummyUID, testUser);
+        //store.storeHabit(dummyUID, testHabit);
+        //store.storeHabitEvent(dummyUID, testHabit.getName(), testEvent);
 
 
 
 
 
-        Intent testSignIn = new Intent(this, DummySignIn.class);
-        startActivity(testSignIn);
+        //Intent testSignIn = new Intent(this, DummySignIn.class);
+        //startActivity(testSignIn);
 
     }
 

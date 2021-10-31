@@ -19,6 +19,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+
+
+//DEAD CLASS!! CURRENTLY ONLY EXISTS AS A CODE REPOSITORY FROM PREVIOUS TESTS
 public class DummySignIn extends AppCompatActivity {
 
     //IMportant note about mAuth: needs to be passed around in order to allow other activities

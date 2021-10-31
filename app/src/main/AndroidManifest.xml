@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sisyphus">
         <activity
-
+            android:name=".EmptyMainMenu"
+            android:exported="true" />
+        <activity
             android:name=".Register"
             android:exported="false" />
         <activity
@@ -19,7 +21,6 @@
         <activity
             android:name=".Entry"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
