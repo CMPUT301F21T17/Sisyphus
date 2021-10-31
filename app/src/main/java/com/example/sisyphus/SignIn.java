@@ -3,6 +3,7 @@ package com.example.sisyphus;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,47 +11,42 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.Serializable;
+
 public class SignIn extends AppCompatActivity {
 
-    //IMportant note about mAuth: needs to be passed around in order to allow other activities
-    // to use the same auth object!
+    EditText signInEmail;
+    EditText signInPassword;
+    Button signInConfirm;
+
     private FirebaseAuth mAuth;
 
     private static final String TAG = "EmailPassword";
 
-    Button signIn;
-    Button register;
-    EditText email;
-    EditText password;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.signin);
 
-        // ...
-        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        signIn = findViewById(R.id.buttonSignIn);
-        register = findViewById(R.id.buttonRegister);
-        email = findViewById(R.id.editTextEmailAddress);
-        password = findViewById(R.id.editTextPassword);
+        EditText signInEmail = findViewById(R.id.signInEmail);
+        EditText signInPassword = findViewById(R.id.signInPassword);
+        Button signInConfirm = findViewById(R.id.registerConfirm);
 
-
-        signIn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        signInConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 String emailStore;
                 String passStore;
-                emailStore = email.getText().toString();
-                passStore = password.getText().toString();
+                emailStore = signInEmail.getText().toString();
+                passStore = signInPassword.getText().toString();
 
                 //if username and password non-null
                 //can be modified to add security constraints in future
@@ -63,7 +59,14 @@ public class SignIn extends AppCompatActivity {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d(TAG, "signInWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                    } else {
+
+                                        //Pass intent to next class here!
+
+                                        Intent startEmptyMain = new Intent(view.getContext(), EmptyMainMenu.class);
+                                        startActivity(startEmptyMain);
+
+
+                                        } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "signInWithEmail:failure", task.getException());
                                         Toast.makeText(SignIn.this, "Authentication failed.",
@@ -74,61 +77,6 @@ public class SignIn extends AppCompatActivity {
                 }
             }
         });
-
-        register.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String emailStore;
-                String passStore;
-                emailStore = email.getText().toString();
-                passStore = password.getText().toString();
-
-                //if username and password non-null
-                //can be modified to add security constraints in future
-                if(emailStore != "" && passStore != ""){
-
-                    //WHOLE SECTION BELOW COPIED WITH VERY LITTLE EDITING FROM FIREBASE DOCUMENTATION!! CITE!!
-                    mAuth.createUserWithEmailAndPassword(emailStore, passStore)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        Log.d(TAG, "createUserWithEmail:success");
-                                        FirebaseUser user = mAuth.getCurrentUser();
-
-                                    } else {
-                                        // If sign in fails, display a message to the user.
-                                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                        Toast.makeText(SignIn.this, "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
-            }
-        });
-
     }
-
-    public void signOut(){
-        FirebaseAuth.getInstance().signOut();
-    }
-
-    //an important method that will grab the UID from the auth object.
-    public String getUserID(){
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        return currentUser.getUid();
-    }
-
-    public void changeEmail(String email){
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        currentUser.updateEmail(email);
-    }
-
-    public void changePassword(String password){
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        currentUser.updatePassword(password);
-    }
-
 
 }

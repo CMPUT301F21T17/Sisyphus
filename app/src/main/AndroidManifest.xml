@@ -17,7 +17,17 @@
             android:exported="false" />
         <activity
             android:name=".SignIn"
+            android:name=".EmptyMainMenu"
             android:exported="true" />
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".SignIn"
+            android:exported="false" />
+        <activity
+            android:name=".Entry"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
