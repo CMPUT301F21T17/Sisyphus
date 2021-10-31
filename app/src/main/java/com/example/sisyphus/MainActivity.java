@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         final String TAG = "Sample";
         //addHabitEvent(TAG);
-        
+
 
 
         Date testDate = new Date();
@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         User testUser = new User("New user", "New user last", testDate);
         Habit testHabit = new Habit("Testing automated add class", "To see if it works", 1, testDate);
         HabitEvent testEvent = new HabitEvent("did this work?", testDate);
+
+
+
         store.storeUser(dummyUID, testUser);
         store.storeHabit(dummyUID, testHabit);
         store.storeHabitEvent(dummyUID, testHabit.getName(), testEvent);
@@ -46,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //Intent testSignIn = new Intent(this, SignIn.class);
-        //startActivity(testSignIn);
+        Intent testSignIn = new Intent(this, DummySignIn.class);
+        startActivity(testSignIn);
 
     }
 

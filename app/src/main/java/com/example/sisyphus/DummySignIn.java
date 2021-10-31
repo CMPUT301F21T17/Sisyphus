@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class SignIn extends AppCompatActivity {
+public class DummySignIn extends AppCompatActivity {
 
     //IMportant note about mAuth: needs to be passed around in order to allow other activities
     // to use the same auth object!
@@ -68,7 +68,7 @@ public class SignIn extends AppCompatActivity {
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                        Toast.makeText(SignIn.this, "Authentication failed.",
+                                        Toast.makeText(DummySignIn.this, "Authentication failed.",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -120,7 +120,7 @@ public class SignIn extends AppCompatActivity {
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                        Toast.makeText(SignIn.this, "Authentication failed.",
+                                        Toast.makeText(DummySignIn.this, "Authentication failed.",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 }
