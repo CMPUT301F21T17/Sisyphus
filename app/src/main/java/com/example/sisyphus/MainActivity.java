@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         final String TAG = "Sample";
         //addHabitEvent(TAG);
 
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
+
     }
 
 }

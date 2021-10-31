@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/seanp/Sisyphus/app/src/main/res/layout/activity_sign_in.xml" value="0.36" />
+
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/entry.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/register.xml" value="0.33" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/signin.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
