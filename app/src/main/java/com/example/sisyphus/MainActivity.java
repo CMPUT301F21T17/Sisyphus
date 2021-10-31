@@ -88,5 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
                 });
     }
+    //Leah's
+    //        Intent intent = new Intent(getApplicationContext(), Entry.class);
+    //        startActivity(intent);
 
 }
