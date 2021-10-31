@@ -54,24 +54,7 @@ public class AllHabitListView extends AppCompatActivity {
         habitAdapter = new AllHabitList_Adapter(this, habitDataList);
         allhabitListView.setAdapter(habitAdapter);
 
-//-----------------------------------------Test searching-----------------------------------------------------------------------------------
-
-        final CollectionReference habitRef = db.collection("Users").document(currentUserID).collection("Habits");
-        habitRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                habitDataList.clear();
-                for(QueryDocumentSnapshot doc:value){
-                    Habit result = doc.toObject(Habit.class);
-                    habitDataList.add(result);
-                }
-                habitAdapter.notifyDataSetChanged();
-            }
-        });
-//------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
+        setUserHabit(currentUserID);
 
 
         allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,5 +80,19 @@ public class AllHabitListView extends AppCompatActivity {
     }
 
 
+    public void setUserHabit(String ID){
+        final CollectionReference habitRef = db.collection("Users").document(ID).collection("Habits");
+        habitRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                habitDataList.clear();
+                for(QueryDocumentSnapshot doc:value){
+                    Habit result = doc.toObject(Habit.class);
+                    habitDataList.add(result);
+                }
+                habitAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 
 }

@@ -38,7 +38,7 @@ public class AllHabitList_Adapter extends ArrayAdapter<Habit> {
         TextView habitTitle = view.findViewById(R.id.habit_title_text);
         TextView habitDate = view.findViewById(R.id.habit_date_text);
 
-        habitTitle.setText(habit.getTitle());
+        habitTitle.setText(habit.getName());
         habitDate.setText(habit.getDate());
 
         return view;

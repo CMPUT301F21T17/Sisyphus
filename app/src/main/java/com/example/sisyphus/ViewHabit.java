@@ -29,7 +29,7 @@ public class ViewHabit extends AppCompatActivity {
         final String TAG = intent.getStringExtra("tag");
         String receivedUser = intent.getStringExtra("user");
         Habit receivedHabit = (Habit) intent.getSerializableExtra("habit");
-        String receivedTitle = receivedHabit.getTitle();
+        String receivedTitle = receivedHabit.getName();
         String receivedDate = receivedHabit.getDate();
         String receivedReason = receivedHabit.getReason();
 

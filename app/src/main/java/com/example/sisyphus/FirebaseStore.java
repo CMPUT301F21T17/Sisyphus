@@ -78,7 +78,7 @@ public class FirebaseStore {
                 });
     }
 
-    /**
+    /*/**
      * Stores a habit event to firebase
      * @param userID
      * The userID of the user to store data under
@@ -87,6 +87,7 @@ public class FirebaseStore {
      * @param habitEvent
      * The habit event to be stored
      */
+    /*
     public void storeHabitEvent(String userID, String habitName, HabitEvent habitEvent){
         // creating a unique name for the habit event based on current date and time
         Date today = new Date();
@@ -108,7 +109,7 @@ public class FirebaseStore {
                     }
 
                 });
-    }
+    }*/
 
 
 
