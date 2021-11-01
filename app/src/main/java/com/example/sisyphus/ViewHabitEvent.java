@@ -43,17 +43,29 @@ public class ViewHabitEvent extends AppCompatActivity {
             }
         });
 
-        /*final Button deleteHabitEventButton = findViewById(R.id.delete_habitEvent_button);
+        final Button deleteHabitEventButton = findViewById(R.id.delete_habitEvent_button);
         deleteHabitEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteHabit dialog = new deleteHabit();
+                deleteHabitEvent dialog = new deleteHabitEvent();
                 Bundle bundle = new Bundle();
-                bundle.putString("selectedEventDate",receivedTitle);
+                bundle.putString("selectedHabit",receivedHabitEvent.getHabitName());
+                bundle.putString("selectedEventDate",receivedHabitEvent.getDate().toString());
                 bundle.putString("selectedUser",receivedUser);
                 dialog.setArguments(bundle);
                 dialog.show(getSupportFragmentManager(), "DELETE");
             }
-        });*/
+        });
+
+        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
+        button_allHabitList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewHabitEvent.this,AllHabitListView.class);
+                intent.putExtra("currentUserID",mAuth.getUid());
+                intent.putExtra("currentTag","Sample");
+                startActivity(intent);
+            }
+        });
     }
 }

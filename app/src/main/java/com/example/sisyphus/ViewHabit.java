@@ -73,6 +73,17 @@ public class ViewHabit extends AppCompatActivity {
             }
         });
 
+        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
+        button_allHabitList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewHabit.this,AllHabitListView.class);
+                intent.putExtra("currentUserID",mAuth.getUid());
+                intent.putExtra("currentTag","Sample");
+                startActivity(intent);
+            }
+        });
+
         final Button deleteHabitButton = findViewById(R.id.deleteHabitButton);
         deleteHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,5 +97,7 @@ public class ViewHabit extends AppCompatActivity {
                 dialog.show(getSupportFragmentManager(), "DELETE");
             }
         });
+
+
     }
 }

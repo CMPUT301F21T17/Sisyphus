@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -69,6 +70,17 @@ public class ListHabitEvent extends AppCompatActivity {
                 intent.putExtra("habit_event",clickedHabitEvent);
                 //intent.putExtra("tag",currentTag);
                 intent.putExtra("user",mAuth.getUid());
+                startActivity(intent);
+            }
+        });
+
+        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
+        button_allHabitList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ListHabitEvent.this,AllHabitListView.class);
+                intent.putExtra("currentUserID",mAuth.getUid());
+                intent.putExtra("currentTag","Sample");
                 startActivity(intent);
             }
         });

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,9 +49,6 @@ public class AllHabitListView extends AppCompatActivity {
 
         habitDataList = new ArrayList<>();
 
-        /*for(int i=0;i<habit_title.length;i++){
-            habitDataList.add((new Habit(habit_title[i], habit_date[i],habit_reason[i])));
-        }*/
         habitAdapter = new AllHabitList_Adapter(this, habitDataList);
         allhabitListView.setAdapter(habitAdapter);
 
@@ -65,6 +63,17 @@ public class AllHabitListView extends AppCompatActivity {
                 intent.putExtra("habit",clickedHabit);
                 intent.putExtra("tag",currentTag);
                 intent.putExtra("user",currentUserID);
+                startActivity(intent);
+            }
+        });
+
+        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
+        button_allHabitList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AllHabitListView.this,AllHabitListView.class);
+                intent.putExtra("currentUserID",currentUserID);
+                intent.putExtra("currentTag",currentTag);
                 startActivity(intent);
             }
         });

@@ -37,12 +37,14 @@ public class HabitEventListAdapter extends ArrayAdapter<HabitEvent> {
 
         HabitEvent habitEvent = habitEvents.get(position);
 
+        TextView habitEventTitle = view.findViewById(R.id.habit_title);
         TextView habitEventComment = view.findViewById(R.id.habit_event_comment);
         TextView habitEventDate = view.findViewById(R.id.habit_event_date);
         TextView habitEventLocation = view.findViewById(R.id.habit_event_location);
 
+        habitEventTitle.setText(habitEvent.getHabitName());
         habitEventComment.setText(habitEvent.getComment());
-        habitEventDate.setText(habitEvent.getDate().toString());
+        habitEventDate.setText(habitEvent.getDate().toString().substring(0,10));
         habitEventLocation.setText(habitEvent.getLocation());
 
         return view;
