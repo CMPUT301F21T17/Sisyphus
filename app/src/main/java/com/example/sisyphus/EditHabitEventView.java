@@ -1,5 +1,6 @@
 package com.example.sisyphus;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -13,13 +14,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddHabitEvent extends AppCompatActivity {
-
+public class EditHabitEventView extends AppCompatActivity {
     FirebaseAuth mAuth;
+
 
     EditText location;
     EditText date;
@@ -34,7 +40,7 @@ public class AddHabitEvent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_habit_event);
+        setContentView(R.layout.activity_edit_habit_event);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -46,9 +52,13 @@ public class AddHabitEvent extends AppCompatActivity {
         cancel = findViewById(R.id.buttonCancel);
 
         Intent intent = getIntent();
-        String habitName = intent.getStringExtra("1");
-
-        habitTitle.setText(habitName);
+        HabitEvent EditEvent = (HabitEvent) intent.getSerializableExtra("editEvent");
+        String EditEventID = intent.getStringExtra("editEventID");
+        String habitName = EditEvent.getHabitName();
+        habitTitle.setText(EditEvent.getHabitName());
+        location.setText(EditEvent.getLocation());
+        date.setText(EditEvent.getDate().toString().substring(0,10));
+        comment.setText(EditEvent.getComment());
 
 
 
@@ -61,7 +71,7 @@ public class AddHabitEvent extends AppCompatActivity {
             int month = cal.get(Calendar.MONTH);
             int day = cal.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog dialog = new DatePickerDialog(AddHabitEvent.this, mDateSetListener, year, month, day);
+            DatePickerDialog dialog = new DatePickerDialog(EditHabitEventView.this, mDateSetListener, year, month, day);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); //Transparent Background
             dialog.show();
         });
@@ -82,8 +92,12 @@ public class AddHabitEvent extends AppCompatActivity {
                 System.out.println(habitName);
                 HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName);
                 FirebaseStore fb = new FirebaseStore();
-                fb.storeHabitEvent(mAuth.getUid(), habitName, newEvent);
-                finish();
+                fb.editHabitEvent(mAuth.getUid(), habitName,EditEventID,newEvent);
+                Intent toEventDetail = new Intent(EditHabitEventView.this,ViewHabitEvent.class);
+                toEventDetail.putExtra("user",mAuth.getUid());
+                toEventDetail.putExtra("habit_event",newEvent);
+                toEventDetail.putExtra("habit_eventID", EditEventID);
+                startActivity(toEventDetail);
             }
         });
 
@@ -94,10 +108,6 @@ public class AddHabitEvent extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
-
 
     }
 }

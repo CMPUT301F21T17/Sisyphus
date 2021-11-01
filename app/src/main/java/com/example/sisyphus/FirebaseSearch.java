@@ -42,8 +42,6 @@ public class FirebaseSearch {
                 searchedUser[0] = documentSnapshot.toObject(User.class);
             }
         });
-
-
         return searchedUser[0];
     }
 

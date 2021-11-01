@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="@color/white"
-android:orientation="vertical"
-tools:context=".EmptyMainMenu">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".EmptyMainMenu">
 
 <TextView
     android:id="@+id/homepagetext"
@@ -35,24 +36,28 @@ tools:context=".EmptyMainMenu">
             android:id="@+id/home_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:backgroundTint="#17A6A6"
             android:text="Home" />
 
         <Button
             android:id="@+id/calendar_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:backgroundTint="#17A6A6"
             android:text="Calendar" />
 
         <Button
             android:id="@+id/allhabitlist_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:backgroundTint="#17A6A6"
             android:text="Habit" />
 
         <Button
             android:id="@+id/profile_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:backgroundTint="#17A6A6"
             android:text="Prof" />
     </LinearLayout>
 

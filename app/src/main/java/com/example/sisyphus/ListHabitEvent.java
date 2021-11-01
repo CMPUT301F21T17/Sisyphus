@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,6 +33,8 @@ import java.util.List;
 
 public class ListHabitEvent extends AppCompatActivity {
     ListView listHabitEvent;
+    TextView topBarTitle;
+    ArrayList<String> habitEventID;
     ArrayAdapter<HabitEvent> habitEventAdapter;
     ArrayList<HabitEvent> habitEventDataList;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -48,18 +51,19 @@ public class ListHabitEvent extends AppCompatActivity {
         //String currentUserID = intent.getStringExtra("currentUserID");
         String currentHabit = intent.getStringExtra("1");
         listHabitEvent= findViewById(R.id.list_habit_event);
+        topBarTitle = findViewById(R.id.habit_event_title);
 
         mAuth = FirebaseAuth.getInstance();
 
         habitEventDataList = new ArrayList<>();
+        habitEventID = new ArrayList<>();
 
-        /*for(int i=0;i<habit_title.length;i++){
-            habitDataList.add((new Habit(habit_title[i], habit_date[i],habit_reason[i])));
-        }*/
         habitEventAdapter = new HabitEventListAdapter(this, habitEventDataList);
         listHabitEvent.setAdapter(habitEventAdapter);
 
+        topBarTitle.setText("HabitEvents of [" + currentHabit+"]");
         setUserHabitEvent(mAuth.getUid(), currentHabit);
+
 
 
         listHabitEvent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,9 +71,10 @@ public class ListHabitEvent extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent (ListHabitEvent.this,ViewHabitEvent.class);
                 HabitEvent clickedHabitEvent = habitEventDataList.get(i);
-                intent.putExtra("habit_event",clickedHabitEvent);
+                intent.putExtra("habit_eventID", habitEventID.get(i));
                 //intent.putExtra("tag",currentTag);
                 intent.putExtra("user",mAuth.getUid());
+                intent.putExtra("habit_event",clickedHabitEvent);
                 startActivity(intent);
             }
         });
@@ -103,8 +108,10 @@ public class ListHabitEvent extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 habitEventDataList.clear();
+                habitEventID.clear();
                 for(QueryDocumentSnapshot doc:value){
                     HabitEvent result = doc.toObject(HabitEvent.class);
+                    habitEventID.add(doc.getId());
                     habitEventDataList.add(result);
                 }
                 habitEventAdapter.notifyDataSetChanged();

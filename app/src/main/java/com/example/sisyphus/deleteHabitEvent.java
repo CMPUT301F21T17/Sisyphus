@@ -26,9 +26,9 @@ public class deleteHabitEvent extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         Bundle bundle = getArguments();
         String deleteTitle = bundle.getString("selectedHabit","");
-        String deleteDate= bundle.getString("selectedEventDate","");
+        String deleteID= bundle.getString("selectedEventID","");
         String deleteUser = bundle.getString("selectedUser","");
-        String eventName = deleteTitle + " event " + deleteDate;
+        //String eventName = deleteTitle + " event " + deleteDate;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 
@@ -39,7 +39,7 @@ public class deleteHabitEvent extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        db.collection("Users").document(deleteUser).collection("Habits").document(deleteTitle).collection("HabitEvent").document(eventName)
+                        db.collection("Users").document(deleteUser).collection("Habits").document(deleteTitle).collection("HabitEvent").document(deleteID)
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

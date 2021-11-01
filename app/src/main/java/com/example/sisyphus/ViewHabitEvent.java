@@ -29,6 +29,7 @@ public class ViewHabitEvent extends AppCompatActivity {
         Intent intent = getIntent();
         //final String TAG = intent.getStringExtra("tag");
         String receivedUser = intent.getStringExtra("user");
+        String receivedHabitEventID = intent.getStringExtra("habit_eventID");
         HabitEvent receivedHabitEvent = (HabitEvent) intent.getSerializableExtra("habit_event");
         habitEventTitleText.setText(receivedHabitEvent.getHabitName());
         habitEventDateText.setText(receivedHabitEvent.getDate().toString());
@@ -40,6 +41,10 @@ public class ViewHabitEvent extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //do something
+                Intent editHabit = new Intent(view.getContext(), EditHabitEventView.class);
+                editHabit.putExtra("editEvent",receivedHabitEvent);
+                editHabit.putExtra("editEventID",receivedHabitEventID);
+                startActivity(editHabit);
             }
         });
 
@@ -50,7 +55,7 @@ public class ViewHabitEvent extends AppCompatActivity {
                 deleteHabitEvent dialog = new deleteHabitEvent();
                 Bundle bundle = new Bundle();
                 bundle.putString("selectedHabit",receivedHabitEvent.getHabitName());
-                bundle.putString("selectedEventDate",receivedHabitEvent.getDate().toString());
+                bundle.putString("selectedEventID",receivedHabitEventID);
                 bundle.putString("selectedUser",receivedUser);
                 dialog.setArguments(bundle);
                 dialog.show(getSupportFragmentManager(), "DELETE");

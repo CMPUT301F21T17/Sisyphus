@@ -108,9 +108,44 @@ public class FirebaseStore {
                         // These are a method which gets executed if there’s any problem
                         Log.d(TAG, "Data could not be added!" + e.toString());
                     }
-
                 });
     }
+
+    /**
+     * Stores a habit event to firebase
+     * @param userID
+     * The userID of the user to store data under
+     * @param habitName
+     * The name of the habit to which the event belongs
+     * @param habitEventID
+     * The habit event to be edited
+     * @param newHabitEvent
+     * The modified habit event to be stored
+     */
+
+    public void editHabitEvent(String userID, String habitName, String habitEventID,HabitEvent newHabitEvent){
+        // creating a unique name for the habit event based on current date and time
+        //Date today = new Date();
+        String eventName = habitEventID;
+        collectionReference
+                .document(userID).collection("Habits").document(habitName).collection("HabitEvent").document(eventName).set(newHabitEvent)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // These are a method which gets executed when the task is succeeded
+                        Log.d(TAG, "Data has been added successfully!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // These are a method which gets executed if there’s any problem
+                        Log.d(TAG, "Data could not be added!" + e.toString());
+                    }
+                });
+    }
+
+
 
 
 
