@@ -58,6 +58,7 @@ public class FirebaseStore {
      * The data of the habit to be stored
      */
     public void storeHabit(String userID, Habit habit){
+
         collectionReference
                 //habit given a database name the same as the title given to it by a user
                 .document(userID).collection("Habits").document(habit.getName()).set(habit)
