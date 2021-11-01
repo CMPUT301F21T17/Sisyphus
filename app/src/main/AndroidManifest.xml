@@ -13,7 +13,6 @@
             android:name=".AddHabitEvent"
             android:exported="true" />
         <activity
-            android:name=".EmptyMainMenu"
             android:name=".ListHabitEvent"
             android:exported="false" />
         <activity

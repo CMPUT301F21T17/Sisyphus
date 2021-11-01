@@ -78,7 +78,9 @@ public class ListHabitEvent extends AppCompatActivity {
         addHabitEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent);
+                Intent addHabit = new Intent(view.getContext(), AddHabitEvent.class);
+                addHabit.putExtra("1", currentHabit);
+                startActivity(addHabit);
             }
         });
     }

@@ -49,10 +49,6 @@ public class ViewHabit extends AppCompatActivity {
         viewHabitEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HabitEvent dummyEvent = new HabitEvent(new Date(), "Edmonton", "This is a test", "Sleeping");
-                FirebaseStore fb = new FirebaseStore();
-                fb.storeHabitEvent(mAuth.getUid(), "Sleeping", dummyEvent);
-
                 Intent viewHabitEventInt = new Intent(view.getContext(), ListHabitEvent.class);
                 viewHabitEventInt.putExtra("1", receivedTitle);
                 startActivity(viewHabitEventInt);
@@ -63,7 +59,9 @@ public class ViewHabit extends AppCompatActivity {
         addHabitEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //do something
+                Intent addHabit = new Intent(view.getContext(), AddHabitEvent.class);
+                addHabit.putExtra("1", receivedTitle);
+                startActivity(addHabit);
             }
         });
 
