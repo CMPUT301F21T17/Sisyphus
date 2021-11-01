@@ -10,15 +10,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Date;
 
 public class ViewHabit extends AppCompatActivity {
 
     TextView habitTitleText, startDateText, frequencyText, habitReasonText;
 
+    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_habit);
+
+        mAuth = FirebaseAuth.getInstance();
 
         habitTitleText = findViewById(R.id.habitTitleText);
         startDateText = findViewById(R.id.startDateText);
@@ -42,7 +49,13 @@ public class ViewHabit extends AppCompatActivity {
         viewHabitEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //do something
+                HabitEvent dummyEvent = new HabitEvent(new Date(), "Edmonton", "This is a test", "Sleeping");
+                FirebaseStore fb = new FirebaseStore();
+                fb.storeHabitEvent(mAuth.getUid(), "Sleeping", dummyEvent);
+
+                Intent viewHabitEventInt = new Intent(view.getContext(), ListHabitEvent.class);
+                viewHabitEventInt.putExtra("1", receivedTitle);
+                startActivity(viewHabitEventInt);
             }
         });
 

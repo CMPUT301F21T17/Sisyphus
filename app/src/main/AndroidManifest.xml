@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sisyphus">
         <activity
+            android:name=".ListHabitEvent"
+            android:exported="false" />
+        <activity
             android:name=".AllHabitListView"
             android:exported="true" />
         <activity
@@ -26,7 +29,7 @@
             android:exported="false" />
         <activity
             android:name=".EmptyMainMenu"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
