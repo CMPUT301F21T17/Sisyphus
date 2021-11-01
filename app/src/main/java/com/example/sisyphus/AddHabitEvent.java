@@ -30,9 +30,6 @@ public class AddHabitEvent extends AppCompatActivity {
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
-import android.os.Bundle;
-
-public class AddHabitEvent extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
