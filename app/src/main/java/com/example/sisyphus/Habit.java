@@ -1,4 +1,6 @@
 package com.example.sisyphus;
+import android.text.Editable;
+
 import java.io.Serializable;
 
 public class Habit implements Serializable {
