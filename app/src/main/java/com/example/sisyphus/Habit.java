@@ -1,17 +1,16 @@
 package com.example.sisyphus;
 
-import android.text.Editable;
-
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Habit {
     private String habitName;
-    private Editable startDate;
+    private Date startDate;
     private ArrayList<String> frequency;
     private String reason;
 
 
-    public Habit(String habitName, Editable startDate, ArrayList<String> frequency, String reason) {
+    public Habit(String habitName, Date startDate, ArrayList<String> frequency, String reason) {
         setHabitName(habitName);
         setStartDate(startDate);
         setFrequency(frequency);
@@ -20,7 +19,7 @@ public class Habit {
 
 
 
-    public String getHabitName() {
+    public String getName() {
         return habitName;
     }
 
@@ -36,11 +35,11 @@ public class Habit {
         this.habitName = habitName;
     }
 
-    public Editable getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Editable startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
 
     }

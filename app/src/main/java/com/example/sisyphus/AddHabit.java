@@ -1,21 +1,26 @@
 package com.example.sisyphus;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Editable;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Objects;
 
 public class AddHabit extends AppCompatActivity {
@@ -23,14 +28,18 @@ public class AddHabit extends AppCompatActivity {
     private EditText startDate, frequency;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
+    private FirebaseAuth mAuth;
     public AddHabit() {
     }
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
 
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword("junrui@gmail.com","123456");
         ImageView checkButton = findViewById(R.id.checkButton);
         ImageView cancelButton = findViewById(R.id.cancelButton);
         ImageView backButton = findViewById(R.id.backButton);
@@ -43,9 +52,17 @@ public class AddHabit extends AppCompatActivity {
         //Onclick for the the check button and storing data
         checkButton.setOnClickListener(view -> {
             String habit = Objects.requireNonNull(habitName.getEditText()).getText().toString().trim();
-            Editable dateInput = startDate.getText();
+            Date dateInput = null;
+            try {
+                dateInput = new SimpleDateFormat("dd/MM/yyyy").parse(startDate.getText().toString().trim());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             String reasonInput = Objects.requireNonNull(reason.getEditText()).getText().toString().trim();
             Habit habitInput = new Habit(habit, dateInput, days, reasonInput);
+            String dummyUser = "garbage";
+            FirebaseStore testbase = new FirebaseStore();
+            testbase.storeHabit(dummyUser,habitInput);
         });
 
 
@@ -57,12 +74,12 @@ public class AddHabit extends AppCompatActivity {
             int day = cal.get(Calendar.DAY_OF_MONTH);
 
             DatePickerDialog dialog = new DatePickerDialog(AddHabit.this, mDateSetListener, year, month, day);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); //Transparent Background
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE)); //Black Background
             dialog.show();
         });
         mDateSetListener = (datePicker, year, month, day) -> {
             month = month + 1;
-            String date = month + "/" + day + "/" + year;
+            String date = day + "/" + month + "/" + year;
             startDate.setText(date);
         };
 

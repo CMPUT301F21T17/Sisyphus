@@ -57,10 +57,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:hint="Select_days"
-            android:inputType="none"
             android:focusable="false"
-            android:importantForAutofill="no"/>
+            android:hint="Select_days"
+            android:importantForAutofill="no"
+            android:inputType="none"
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
