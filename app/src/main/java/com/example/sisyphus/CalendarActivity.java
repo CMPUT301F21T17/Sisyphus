@@ -70,8 +70,7 @@ public class CalendarActivity extends AppCompatActivity {
                         data.clear();
                         for (QueryDocumentSnapshot d: value) {
                             // TODO adapt data to Habit list
-                            d.getData();
-                            data.add();
+                            data.add(d.getData());
                         }
                         adapter.notifyDataSetChanged();
                     }
