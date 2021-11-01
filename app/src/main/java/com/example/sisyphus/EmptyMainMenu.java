@@ -28,8 +28,9 @@ public class EmptyMainMenu extends AppCompatActivity {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String userID = mAuth.getCurrentUser().getUid();
-        /*for(int i = 0;i<habit_title.length;i++){
-            //addHabit(TAG,i,userID);
+        //Adding habit by hand
+        /*
+        for(int i = 0;i<habit_title.length;i++){
             FirebaseStore fb = new FirebaseStore();
             Habit testHabit = new Habit(habit_title[i],habit_date[i],habit_reason[i]);
             fb.storeHabit(userID,testHabit);

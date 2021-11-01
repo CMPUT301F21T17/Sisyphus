@@ -60,19 +60,19 @@ public class ListHabitEvent extends AppCompatActivity {
 
         setUserHabitEvent(mAuth.getUid(), currentHabit);
 
-        /*
+
         listHabitEvent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent (ListHabitEvent.this,ViewHabit.class);
+                Intent intent = new Intent (ListHabitEvent.this,ViewHabitEvent.class);
                 HabitEvent clickedHabitEvent = habitEventDataList.get(i);
                 intent.putExtra("habit_event",clickedHabitEvent);
-                intent.putExtra("tag",currentTag);
-                intent.putExtra("user",currentUserID);
+                //intent.putExtra("tag",currentTag);
+                intent.putExtra("user",mAuth.getUid());
                 startActivity(intent);
             }
         });
-        */
+
 
         final FloatingActionButton addHabitEventButton = findViewById(R.id.add_habit_event);
         addHabitEventButton.setOnClickListener(new View.OnClickListener() {

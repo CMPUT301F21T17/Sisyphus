@@ -31,10 +31,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*final String TAG = "Sample";
-        for(int i = 0;i<habit_title.length;i++){
-            addHabit(TAG,i);
-        }*/
 
         Intent intent = new Intent(MainActivity.this,Entry.class);
         startActivity(intent);
@@ -63,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         //Date testDate = new Date();
         //FirebaseStore store = new FirebaseStore();
         //String dummyUID = "111111111";
-       // User testUser = new User("New user", "New user last", testDate);
+        // User testUser = new User("New user", "New user last", testDate);
         //Habit testHabit = new Habit("Testing automated add class", "To see if it works", 1, testDate);
         //HabitEvent testEvent = new HabitEvent("did this work?", testDate);
 
@@ -83,21 +79,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /*public void addHabit(String TAG,int index) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("Users");
-        Habit testHabit = new Habit(habit_title[index],habit_date[index],habit_reason[index]);
-        collectionReference
-                .document(userID).collection("Habits").document(habit_title[index])
-                .set(testHabit)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG,"Habit has been added successfully");
-                    }
-                });
-
-    }*/
     //Leah's
     //        Intent intent = new Intent(getApplicationContext(), Entry.class);
     //        startActivity(intent);

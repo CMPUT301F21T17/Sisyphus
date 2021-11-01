@@ -86,7 +86,5 @@ public class ViewHabit extends AppCompatActivity {
                 dialog.show(getSupportFragmentManager(), "DELETE");
             }
         });
-
-
     }
 }
