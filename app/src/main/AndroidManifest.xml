@@ -11,6 +11,10 @@
         android:theme="@style/Theme.Sisyphus">
         <activity
             android:name=".AddHabitEvent"
+            android:name=".AddHabitEvent"
+            android:exported="true" />
+        <activity
+            android:name=".EmptyMainMenu"
             android:exported="true" />
         <activity
             android:name=".ListHabitEvent"
