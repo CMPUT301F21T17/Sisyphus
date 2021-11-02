@@ -1,30 +1,48 @@
 package com.example.sisyphus;
-import android.text.Editable;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 
-public class Habit implements Serializable {
-    private String name;
+public class Habit {
+    private String habitName;
+    private Date startDate;
+    private ArrayList<String> frequency;
     private String reason;
-    private String date;
 
-    public Habit(){
+
+    public Habit(String habitName, Date startDate, ArrayList<String> frequency, String reason) {
+        setHabitName(habitName);
+        setStartDate(startDate);
+        setFrequency(frequency);
+        setReason(reason);
     }
 
-    public Habit(String name,String date,String reason){
-        this.name = name;
-        this.reason = reason;
-        this.date = date;
-    }
+
 
     public String getName() {
-        return name;
+        return habitName;
     }
 
-    public void setTitle(String title) {
-        this.name = title;
+    public ArrayList<String> getFrequency() {
+        return frequency;
     }
 
+    public void setFrequency(ArrayList<String> frequency) {
+        this.frequency = frequency;
+    }
+
+    public void setHabitName(String habitName) {
+        this.habitName = habitName;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+
+    }
     public String getReason() {
         return reason;
     }
@@ -32,12 +50,6 @@ public class Habit implements Serializable {
     public void setReason(String reason) {
         this.reason = reason;
     }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 }
+
+

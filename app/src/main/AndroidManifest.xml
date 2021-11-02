@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sisyphus">
         <activity
+            android:name=".AddHabit"
+            android:exported="false" />
+        <activity
             android:name=".EditHabitEventView"
             android:exported="true" />
         <activity
