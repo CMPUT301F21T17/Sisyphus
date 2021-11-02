@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -48,11 +49,12 @@ public class AllHabitListView extends AppCompatActivity {
         allhabitListView= findViewById(R.id.allhabit_list);
 
         habitDataList = new ArrayList<>();
+        setUserHabit(currentUserID);
 
         habitAdapter = new AllHabitList_Adapter(this, habitDataList);
         allhabitListView.setAdapter(habitAdapter);
 
-        setUserHabit(currentUserID);
+
 
 
         allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,7 +85,8 @@ public class AllHabitListView extends AppCompatActivity {
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent);
+                Intent toAddHabit = new Intent(AllHabitListView.this,AddHabit.class);
+                startActivity(toAddHabit);
             }
         });
     }

@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -62,7 +64,7 @@ public class AddHabitEvent extends AppCompatActivity {
             int day = cal.get(Calendar.DAY_OF_MONTH);
 
             DatePickerDialog dialog = new DatePickerDialog(AddHabitEvent.this, mDateSetListener, year, month, day);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); //Transparent Background
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE)); //Transparent Background
             dialog.show();
         });
         mDateSetListener = (datePicker, year, month, day) -> {
@@ -77,9 +79,12 @@ public class AddHabitEvent extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Date newDate = new Date(date.getText().toString());
-                System.out.println(newDate);
-                System.out.println(habitName);
+                Date newDate = null;
+                try {
+                    newDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString().trim());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName);
                 FirebaseStore fb = new FirebaseStore();
                 fb.storeHabitEvent(mAuth.getUid(), habitName, newEvent);

@@ -3,6 +3,7 @@ package com.example.sisyphus;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -39,7 +40,8 @@ public class AddHabit extends AppCompatActivity {
         setContentView(R.layout.activity_add_habit);
 
         mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword("junrui@gmail.com","123456");
+        //mAuth.signInWithEmailAndPassword("junrui@gmail.com","123456");
+        String currentUser = mAuth.getUid();
         ImageView checkButton = findViewById(R.id.checkButton);
         ImageView cancelButton = findViewById(R.id.cancelButton);
         ImageView backButton = findViewById(R.id.backButton);
@@ -60,9 +62,13 @@ public class AddHabit extends AppCompatActivity {
             }
             String reasonInput = Objects.requireNonNull(reason.getEditText()).getText().toString().trim();
             Habit habitInput = new Habit(habit, dateInput, days, reasonInput);
-            String dummyUser = "garbage";
-            FirebaseStore testbase = new FirebaseStore();
-            testbase.storeHabit(dummyUser,habitInput);
+            //String dummyUser = "garbage";
+            FirebaseStore fb = new FirebaseStore();
+            fb.storeHabit(currentUser,habitInput);
+            Intent toHabitList = new Intent(AddHabit.this,AllHabitListView.class);
+            toHabitList.putExtra("currentUserID",mAuth.getUid());
+            toHabitList.putExtra("currentTag","Sample");
+            startActivity(toHabitList);
         });
 
 
@@ -153,11 +159,13 @@ public class AddHabit extends AppCompatActivity {
         //On Click for the cancel button
         cancelButton.setOnClickListener(view -> {
             //Intent back
+            finish();
         });
 
         //On Click for the Back button
         backButton.setOnClickListener(view -> {
             //Intent back
+            finish();
         });
 
     }

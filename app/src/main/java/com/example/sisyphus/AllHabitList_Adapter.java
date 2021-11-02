@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class AllHabitList_Adapter extends ArrayAdapter<Habit> {
@@ -38,8 +39,8 @@ public class AllHabitList_Adapter extends ArrayAdapter<Habit> {
         TextView habitTitle = view.findViewById(R.id.habit_title_text);
         TextView habitDate = view.findViewById(R.id.habit_date_text);
 
-        habitTitle.setText(habit.getName());
-        habitDate.setText(habit.getDate());
+        habitTitle.setText(habit.getHabitName());
+        habitDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(habit.getStartDate()));
 
         return view;
 

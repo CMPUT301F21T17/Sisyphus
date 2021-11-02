@@ -20,6 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -57,7 +59,7 @@ public class EditHabitEventView extends AppCompatActivity {
         String habitName = EditEvent.getHabitName();
         habitTitle.setText(EditEvent.getHabitName());
         location.setText(EditEvent.getLocation());
-        date.setText(EditEvent.getDate().toString().substring(0,10));
+        date.setText(new SimpleDateFormat("dd/MM/yyyy").format(EditEvent.getDate()));
         comment.setText(EditEvent.getComment());
 
 
@@ -72,7 +74,7 @@ public class EditHabitEventView extends AppCompatActivity {
             int day = cal.get(Calendar.DAY_OF_MONTH);
 
             DatePickerDialog dialog = new DatePickerDialog(EditHabitEventView.this, mDateSetListener, year, month, day);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); //Transparent Background
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE)); //Transparent Background
             dialog.show();
         });
         mDateSetListener = (datePicker, year, month, day) -> {
@@ -87,9 +89,12 @@ public class EditHabitEventView extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Date newDate = new Date(date.getText().toString());
-                System.out.println(newDate);
-                System.out.println(habitName);
+                Date newDate = null;
+                try {
+                    newDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString().trim());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName);
                 FirebaseStore fb = new FirebaseStore();
                 fb.editHabitEvent(mAuth.getUid(), habitName,EditEventID,newEvent);

@@ -34,7 +34,7 @@ public class deleteHabitEvent extends DialogFragment {
 
         return builder
                 .setView(getView())
-                .setTitle("Delete this habit and all related habit events?")
+                .setTitle("Delete this habit event?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

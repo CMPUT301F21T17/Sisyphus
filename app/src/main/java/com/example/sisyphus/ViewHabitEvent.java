@@ -2,6 +2,7 @@ package com.example.sisyphus;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.text.SimpleDateFormat;
 
 public class ViewHabitEvent extends AppCompatActivity {
     TextView habitEventTitleText, habitEventDateText, habitEventLocationText, habitEventCommentText;
@@ -32,7 +35,7 @@ public class ViewHabitEvent extends AppCompatActivity {
         String receivedHabitEventID = intent.getStringExtra("habit_eventID");
         HabitEvent receivedHabitEvent = (HabitEvent) intent.getSerializableExtra("habit_event");
         habitEventTitleText.setText(receivedHabitEvent.getHabitName());
-        habitEventDateText.setText(receivedHabitEvent.getDate().toString());
+        habitEventDateText.setText(new SimpleDateFormat("dd/MM/yyyy").format(receivedHabitEvent.getDate()));
         habitEventLocationText.setText(receivedHabitEvent.getLocation());
         habitEventCommentText.setText(receivedHabitEvent.getComment());
 
@@ -72,5 +75,16 @@ public class ViewHabitEvent extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        final Button button_backToList = findViewById(R.id.BackButton);
+        button_backToList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toEventList = new Intent(ViewHabitEvent.this,ListHabitEvent.class);
+                toEventList.putExtra("1",receivedHabitEvent.getHabitName());
+                startActivity(toEventList);
+            }
+        });
+
     }
 }

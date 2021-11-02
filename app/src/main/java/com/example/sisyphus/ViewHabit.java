@@ -1,8 +1,10 @@
 package com.example.sisyphus;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ViewHabit extends AppCompatActivity {
@@ -20,6 +24,7 @@ public class ViewHabit extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,14 +41,17 @@ public class ViewHabit extends AppCompatActivity {
         final String TAG = intent.getStringExtra("tag");
         String receivedUser = intent.getStringExtra("user");
         Habit receivedHabit = (Habit) intent.getSerializableExtra("habit");
-        String receivedTitle = receivedHabit.getName();
-        String receivedDate = receivedHabit.getDate();
+        ArrayList<String> receivedFrequency = receivedHabit.getFrequency();
+        String receivedTitle = receivedHabit.getHabitName();
+        String receivedDate = new SimpleDateFormat("dd/MM/yyyy").format(receivedHabit.getStartDate());
         String receivedReason = receivedHabit.getReason();
 
 
         habitTitleText.setText(receivedTitle);
         startDateText.setText(receivedDate);
         habitReasonText.setText(receivedReason);
+        frequencyText.setText(setFrequencyText(receivedFrequency));
+
 
         final Button viewHabitEventButton = findViewById(R.id.viewHabitEventButton);
         viewHabitEventButton.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +105,22 @@ public class ViewHabit extends AppCompatActivity {
                 dialog.show(getSupportFragmentManager(), "DELETE");
             }
         });
+    }
 
-
+    public String setFrequencyText(ArrayList<String> frequencyArray) {
+        //Initialize string builder
+        StringBuilder stringBuilder = new StringBuilder();
+        //Use for loop
+        for (int j = 0; j < frequencyArray.size(); j++) {
+            //Concat array value
+            stringBuilder.append(frequencyArray.get(j).substring(0,3));
+            //Check condition
+            if (j != frequencyArray.size() - 1) {
+                //When j value not equal to day list size -1
+                //Add comma
+                stringBuilder.append(",");
+            }
+        }
+        return stringBuilder.toString();
     }
 }

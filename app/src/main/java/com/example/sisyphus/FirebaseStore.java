@@ -61,7 +61,7 @@ public class FirebaseStore {
 
         collectionReference
                 //habit given a database name the same as the title given to it by a user
-                .document(userID).collection("Habits").document(habit.getName()).set(habit)
+                .document(userID).collection("Habits").document(habit.getHabitName()).set(habit)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
