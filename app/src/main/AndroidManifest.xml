@@ -10,6 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sisyphus">
         <activity
+            android:name=".ChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".InfoEdit"
+            android:exported="false" />
+        <activity
+            android:name=".Settings"
+            android:exported="false" />
+        <activity
+            android:name=".Register"
             android:name=".View.HabitController"
             android:exported="false" />
         <activity

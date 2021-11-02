@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/drawable/layout_border.xml" value="0.3828125" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/changepassword.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/entry.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/infoedit.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/register.xml" value="0.33" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/signin.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/usersettings.xml" value="0.33" />
         <entry key="..\:/Users/seanp/Sisyphus/app/src/main/res/layout/activity_add_habit_event.xml" value="0.2" />
         <entry key="..\:/Users/seanp/Sisyphus/app/src/main/res/layout/activity_list_habit_event.xml" value="0.3" />
         <entry key="..\:/Users/seanp/Sisyphus/app/src/main/res/layout/activity_sign_in.xml" value="0.36" />
