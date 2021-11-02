@@ -2,23 +2,26 @@ package com.example.sisyphus;
 
 import android.text.Editable;
 
+import com.google.firebase.Timestamp;
+
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Locale;
 
 public class Habit implements Serializable {
     private String name;
     private String reason;
-    private Calendar date;
-    private EnumSet<DayOfWeek> daysRepeated;
+    private Date date;
+    private List<DayOfWeek> daysRepeated;
 
     public Habit() {
     }
 
-    public Habit(String name, Calendar date, String reason, EnumSet<DayOfWeek> daysRepeated) {
+    public Habit(String name, Date date, String reason, List<DayOfWeek> daysRepeated) {
         this.name = name;
         this.reason = reason;
         this.date = date;
@@ -34,15 +37,10 @@ public class Habit implements Serializable {
     }
 
     public String getDate() {
-        String result = date.getDisplayName(Calendar.YEAR, Calendar.ALL_STYLES, Locale.CANADA);
-        result += "-";
-        result += date.getDisplayName(Calendar.MONTH, Calendar.ALL_STYLES, Locale.CANADA);
-        result += "-";
-        result += date.getDisplayName(Calendar.DATE, Calendar.ALL_STYLES, Locale.CANADA);
-        return result;
+        return this.date.toString();
     }
 
-    public EnumSet<DayOfWeek> getDaysRepeated() {
+    public List<DayOfWeek> getDaysRepeated() {
         return daysRepeated;
     }
 
@@ -54,11 +52,12 @@ public class Habit implements Serializable {
         this.reason = reason;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public void setDaysRepeated(EnumSet<DayOfWeek> daysRepeated) {
+
+    public void setDaysRepeated(List<DayOfWeek> daysRepeated) {
         this.daysRepeated = daysRepeated;
     }
 }
