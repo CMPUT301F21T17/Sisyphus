@@ -29,4 +29,16 @@ public class User {
     public Date getDateJoined(){
         return dateJoined;
     }
+
+    public void setfirst(String nameFirst) {
+        this.nameFirst = nameFirst;
+    }
+
+    public void setlast(String nameLast) {
+        this.nameLast = nameLast;
+    }
+
+    public void setDateJoined(Date dateJoined) {
+        this.dateJoined = dateJoined;
+    }
 }
