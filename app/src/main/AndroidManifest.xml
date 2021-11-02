@@ -10,40 +10,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sisyphus">
         <activity
-            android:name=".AddHabit"
+            android:name=".View.AddHabit"
             android:exported="false" />
         <activity
-            android:name=".EditHabitEventView"
+            android:name=".View.EditHabitEventView"
             android:exported="true" />
         <activity
-            android:name=".ViewHabitEvent"
+            android:name=".View.ViewHabitEvent"
             android:exported="true" />
         <activity
-            android:name=".AddHabitEvent"
+            android:name=".View.AddHabitEvent"
             android:exported="true" />
         <activity
-            android:name=".EmptyMainMenu"
+            android:name=".View.EmptyMainMenu"
             android:exported="true" />
         <activity
-            android:name=".ListHabitEvent"
+            android:name=".View.ListHabitEvent"
             android:exported="false" />
         <activity
-            android:name=".AllHabitListView"
+            android:name=".View.AllHabitListView"
             android:exported="true" />
         <activity
-            android:name=".ViewHabit"
+            android:name=".View.ViewHabit"
             android:exported="false" />
         <activity
-            android:name=".SignIn"
+            android:name=".View.SignIn"
             android:exported="true" />
         <activity
-            android:name=".Register"
+            android:name=".View.Register"
             android:exported="false" />
         <activity
-            android:name=".Entry"
+            android:name=".View.Entry"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".View.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

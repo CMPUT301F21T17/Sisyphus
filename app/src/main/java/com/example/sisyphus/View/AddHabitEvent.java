@@ -1,6 +1,5 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -13,28 +12,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.sisyphus.Model.FirebaseStore;
+import com.example.sisyphus.Model.HabitEvent;
+import com.example.sisyphus.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class EditHabitEventView extends AppCompatActivity {
-    FirebaseAuth mAuth;
+public class AddHabitEvent extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
 
-    EditText location;
-    EditText date;
-    EditText comment;
-    TextView habitTitle;
-    Button add;
-    Button cancel;
+    private EditText location,date,comment;
+    private TextView habitTitle;
+    private Button add,cancel;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -42,7 +36,7 @@ public class EditHabitEventView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_habit_event);
+        setContentView(R.layout.activity_add_habit_event);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -54,13 +48,9 @@ public class EditHabitEventView extends AppCompatActivity {
         cancel = findViewById(R.id.buttonCancel);
 
         Intent intent = getIntent();
-        HabitEvent EditEvent = (HabitEvent) intent.getSerializableExtra("editEvent");
-        String EditEventID = intent.getStringExtra("editEventID");
-        String habitName = EditEvent.getHabitName();
-        habitTitle.setText(EditEvent.getHabitName());
-        location.setText(EditEvent.getLocation());
-        date.setText(new SimpleDateFormat("dd/MM/yyyy").format(EditEvent.getDate()));
-        comment.setText(EditEvent.getComment());
+        String habitName = intent.getStringExtra("1");
+
+        habitTitle.setText(habitName);
 
 
 
@@ -73,7 +63,7 @@ public class EditHabitEventView extends AppCompatActivity {
             int month = cal.get(Calendar.MONTH);
             int day = cal.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog dialog = new DatePickerDialog(EditHabitEventView.this, mDateSetListener, year, month, day);
+            DatePickerDialog dialog = new DatePickerDialog(AddHabitEvent.this, mDateSetListener, year, month, day);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE)); //Transparent Background
             dialog.show();
         });
@@ -91,18 +81,16 @@ public class EditHabitEventView extends AppCompatActivity {
             public void onClick(View view) {
                 Date newDate = null;
                 try {
-                    newDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString());
+                    newDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString().trim());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName);
                 FirebaseStore fb = new FirebaseStore();
-                fb.editHabitEvent(mAuth.getUid(), habitName,EditEventID,newEvent);
-                Intent toEventDetail = new Intent(EditHabitEventView.this,ViewHabitEvent.class);
-                toEventDetail.putExtra("user",mAuth.getUid());
-                toEventDetail.putExtra("habit_event",newEvent);
-                toEventDetail.putExtra("habit_eventID", EditEventID);
-                startActivity(toEventDetail);
+                fb.storeHabitEvent(mAuth.getUid(), habitName, newEvent);
+                Intent toEventList = new Intent(AddHabitEvent.this, ListHabitEvent.class);
+                toEventList.putExtra("1",habitName);
+                startActivity(toEventList);
             }
         });
 
@@ -113,6 +101,10 @@ public class EditHabitEventView extends AppCompatActivity {
                 finish();
             }
         });
+
+
+
+
 
     }
 }

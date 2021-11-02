@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

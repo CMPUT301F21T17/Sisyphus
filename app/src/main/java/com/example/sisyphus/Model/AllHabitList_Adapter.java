@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.Model;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

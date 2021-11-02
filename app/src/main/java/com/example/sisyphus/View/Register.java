@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,13 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.sisyphus.Model.FirebaseStore;
+import com.example.sisyphus.R;
+import com.example.sisyphus.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.Serializable;
 import java.util.Date;
 
 public class Register extends AppCompatActivity {

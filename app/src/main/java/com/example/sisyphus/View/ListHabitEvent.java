@@ -1,12 +1,10 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,10 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.sisyphus.Model.HabitEvent;
+import com.example.sisyphus.Model.HabitEventListAdapter;
+import com.example.sisyphus.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -28,7 +25,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ListHabitEvent extends AppCompatActivity {
@@ -68,7 +64,7 @@ public class ListHabitEvent extends AppCompatActivity {
         listHabitEvent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent (ListHabitEvent.this,ViewHabitEvent.class);
+                Intent intent = new Intent (ListHabitEvent.this, ViewHabitEvent.class);
                 HabitEvent clickedHabitEvent = habitEventDataList.get(i);
                 intent.putExtra("habit_eventID", habitEventID.get(i));
                 //intent.putExtra("tag",currentTag);
@@ -82,7 +78,7 @@ public class ListHabitEvent extends AppCompatActivity {
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ListHabitEvent.this,AllHabitListView.class);
+                Intent intent = new Intent(ListHabitEvent.this, AllHabitListView.class);
                 startActivity(intent);
             }
         });

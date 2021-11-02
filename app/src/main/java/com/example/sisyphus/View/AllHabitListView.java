@@ -1,22 +1,19 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.sisyphus.Model.AllHabitList_Adapter;
+import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -27,7 +24,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class AllHabitListView extends AppCompatActivity {
@@ -61,7 +57,7 @@ public class AllHabitListView extends AppCompatActivity {
         allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent (AllHabitListView.this,ViewHabit.class);
+                Intent intent = new Intent (AllHabitListView.this, ViewHabit.class);
                 Habit clickedHabit = habitDataList.get(i);
                 intent.putExtra("habit",clickedHabit);
                 startActivity(intent);
@@ -82,7 +78,7 @@ public class AllHabitListView extends AppCompatActivity {
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent toAddHabit = new Intent(AllHabitListView.this,AddHabit.class);
+                Intent toAddHabit = new Intent(AllHabitListView.this, AddHabit.class);
                 startActivity(toAddHabit);
             }
         });

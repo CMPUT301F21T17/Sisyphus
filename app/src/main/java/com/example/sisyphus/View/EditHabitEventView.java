@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.sisyphus.Model.FirebaseStore;
+import com.example.sisyphus.Model.HabitEvent;
+import com.example.sisyphus.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
@@ -19,13 +22,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddHabitEvent extends AppCompatActivity {
+public class EditHabitEventView extends AppCompatActivity {
+    FirebaseAuth mAuth;
 
-    private FirebaseAuth mAuth;
 
-    private EditText location,date,comment;
-    private TextView habitTitle;
-    private Button add,cancel;
+    EditText location;
+    EditText date;
+    EditText comment;
+    TextView habitTitle;
+    Button add;
+    Button cancel;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -33,7 +39,7 @@ public class AddHabitEvent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_habit_event);
+        setContentView(R.layout.activity_edit_habit_event);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -45,9 +51,13 @@ public class AddHabitEvent extends AppCompatActivity {
         cancel = findViewById(R.id.buttonCancel);
 
         Intent intent = getIntent();
-        String habitName = intent.getStringExtra("1");
-
-        habitTitle.setText(habitName);
+        HabitEvent EditEvent = (HabitEvent) intent.getSerializableExtra("editEvent");
+        String EditEventID = intent.getStringExtra("editEventID");
+        String habitName = EditEvent.getHabitName();
+        habitTitle.setText(EditEvent.getHabitName());
+        location.setText(EditEvent.getLocation());
+        date.setText(new SimpleDateFormat("dd/MM/yyyy").format(EditEvent.getDate()));
+        comment.setText(EditEvent.getComment());
 
 
 
@@ -60,7 +70,7 @@ public class AddHabitEvent extends AppCompatActivity {
             int month = cal.get(Calendar.MONTH);
             int day = cal.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog dialog = new DatePickerDialog(AddHabitEvent.this, mDateSetListener, year, month, day);
+            DatePickerDialog dialog = new DatePickerDialog(EditHabitEventView.this, mDateSetListener, year, month, day);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE)); //Transparent Background
             dialog.show();
         });
@@ -78,16 +88,18 @@ public class AddHabitEvent extends AppCompatActivity {
             public void onClick(View view) {
                 Date newDate = null;
                 try {
-                    newDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString().trim());
+                    newDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName);
                 FirebaseStore fb = new FirebaseStore();
-                fb.storeHabitEvent(mAuth.getUid(), habitName, newEvent);
-                Intent toEventList = new Intent(AddHabitEvent.this,ListHabitEvent.class);
-                toEventList.putExtra("1",habitName);
-                startActivity(toEventList);
+                fb.editHabitEvent(mAuth.getUid(), habitName,EditEventID,newEvent);
+                Intent toEventDetail = new Intent(EditHabitEventView.this, ViewHabitEvent.class);
+                toEventDetail.putExtra("user",mAuth.getUid());
+                toEventDetail.putExtra("habit_event",newEvent);
+                toEventDetail.putExtra("habit_eventID", EditEventID);
+                startActivity(toEventDetail);
             }
         });
 
@@ -98,10 +110,6 @@ public class AddHabitEvent extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
-
 
     }
 }

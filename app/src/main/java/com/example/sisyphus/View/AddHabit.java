@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -9,10 +9,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sisyphus.Model.FirebaseStore;
+import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.R;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -64,7 +66,7 @@ public class AddHabit extends AppCompatActivity {
             //String dummyUser = "garbage";
             FirebaseStore fb = new FirebaseStore();
             fb.storeHabit(currentUser,habitInput);
-            Intent toHabitList = new Intent(AddHabit.this,AllHabitListView.class);
+            Intent toHabitList = new Intent(AddHabit.this, AllHabitListView.class);
             startActivity(toHabitList);
         });
 

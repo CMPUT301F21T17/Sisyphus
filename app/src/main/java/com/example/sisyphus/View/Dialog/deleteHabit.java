@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View.Dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.sisyphus.View.AllHabitListView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class deleteHabit extends DialogFragment {
@@ -51,7 +51,7 @@ public class deleteHabit extends DialogFragment {
                                     }
                                 });
 
-                        Intent intent = new Intent(getContext(),AllHabitListView.class);
+                        Intent intent = new Intent(getContext(), AllHabitListView.class);
                         startActivity(intent);
                     }
                 })

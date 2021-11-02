@@ -1,5 +1,6 @@
-package com.example.sisyphus;
+package com.example.sisyphus.Model;
 
+import com.example.sisyphus.Model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;

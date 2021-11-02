@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View.Dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,11 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.sisyphus.View.ListHabitEvent;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.List;
 
 public class deleteHabitEvent extends DialogFragment {
     final String deleteTAG = "Sample";

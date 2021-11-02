@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,15 +8,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.R;
+import com.example.sisyphus.View.Dialog.deleteHabit;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ViewHabit extends AppCompatActivity {
 
@@ -86,7 +86,7 @@ public class ViewHabit extends AppCompatActivity {
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewHabit.this,AllHabitListView.class);
+                Intent intent = new Intent(ViewHabit.this, AllHabitListView.class);
                 startActivity(intent);
             }
         });

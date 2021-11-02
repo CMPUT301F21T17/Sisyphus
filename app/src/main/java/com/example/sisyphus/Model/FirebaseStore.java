@@ -1,9 +1,12 @@
-package com.example.sisyphus;
+package com.example.sisyphus.Model;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.HabitEvent;
+import com.example.sisyphus.Model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;

@@ -1,14 +1,16 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.sisyphus.Model.HabitEvent;
+import com.example.sisyphus.R;
+import com.example.sisyphus.View.Dialog.deleteHabitEvent;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
@@ -68,7 +70,7 @@ public class ViewHabitEvent extends AppCompatActivity {
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewHabitEvent.this,AllHabitListView.class);
+                Intent intent = new Intent(ViewHabitEvent.this, AllHabitListView.class);
                 startActivity(intent);
             }
         });
@@ -77,7 +79,7 @@ public class ViewHabitEvent extends AppCompatActivity {
         button_backToList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent toEventList = new Intent(ViewHabitEvent.this,ListHabitEvent.class);
+                Intent toEventList = new Intent(ViewHabitEvent.this, ListHabitEvent.class);
                 toEventList.putExtra("1",receivedHabitEvent.getHabitName());
                 startActivity(toEventList);
             }
