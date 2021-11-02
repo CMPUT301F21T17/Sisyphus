@@ -48,7 +48,6 @@ public class ListHabitEvent extends AppCompatActivity {
         setContentView(R.layout.activity_list_habit_event);
 
         Intent intent = getIntent();
-        //String currentUserID = intent.getStringExtra("currentUserID");
         String currentHabit = intent.getStringExtra("1");
         listHabitEvent= findViewById(R.id.list_habit_event);
         topBarTitle = findViewById(R.id.habit_event_title);
@@ -57,11 +56,11 @@ public class ListHabitEvent extends AppCompatActivity {
 
         habitEventDataList = new ArrayList<>();
         habitEventID = new ArrayList<>();
-
         habitEventAdapter = new HabitEventListAdapter(this, habitEventDataList);
         listHabitEvent.setAdapter(habitEventAdapter);
 
         topBarTitle.setText("HabitEvents of [" + currentHabit+"]");
+
         setUserHabitEvent(mAuth.getUid(), currentHabit);
 
 
@@ -84,8 +83,6 @@ public class ListHabitEvent extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ListHabitEvent.this,AllHabitListView.class);
-                intent.putExtra("currentUserID",mAuth.getUid());
-                intent.putExtra("currentTag","Sample");
                 startActivity(intent);
             }
         });
@@ -102,6 +99,13 @@ public class ListHabitEvent extends AppCompatActivity {
         });
     }
 
+    /**
+     * Insert all habit's events and their documentID into lists
+     * @param ID
+     * The userID of the user to store data under
+     * @param habitName
+     * The habitName of the user to store habit events under
+     */
     public void setUserHabitEvent(String ID, String habitName){
         final CollectionReference habitEventRef = db.collection("Users").document(ID).collection("Habits").document(habitName).collection("HabitEvent");
         habitEventRef.addSnapshotListener(new EventListener<QuerySnapshot>() {

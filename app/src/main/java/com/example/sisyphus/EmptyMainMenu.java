@@ -33,8 +33,6 @@ public class EmptyMainMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EmptyMainMenu.this,AllHabitListView.class);
-                intent.putExtra("currentUserID",userID);
-                intent.putExtra("currentTag",TAG);
                 startActivity(intent);
             }
         });

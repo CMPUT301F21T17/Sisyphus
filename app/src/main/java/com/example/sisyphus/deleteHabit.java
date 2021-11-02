@@ -52,8 +52,6 @@ public class deleteHabit extends DialogFragment {
                                 });
 
                         Intent intent = new Intent(getContext(),AllHabitListView.class);
-                        intent.putExtra("currentUserID",delectUser);
-                        intent.putExtra("currentTag",delectTAG);
                         startActivity(intent);
                     }
                 })

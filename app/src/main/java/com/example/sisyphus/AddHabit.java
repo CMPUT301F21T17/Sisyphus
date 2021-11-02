@@ -40,7 +40,6 @@ public class AddHabit extends AppCompatActivity {
         setContentView(R.layout.activity_add_habit);
 
         mAuth = FirebaseAuth.getInstance();
-        //mAuth.signInWithEmailAndPassword("junrui@gmail.com","123456");
         String currentUser = mAuth.getUid();
         ImageView checkButton = findViewById(R.id.checkButton);
         ImageView cancelButton = findViewById(R.id.cancelButton);
@@ -66,8 +65,6 @@ public class AddHabit extends AppCompatActivity {
             FirebaseStore fb = new FirebaseStore();
             fb.storeHabit(currentUser,habitInput);
             Intent toHabitList = new Intent(AddHabit.this,AllHabitListView.class);
-            toHabitList.putExtra("currentUserID",mAuth.getUid());
-            toHabitList.putExtra("currentTag","Sample");
             startActivity(toHabitList);
         });
 

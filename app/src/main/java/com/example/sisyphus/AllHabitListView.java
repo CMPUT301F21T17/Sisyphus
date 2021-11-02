@@ -31,10 +31,11 @@ import java.util.List;
 
 
 public class AllHabitListView extends AppCompatActivity {
-    ListView allhabitListView;
-    ArrayAdapter<Habit> habitAdapter;
-    ArrayList<Habit> habitDataList;
+    private ListView allhabitListView;
+    private ArrayAdapter<Habit> habitAdapter;
+    private ArrayList<Habit> habitDataList;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
     final CollectionReference collectionReference = db.collection("Users");
 
 
@@ -43,12 +44,12 @@ public class AllHabitListView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_habit_list);
 
+        mAuth = FirebaseAuth.getInstance();
         Intent intent = getIntent();
-        String currentUserID = intent.getStringExtra("currentUserID");
-        String currentTag = intent.getStringExtra("currentTag");
+        String currentUserID = mAuth.getUid();
         allhabitListView= findViewById(R.id.allhabit_list);
-
         habitDataList = new ArrayList<>();
+
         setUserHabit(currentUserID);
 
         habitAdapter = new AllHabitList_Adapter(this, habitDataList);
@@ -63,8 +64,6 @@ public class AllHabitListView extends AppCompatActivity {
                 Intent intent = new Intent (AllHabitListView.this,ViewHabit.class);
                 Habit clickedHabit = habitDataList.get(i);
                 intent.putExtra("habit",clickedHabit);
-                intent.putExtra("tag",currentTag);
-                intent.putExtra("user",currentUserID);
                 startActivity(intent);
             }
         });
@@ -74,8 +73,6 @@ public class AllHabitListView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AllHabitListView.this,AllHabitListView.class);
-                intent.putExtra("currentUserID",currentUserID);
-                intent.putExtra("currentTag",currentTag);
                 startActivity(intent);
             }
         });
@@ -91,7 +88,11 @@ public class AllHabitListView extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Insert all habits from firebase into a list
+     * @param ID
+     * The userID of the user to store data under
+     */
     public void setUserHabit(String ID){
         final CollectionReference habitRef = db.collection("Users").document(ID).collection("Habits");
         habitRef.addSnapshotListener(new EventListener<QuerySnapshot>() {

@@ -21,14 +21,11 @@ import java.util.Date;
 
 public class AddHabitEvent extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
-    EditText location;
-    EditText date;
-    EditText comment;
-    TextView habitTitle;
-    Button add;
-    Button cancel;
+    private EditText location,date,comment;
+    private TextView habitTitle;
+    private Button add,cancel;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -69,7 +66,7 @@ public class AddHabitEvent extends AppCompatActivity {
         });
         mDateSetListener = (datePicker, year, month, day) -> {
             month = month + 1;
-            String newDate = month + "/" + day + "/" + year;
+            String newDate = day + "/" + month + "/" + year;
             date.setText(newDate);
         };
 
@@ -88,7 +85,9 @@ public class AddHabitEvent extends AppCompatActivity {
                 HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName);
                 FirebaseStore fb = new FirebaseStore();
                 fb.storeHabitEvent(mAuth.getUid(), habitName, newEvent);
-                finish();
+                Intent toEventList = new Intent(AddHabitEvent.this,ListHabitEvent.class);
+                toEventList.putExtra("1",habitName);
+                startActivity(toEventList);
             }
         });
 

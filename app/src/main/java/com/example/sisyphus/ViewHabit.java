@@ -31,6 +31,8 @@ public class ViewHabit extends AppCompatActivity {
         setContentView(R.layout.activity_view_habit);
 
         mAuth = FirebaseAuth.getInstance();
+        final String TAG = "Sample";
+
 
         habitTitleText = findViewById(R.id.habitTitleText);
         startDateText = findViewById(R.id.startDateText);
@@ -38,14 +40,13 @@ public class ViewHabit extends AppCompatActivity {
         habitReasonText = findViewById(R.id.habitReasonText);
 
         Intent intent = getIntent();
-        final String TAG = intent.getStringExtra("tag");
-        String receivedUser = intent.getStringExtra("user");
         Habit receivedHabit = (Habit) intent.getSerializableExtra("habit");
+
+        String receivedUser = mAuth.getUid();
         ArrayList<String> receivedFrequency = receivedHabit.getFrequency();
         String receivedTitle = receivedHabit.getHabitName();
         String receivedDate = new SimpleDateFormat("dd/MM/yyyy").format(receivedHabit.getStartDate());
         String receivedReason = receivedHabit.getReason();
-
 
         habitTitleText.setText(receivedTitle);
         startDateText.setText(receivedDate);
@@ -86,8 +87,6 @@ public class ViewHabit extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ViewHabit.this,AllHabitListView.class);
-                intent.putExtra("currentUserID",mAuth.getUid());
-                intent.putExtra("currentTag","Sample");
                 startActivity(intent);
             }
         });

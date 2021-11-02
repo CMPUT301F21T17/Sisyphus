@@ -30,7 +30,6 @@ public class ViewHabitEvent extends AppCompatActivity {
         habitEventCommentText = findViewById(R.id.habit_event_comment);
 
         Intent intent = getIntent();
-        //final String TAG = intent.getStringExtra("tag");
         String receivedUser = intent.getStringExtra("user");
         String receivedHabitEventID = intent.getStringExtra("habit_eventID");
         HabitEvent receivedHabitEvent = (HabitEvent) intent.getSerializableExtra("habit_event");
@@ -70,8 +69,6 @@ public class ViewHabitEvent extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ViewHabitEvent.this,AllHabitListView.class);
-                intent.putExtra("currentUserID",mAuth.getUid());
-                intent.putExtra("currentTag","Sample");
                 startActivity(intent);
             }
         });

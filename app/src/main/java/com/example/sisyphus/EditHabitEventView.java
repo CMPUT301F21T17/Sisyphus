@@ -79,7 +79,7 @@ public class EditHabitEventView extends AppCompatActivity {
         });
         mDateSetListener = (datePicker, year, month, day) -> {
             month = month + 1;
-            String newDate = month + "/" + day + "/" + year;
+            String newDate = day + "/" + month + "/" + year;
             date.setText(newDate);
         };
 
@@ -91,7 +91,7 @@ public class EditHabitEventView extends AppCompatActivity {
             public void onClick(View view) {
                 Date newDate = null;
                 try {
-                    newDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString().trim());
+                    newDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

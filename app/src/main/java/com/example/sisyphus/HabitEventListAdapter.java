@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class HabitEventListAdapter extends ArrayAdapter<HabitEvent> {
