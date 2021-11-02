@@ -47,6 +47,16 @@ public class EmptyMainMenu extends AppCompatActivity {
             }
         });
 
+
+        final Button button_settings = findViewById(R.id.settingsButton);
+        button_settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmptyMainMenu.this,Settings.class);
+                startActivity(intent);
+            }
+        });
+
         //FirebaseAuth mAuth = FirebaseAuth.getInstance();
         //System.out.println(mAuth.getCurrentUser().getUid());
 

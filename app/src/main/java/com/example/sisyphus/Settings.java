@@ -7,6 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 //
 // This activity is meant to represent our settings pages
 // In this page, users can select an item and it will lead them to an activity where they can
@@ -28,7 +36,11 @@ public class Settings extends AppCompatActivity {
     Button lNameEdit;
     Button emailEdit;
     Button passwordEdit;
+    Button back;
 
+    FirebaseAuth mAuth;
+
+    User activeUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +59,27 @@ public class Settings extends AppCompatActivity {
         lNameEdit = findViewById(R.id.lNameEdit);
         emailEdit = findViewById(R.id.emailEdit);
         passwordEdit = findViewById(R.id.passwordEdit);
+        back = findViewById(R.id.back);
+
+        //intializing FirebasAuth object to get user
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //ripped from the firestore documentation with small edits
+        DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
+        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                activeUser = documentSnapshot.toObject(User.class);
+                fName.setText(activeUser.getFirst());
+                lName.setText(activeUser.getLast());
+                email.setText(mAuth.getCurrentUser().getEmail());
+            }
+        });
+
+
+
+
 
 
         // Passes the users first name to the info edit activity and switches activities
@@ -85,6 +118,16 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent passInt = new Intent(getApplicationContext(), ChangePassword.class);
+                startActivity(passInt);
+            }
+        });
+
+
+        // Moves to the change password activity, in a separate activity to maintain security
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent passInt = new Intent(getApplicationContext(), EmptyMainMenu.class);
                 startActivity(passInt);
             }
         });

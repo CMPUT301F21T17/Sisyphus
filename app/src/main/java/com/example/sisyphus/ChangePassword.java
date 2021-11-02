@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 
 //
 // This activity represents the area where a user can change their password
@@ -26,6 +30,8 @@ public class ChangePassword extends AppCompatActivity {
     Button passCancel;
     Button passConfirm;
 
+    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +45,9 @@ public class ChangePassword extends AppCompatActivity {
         passCancel = findViewById(R.id.passCancel);
         passConfirm = findViewById(R.id.passConfirm);
 
+
+        mAuth = FirebaseAuth.getInstance();
+
         // Cancel just switches to previous activity on click
         passCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,10 +60,11 @@ public class ChangePassword extends AppCompatActivity {
         passConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (passwordNew.getText() == passwordConfirmNew.getText()) {
+                if (passwordNew.getText().toString().equals(passwordConfirmNew.getText().toString()) && passwordNew.getText().toString().length() > 5) {
                     // Add another check here that the original password matches the current user password
                     // If all things work properly, then we implement a password change and then
                     // Switch activities back to the previous
+                    mAuth.getCurrentUser().updatePassword(passwordNew.getText().toString());
 
                     Intent confirmInt = new Intent(getApplicationContext(), Settings.class);
                     startActivity(confirmInt);
