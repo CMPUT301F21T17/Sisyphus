@@ -23,6 +23,10 @@
             android:exported="true" />
         <activity
             android:name=".View.AddHabitEvent"
+            android:name=".UserSearch"
+            android:exported="true" />
+        <activity
+            android:name=".AddHabitEvent"
             android:exported="true" />
         <activity
             android:name=".View.EmptyMainMenu"
