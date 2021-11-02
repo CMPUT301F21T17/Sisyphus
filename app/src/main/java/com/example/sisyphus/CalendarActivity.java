@@ -5,26 +5,22 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class CalendarActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mauth;
     private Calendar selectedDay;
 
     CalendarView calendar;
@@ -58,8 +54,8 @@ public class CalendarActivity extends AppCompatActivity {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        mAuth = (FirebaseAuth) this.getIntent().getExtras().get("MAUTH");
-        String userID = mAuth.getUid();
+        mauth = FirebaseAuth.getInstance();
+        String userID = mauth.getUid();
 
         // event listener to get up to date data for Habit list
         db.collection("Users")
