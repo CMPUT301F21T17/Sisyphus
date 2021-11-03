@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,7 +22,6 @@ import java.util.GregorianCalendar;
 
 public class CalendarActivity extends AppCompatActivity {
     private FirebaseAuth mauth;
-    private Timestamp index;
     private Calendar selectedDay;
 
     CalendarView calendar;
@@ -43,7 +41,7 @@ public class CalendarActivity extends AppCompatActivity {
         selectedDay.set(Calendar.HOUR,0);
         selectedDay.set(Calendar.MINUTE,0);
         selectedDay.set(Calendar.SECOND, 0);
-        index = new Timestamp(selectedDay.getTime());
+
 
         data = new ArrayList<Habit>();
         adapter = new AllHabitList_Adapter(this, data);
@@ -52,7 +50,7 @@ public class CalendarActivity extends AppCompatActivity {
         // event listener to get up to date data for Habit list
         mauth = FirebaseAuth.getInstance();
         mauth.signInWithEmailAndPassword("ktbrown@ualberta.ca", "123456");
-        update(mauth.getUid());
+        update(mauth.getUid(), selectedDay);
 
         // click listener for changes to calendar widget
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -61,19 +59,18 @@ public class CalendarActivity extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
                 selectedDay.set(year, month - 1, day, 0, 0, 0);
                 // compare date_string to date field of calendar ref to get the correct group
-                update(mauth.getUid());
+                update(mauth.getUid(), selectedDay);
             }
         });
     }
 
-    public void update(String userID) {
+    public void update(String userID, Calendar selectedDay) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .document(mauth.getUid())
+                .document(userID)
                 .collection("Habits")
-                .whereGreaterThanOrEqualTo("date", index)
+                .whereGreaterThanOrEqualTo("dateSort", selectedDay.getTime())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         data.clear();
@@ -81,7 +78,13 @@ public class CalendarActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot d: value) {
                                 // TODO adapt data to Habit list
                                 Habit temp = d.toObject(Habit.class);
-                                if (temp.getDaysRepeated().contains(DayOfWeek.of(selectedDay.get(Calendar.DAY_OF_WEEK)))) {
+                                boolean add = false;
+                                for (String e : temp.getDaysRepeated()){
+                                    if (e.equals(CalToStr(selectedDay)));
+                                        add = true;
+                                        break;
+                                }
+                                if (add) {
                                     data.add(temp);
                                 }
                             }
@@ -89,5 +92,26 @@ public class CalendarActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    public String CalToStr (Calendar selectedDay) {
+            int i = selectedDay.get(Calendar.DAY_OF_WEEK);
+            switch (i) {
+                case Calendar.SATURDAY:
+                    return "SATURDAY";
+                case Calendar.SUNDAY:
+                    return "SUNDAY";
+                case Calendar.MONDAY:
+                    return "MONDAY";
+                case Calendar.TUESDAY:
+                    return "TUESDAY";
+                case Calendar.WEDNESDAY:
+                    return "WEDNESDAY";
+                case Calendar.THURSDAY:
+                    return "THURSDAY";
+                case Calendar.FRIDAY:
+                    return "FRIDAY";
+            }
+        return "ERROR";
     }
 }
