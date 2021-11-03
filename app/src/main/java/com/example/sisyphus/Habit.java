@@ -9,6 +9,8 @@ public class Habit {
     private ArrayList<String> frequency;
     private String reason;
 
+    public Habit() {
+    }
 
     public Habit(String habitName, Date startDate, ArrayList<String> frequency, String reason) {
         setHabitName(habitName);

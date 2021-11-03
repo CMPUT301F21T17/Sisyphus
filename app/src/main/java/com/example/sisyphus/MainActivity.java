@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent testSignIn = new Intent(MainActivity.this, AddHabit.class);
+        Intent testSignIn = new Intent(MainActivity.this, HabitController.class);
         startActivity(testSignIn);
     }
 }

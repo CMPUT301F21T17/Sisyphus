@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HabitController">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/teal_200">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                tools:ignore="ContentDescription,ImageContrastCheck" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@id/backButton"
+                android:text="Habit's detail"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText,TextContrastCheck" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:errorEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/habitName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="habit_name"
+            android:inputType="text"
+            tools:ignore="HardcodedText,TextContrastCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:errorEnabled="false">
+
+        <EditText
+            android:id="@+id/startDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:focusable="false"
+            android:hint="yyyy_dd_mm"
+            android:importantForAutofill="no"
+            android:inputType="none"
+            tools:ignore="HardcodedText,SpeakableTextPresentCheck,TextFields" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:errorEnabled="false">
+
+        <EditText
+            android:id="@+id/frequency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:focusable="false"
+            android:hint="Select_days"
+            android:importantForAutofill="no"
+            android:inputType="none"
+            tools:ignore="HardcodedText,SpeakableTextPresentCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        app:errorEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:hint="reason"
+            android:inputType="text"
+            tools:ignore="HardcodedText,TextContrastCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/viewHabit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_700"
+            android:text="view habit event"
+            tools:ignore="ButtonStyle,HardcodedText,TextContrastCheck" />
+
+        <Button
+            android:id="@+id/addHabit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_700"
+            android:text="add habit event"
+            tools:ignore="ButtonStyle,HardcodedText,TextContrastCheck" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:text="Delete Habit"
+        tools:ignore="HardcodedText,TextContrastCheck" />
+
+
+</LinearLayout>
