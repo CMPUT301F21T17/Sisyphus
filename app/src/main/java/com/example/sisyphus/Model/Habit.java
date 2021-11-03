@@ -10,20 +10,28 @@ public class Habit implements Serializable {
     private ArrayList<String> frequency;
     private String reason;
 
-    public Habit(){
-
+    public Habit() {
     }
-
 
     public Habit(String habitName, Date startDate, ArrayList<String> frequency, String reason) {
-        this.habitName = habitName;
-        this.startDate = startDate;
-        this.frequency = frequency;
-        this.reason = reason;
+        setHabitName(habitName);
+        setStartDate(startDate);
+        setFrequency(frequency);
+        setReason(reason);
     }
+
+
 
     public String getHabitName() {
         return habitName;
+    }
+
+    public ArrayList<String> getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(ArrayList<String> frequency) {
+        this.frequency = frequency;
     }
 
     public void setHabitName(String habitName) {
@@ -36,16 +44,8 @@ public class Habit implements Serializable {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
-    }
 
-    public ArrayList<String> getFrequency() {
-        return frequency;
     }
-
-    public void setFrequency(ArrayList<String> frequency) {
-        this.frequency = frequency;
-    }
-
     public String getReason() {
         return reason;
     }
