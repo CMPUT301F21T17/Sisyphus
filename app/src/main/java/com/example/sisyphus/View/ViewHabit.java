@@ -78,7 +78,9 @@ public class ViewHabit extends AppCompatActivity {
         editHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //do something
+                Intent editHabit = new Intent(view.getContext(), HabitController.class);
+                editHabit.putExtra("1", receivedTitle);
+                startActivity(editHabit);
             }
         });
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HabitController">
+    tools:context=".View.HabitController">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
                 android:layout_toEndOf="@id/backButton"
-                android:text="Habit's detail"
+                android:text="Edit Habit"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -126,22 +126,22 @@
         android:padding="16dp">
 
         <Button
-            android:id="@+id/viewHabit"
+            android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:backgroundTint="@color/teal_700"
-            android:text="view habit event"
+            android:text="Cancel"
             tools:ignore="ButtonStyle,HardcodedText,TextContrastCheck" />
 
         <Button
-            android:id="@+id/addHabit"
+            android:id="@+id/confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/teal_700"
-            android:text="add habit event"
+            android:text="Confirm"
             tools:ignore="ButtonStyle,HardcodedText,TextContrastCheck" />
 
     </LinearLayout>

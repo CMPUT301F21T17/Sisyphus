@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,15 +6,19 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.sisyphus.Model.FirebaseStore;
+import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -33,7 +37,7 @@ public class HabitController extends AppCompatActivity {
     private EditText startDate, frequency,reason;
     private TextView habitName;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-    private Button addHabit,viewHabit,deleteButton;
+    private Button confirm,cancel,deleteButton;
     private FirebaseStore testbase = new FirebaseStore();
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -46,27 +50,28 @@ public class HabitController extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword("junrui@gmail.com","123456");
-        ImageView cancelButton = findViewById(R.id.cancelButton);
-        addHabit = findViewById(R.id.addHabit);
-        viewHabit = findViewById(R.id.viewHabit);
+        ImageView backButton = findViewById(R.id.backButton);
+        confirm = findViewById(R.id.confirm);
+        cancel = findViewById(R.id.cancel);
         deleteButton = findViewById(R.id.deleteButton);
         habitName = findViewById(R.id.habitName);
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
         reason = findViewById(R.id.reason);
         ArrayList<String> days = new ArrayList<>();
-        String dummyUser = "garbage";
-        String dummyhabitname1 = "s";
+        String dummyUser = mAuth.getUid();
+        Intent habitinfo = getIntent();
+        String dummyhabitname = habitinfo.getStringExtra("1");
 
 
         //getting habit info from database
-        DocumentReference docRef = db.collection("Users").document(dummyUser).collection("Habits").document(dummyhabitname1);
+        DocumentReference docRef = db.collection("Users").document(dummyUser).collection("Habits").document(dummyhabitname);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Habit habit1 = documentSnapshot.toObject(Habit.class);
-                habitName.setText(dummyhabitname1);
-                String pattern = "yyyy-MM-dd";
+                habitName.setText(dummyhabitname);
+                String pattern = "dd/MM/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                 startDate.setText(simpleDateFormat.format(habit1.getStartDate()));
                 frequency.setText(habit1.getFrequency().toString().replace("[","").replace("]",""));
@@ -74,8 +79,8 @@ public class HabitController extends AppCompatActivity {
             }
         });
 
-        //Onclick for the the addHabit event button and storing data
-        addHabit.setOnClickListener(view -> {
+            //Onclick for the the addHabit event button and storing data
+        confirm.setOnClickListener(view -> {
             Date dateInput = null;
             try {
                 dateInput = new SimpleDateFormat("dd/MM/yyyy").parse(startDate.getText().toString().trim());
@@ -83,9 +88,19 @@ public class HabitController extends AppCompatActivity {
                 e.printStackTrace();
             }
             String reasonInput = reason.getText().toString().trim();
+            Habit modifiedHabit = new Habit(dummyhabitname,dateInput,days,reasonInput);
+            FirebaseStore fb = new FirebaseStore();
+            fb.storeHabit(dummyUser,modifiedHabit);
+            Intent intent = new Intent(view.getContext(),ViewHabit.class);
+            intent.putExtra("habit",modifiedHabit);
+            startActivity(intent);
+        });
 
-//            //Intent to send data Addhabit
-//            //(dummyUser,dummyhabitname,dateInput,days,reasonInput);
+        cancel.setOnClickListener(view -> {
+          finish();
+        });
+        backButton.setOnClickListener(view -> {
+            finish();
         });
 
         //Deleting a Habit from database
@@ -98,18 +113,20 @@ public class HabitController extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    String dummyhabitname = "s";
                                     testbase.deleteHabit(dummyUser,dummyhabitname);
+                                    Intent intent = new Intent(view.getContext(),AllHabitListView.class);
+                                    startActivity(intent);
                                 }
                             });
                     builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
-                    });
 
+                    });
         AlertDialog deleteDialog = builder.create();
         deleteDialog.show();
+
         });
         //creating the calendar for user to input startdate
         startDate.setOnClickListener(view -> {

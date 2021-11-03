@@ -148,7 +148,25 @@ public class FirebaseStore {
                 });
     }
 
+    public void deleteHabit(String userId,String habitName){
+        collectionReference
+                //habit given a database name the same as the title given to it by a user
+                .document(userId).collection("Habits").document(habitName)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
 
+    }
 
 
 

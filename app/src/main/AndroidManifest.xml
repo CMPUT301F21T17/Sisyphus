@@ -10,10 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sisyphus">
         <activity
-            android:name=".HabitController"
+            android:name=".View.HabitController"
             android:exported="false" />
         <activity
-            android:name=".AddHabit"
             android:name=".View.AddHabit"
             android:exported="false" />
         <activity
