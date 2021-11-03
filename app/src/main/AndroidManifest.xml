@@ -69,7 +69,7 @@
             android:name=".View.Entry"
             android:exported="false" />
         <activity
-            android:name=".View.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
