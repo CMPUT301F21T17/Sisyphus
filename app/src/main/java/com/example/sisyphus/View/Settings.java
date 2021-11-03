@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,9 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.sisyphus.EmptyMainMenu;
+import com.example.sisyphus.Model.User;
+import com.example.sisyphus.R;
+import com.example.sisyphus.View.Dialog.ChangePassword;
+import com.example.sisyphus.View.InfoEdit;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;

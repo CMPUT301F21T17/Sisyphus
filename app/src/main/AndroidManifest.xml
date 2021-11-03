@@ -10,16 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sisyphus">
         <activity
-            android:name=".ChangePassword"
+            android:name=".View.Dialog.ChangePassword"
             android:exported="false" />
         <activity
-            android:name=".InfoEdit"
+            android:name=".View.InfoEdit"
             android:exported="false" />
         <activity
-            android:name=".Settings"
+            android:name=".View.Settings"
             android:exported="false" />
         <activity
-            android:name=".Register"
             android:name=".View.HabitController"
             android:exported="false" />
         <activity
@@ -33,31 +32,9 @@
             android:exported="true" />
         <activity
             android:name=".View.AddHabitEvent"
-            android:name=".UserSearch"
             android:exported="true" />
         <activity
-            android:name=".InfoEdit"
-            android:exported="true" />
-        <activity
-            android:name=".ChangePassword"
-            android:exported="true" />
-        <activity
-            android:name=".Settings"
-            android:exported="false"/>
-        <activity
-            android:name=".UserSearch"
-            android:exported="true" />
-        <activity
-            android:name=".InfoEdit"
-            android:exported="true" />
-        <activity
-            android:name=".ChangePassword"
-            android:exported="true" />
-        <activity
-            android:name=".Settings"
-            android:exported="false"/>
-        <activity
-            android:name=".AddHabitEvent"
+            android:name=".View.UserSearch"
             android:exported="true" />
         <activity
             android:name=".View.EmptyMainMenu"

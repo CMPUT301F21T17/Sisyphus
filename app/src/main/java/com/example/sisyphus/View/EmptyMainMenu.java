@@ -32,6 +32,15 @@ public class EmptyMainMenu extends AppCompatActivity {
             }
         });
 
+        final Button button_calendar = findViewById(R.id.calendar_button);
+        button_calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmptyMainMenu.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 

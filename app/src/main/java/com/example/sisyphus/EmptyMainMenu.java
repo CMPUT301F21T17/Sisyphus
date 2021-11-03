@@ -4,16 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.sisyphus.View.AllHabitListView;
+import com.example.sisyphus.View.Settings;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.io.Serializable;
 
 public class EmptyMainMenu extends AppCompatActivity {
     final String TAG = "Sample";
@@ -40,7 +36,7 @@ public class EmptyMainMenu extends AppCompatActivity {
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EmptyMainMenu.this,AllHabitListView.class);
+                Intent intent = new Intent(EmptyMainMenu.this, AllHabitListView.class);
                 intent.putExtra("currentUserID",userID);
                 intent.putExtra("currentTag",TAG);
                 startActivity(intent);
@@ -52,7 +48,7 @@ public class EmptyMainMenu extends AppCompatActivity {
         button_settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EmptyMainMenu.this,Settings.class);
+                Intent intent = new Intent(EmptyMainMenu.this, Settings.class);
                 startActivity(intent);
             }
         });
