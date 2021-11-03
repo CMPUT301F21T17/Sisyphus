@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -8,6 +8,9 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sisyphus.Model.AllHabitList_Adapter;
+import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,11 +38,8 @@ public class CalendarActivity extends AppCompatActivity {
 
         calendar = findViewById(R.id.calendar);
         habitsView = findViewById(R.id.calendar_events);
-
         selectedDay = new GregorianCalendar();
-
-
-        data = new ArrayList<Habit>();
+        data = new ArrayList<>();
         adapter = new AllHabitList_Adapter(this, data);
         habitsView.setAdapter(adapter);
 
@@ -69,9 +69,9 @@ public class CalendarActivity extends AppCompatActivity {
     private void update(String userID, Calendar selectedDay) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .document(userID)
+                .document("7uhtuTVJ95br7CvV5AgPY6nOT543")
                 .collection("Habits")
-                .whereGreaterThanOrEqualTo("date", selectedDay.getTime())
+                .whereGreaterThanOrEqualTo("startDate", selectedDay.getTime())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -81,7 +81,7 @@ public class CalendarActivity extends AppCompatActivity {
                                 // TODO adapt data to Habit list
                                 Habit temp = d.toObject(Habit.class);
                                 boolean add = false;
-                                for (String e : temp.getDaysRepeated()){
+                                for (String e : temp.getFrequency()){
                                     if (e.equals(CalToStr(selectedDay))){
                                         add = true;
                                         break;
