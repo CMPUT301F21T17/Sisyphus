@@ -1,4 +1,4 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View.Dialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.example.sisyphus.R;
+import com.example.sisyphus.View.Settings;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 
 //
 // This activity represents the area where a user can change their password

@@ -1,8 +1,10 @@
-package com.example.sisyphus;
+package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.sisyphus.R;
 
 public class UserSearch extends AppCompatActivity {
 
