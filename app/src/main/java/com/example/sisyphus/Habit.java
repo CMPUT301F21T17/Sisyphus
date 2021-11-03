@@ -16,15 +16,17 @@ public class Habit implements Serializable {
     private String name;
     private String reason;
     private Date date;
-    private List<DayOfWeek> daysRepeated;
+    private long dateSort;
+    private List<String> daysRepeated;
 
     public Habit() {
     }
 
-    public Habit(String name, Date date, String reason, List<DayOfWeek> daysRepeated) {
+    public Habit(String name, Date date, String reason, List<String> daysRepeated) {
         this.name = name;
         this.reason = reason;
         this.date = date;
+        this.dateSort = date.getTime();
         this.daysRepeated = daysRepeated;
     }
 
@@ -36,11 +38,19 @@ public class Habit implements Serializable {
         return reason;
     }
 
-    public String getDate() {
-        return this.date.toString();
+    public Date getDate() {
+        return this.date;
     }
 
-    public List<DayOfWeek> getDaysRepeated() {
+    public long getDateSort() {
+        return dateSort;
+    }
+
+    public void setDateSort(long dateSort) {
+        this.dateSort = dateSort;
+    }
+
+    public List<String> getDaysRepeated() {
         return daysRepeated;
     }
 
@@ -54,10 +64,11 @@ public class Habit implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+        this.dateSort = date.getTime();
     }
 
 
-    public void setDaysRepeated(List<DayOfWeek> daysRepeated) {
+    public void setDaysRepeated(List<String> daysRepeated) {
         this.daysRepeated = daysRepeated;
     }
 }
