@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
@@ -49,7 +50,6 @@ public class HabitController extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword("junrui@gmail.com","123456");
         ImageView backButton = findViewById(R.id.backButton);
         confirm = findViewById(R.id.confirm);
         cancel = findViewById(R.id.cancel);
@@ -70,6 +70,7 @@ public class HabitController extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Habit habit1 = documentSnapshot.toObject(Habit.class);
+                days.addAll(habit1.getFrequency());
                 habitName.setText(dummyhabitname);
                 String pattern = "dd/MM/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -150,6 +151,7 @@ public class HabitController extends AppCompatActivity {
         ArrayList<Integer> dayList = new ArrayList<>();
         String[] dayArray = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
         //creating a multiselect day picker for frequency
+
         selectedDay = new boolean[dayArray.length];
 
         frequency.setOnClickListener(view -> {
@@ -158,7 +160,35 @@ public class HabitController extends AppCompatActivity {
             builder.setTitle("Select Day");
             //Set dialog non cancelable
             builder.setCancelable(false);
-
+            if (days.contains("SUNDAY")){
+                selectedDay[0] = true;
+                dayList.add(0);
+            }
+            if (days.contains("MONDAY")){
+                selectedDay[1] = true;
+                dayList.add(1);
+            }
+            if (days.contains("TUESDAY")){
+                selectedDay[2] = true;
+                dayList.add(2);
+            }
+            if (days.contains("WEDNESDAY")){
+                selectedDay[3] = true;
+                dayList.add(3);
+            }
+            if (days.contains("THURSDAY")){
+                selectedDay[4] = true;
+                dayList.add(4);
+            }
+            if (days.contains("FRIDAY")){
+                selectedDay[5] = true;
+                dayList.add(5);
+            }
+            if (days.contains("SATURDAY")){
+                selectedDay[6] = true;
+                dayList.add(6);
+            }
+            days.clear();
             builder.setMultiChoiceItems(dayArray, selectedDay, (dialogInterface, i, b) -> {
                 if (b) {
                     //When checkbox selected
