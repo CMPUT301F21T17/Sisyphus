@@ -45,6 +45,18 @@
             android:name=".Settings"
             android:exported="false"/>
         <activity
+            android:name=".UserSearch"
+            android:exported="true" />
+        <activity
+            android:name=".InfoEdit"
+            android:exported="true" />
+        <activity
+            android:name=".ChangePassword"
+            android:exported="true" />
+        <activity
+            android:name=".Settings"
+            android:exported="false"/>
+        <activity
             android:name=".AddHabitEvent"
             android:exported="true" />
         <activity
