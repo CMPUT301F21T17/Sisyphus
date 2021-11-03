@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "144659470956",
+    "project_id": "sisyphus-846e7",
+    "storage_bucket": "sisyphus-846e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144659470956:android:af6a05faa5e1222c995649",
+        "android_client_info": {
+          "package_name": "com.example.sisyphus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144659470956-fi4s7oudil1u96hin3nmsltcb5fdnd6b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfKkbDJgi_QmroFWzUSkIDQjUlXtJHGOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144659470956-fi4s7oudil1u96hin3nmsltcb5fdnd6b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,6 +10,42 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sisyphus">
         <activity
+            android:name=".UserSearch"
+            android:exported="true" />
+        <activity
+            android:name=".InfoEdit"
+            android:exported="true" />
+        <activity
+            android:name=".ChangePassword"
+            android:exported="true" />
+        <activity
+            android:name=".Settings"
+            android:exported="false"/>
+        <activity
+            android:name=".AddHabitEvent"
+            android:exported="true" />
+        <activity
+            android:name=".EmptyMainMenu"
+            android:exported="true" />
+        <activity
+            android:name=".ListHabitEvent"
+            android:exported="false" />
+        <activity
+            android:name=".AllHabitListView"
+            android:exported="true" />
+        <activity
+            android:name=".ViewHabit"
+            android:exported="false" />
+        <activity
+            android:name=".SignIn"
+            android:exported="true" />
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".Entry"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
