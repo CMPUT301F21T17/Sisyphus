@@ -39,4 +39,5 @@ public class HabitEventClassTest {
         Date currentDate = new Date();
         assertEquals(habitEvent.getDate().toString(), currentDate.toString());
     }
+
 }
