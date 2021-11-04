@@ -32,5 +32,13 @@ public class HabitClassTest {
         assertEquals(mockHabit().getHabitName(), "Sleeping");
     }
 
+    @Test
+    public void testGetFrequency(){
+        ArrayList<String> frequency = mockHabit().getFrequency();
+        assertEquals(frequency.get(0), "TUESDAY");
+        assertEquals(frequency.get(1), "WEDNESDAY");
+    }
+
+
 
 }
