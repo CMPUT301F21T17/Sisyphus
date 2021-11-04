@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 import com.example.sisyphus.Model.Habit;
 import com.example.sisyphus.Model.HabitEvent;
+import com.google.common.hash.HashingInputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +39,77 @@ public class HabitEventClassTest {
         HabitEvent habitEvent = mockHabitEvent();
         Date currentDate = new Date();
         assertEquals(habitEvent.getDate().toString(), currentDate.toString());
+    }
+
+    /**
+     * Tests whether setDate correctly assigns a new date to the habit event.
+     */
+    @Test
+    public void testSetDate(){
+        HabitEvent habitEvent = mockHabitEvent();
+        Date newDate = new Date(21, 10, 3);
+        habitEvent.setDate(newDate);
+        assertEquals(habitEvent.getDate().toString(), newDate.toString());
+    }
+
+    /**
+     * Tests whether getLocation correctly fetches the location of the habit event.
+     */
+    @Test
+    public void testGetLocation(){
+        HabitEvent habitEvent = mockHabitEvent();
+        assertEquals(habitEvent.getLocation(), "Edmonton");
+    }
+
+    /**
+     * Tests whether setLocation correctly changes the location of a habit event.
+     */
+    @Test
+    public void testSetLocation(){
+        HabitEvent habitEvent = mockHabitEvent();
+        String newLocation = "Calgary";
+        habitEvent.setLocation(newLocation);
+        assertEquals(habitEvent.getLocation(), newLocation);
+    }
+
+    /**
+     * Tests whether getComment correctly fetches the comment for a habit event.
+     */
+    @Test
+    public void testGetComment(){
+        HabitEvent habitEvent = mockHabitEvent();
+        assertEquals(habitEvent.getComment(), "Slept for 8 hours.");
+    }
+
+    /**
+     * Tests whether setComment correctly changes the comment for a habit event.
+     */
+    @Test
+    public void testSetComment(){
+        HabitEvent habitEvent = mockHabitEvent();
+        String newComment = "Didn't sleep well.";
+        habitEvent.setComment(newComment);
+        assertEquals(habitEvent.getComment(), newComment);
+    }
+
+    /**
+     * Tests whether getHabitName correctly fetches the habit name for a habit event.
+     */
+    @Test
+    public void testGetHabitName(){
+        HabitEvent habitEvent = mockHabitEvent();
+        assertEquals(habitEvent.getHabitName(), "Sleeping");
+    }
+
+    /**
+     * Tests whether setHabitName correctly changes the habit name for a habit event.
+     */
+    @Test
+    public void testSetHabitName(){
+        HabitEvent habitEvent = mockHabitEvent();
+        String newHabitName = "Walking";
+        habitEvent.setHabitName(newHabitName);
+        assertEquals(habitEvent.getHabitName(), newHabitName);
     }
 
 }
