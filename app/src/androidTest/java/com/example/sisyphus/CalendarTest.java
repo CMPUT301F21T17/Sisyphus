@@ -1,12 +1,16 @@
 package com.example.sisyphus;
 import android.app.Activity;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;import java.util.Random;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import com.example.sisyphus.View.Entry;
 import com.example.sisyphus.View.MainActivity;
 import com.example.sisyphus.View.Register;
@@ -14,21 +18,16 @@ import com.robotium.solo.Solo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
-
 
 /**
- * Test class for AllHabitListView. All the UI tests are written here. Robotium test framework is
+ * Test class for CalendarActivity. The calendar is still in the process of implementation
+ * so we only test its ability of showing correct time.
+ * More tests will be added as the implementation is finished
+ * All the UI tests are written here. Robotium test framework is
  used
  */
 
-//@RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class CalendarTest {
     private Solo solo;
 
     @Rule
@@ -53,22 +52,21 @@ public class MainActivityTest {
     }
 
     /**
-     * Try to sign in by a given user information
+     * Test the clickable and correct time of the calender.
      */
     @Test
-    public void signIn(){
+    public void clickCalender(){
         solo.assertCurrentActivity("Wrong Activity",MainActivity.class);
         solo.clickOnButton("Sign In");
         solo.enterText((EditText) solo.getView(R.id.signInEmail),"intenttest@email.com");
         solo.enterText((EditText) solo.getView(R.id.signInPassword),"123456");
         solo.clickOnButton("Sign In");
-        assertTrue(solo.waitForText("Homepage",1,2000));
+        solo.clickOnView(solo.getView(R.id.calendar_button));
+        assertFalse(solo.waitForText("HomePage",1,2000));
     }
-
 
     @After
     public void tearDown() throws Exception{
         solo.finishOpenedActivities();
     }
 }
-
