@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021.
+ * Sisyphus, CMPUT 301
+ * All Rights Reserved.
+ */
+
 package com.example.sisyphus.View;
 
 import android.content.Intent;
