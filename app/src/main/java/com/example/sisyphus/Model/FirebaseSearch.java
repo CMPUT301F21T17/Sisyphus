@@ -39,10 +39,10 @@ public class FirebaseSearch {
      */
     public User searchUser(String ID){
         DocumentReference docRef = db.collection("Users").document(ID);
-
+        //retrieves given user from database
         //note that user will be a dummy user (no data) on failure!
         //furthermore, this was actually a solution recommended to me by android studios to
-        //evade the need for "final" or making this global.
+        //evade the need for "final" or making searchedUser global.
         final User[] searchedUser = {new User()};
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override

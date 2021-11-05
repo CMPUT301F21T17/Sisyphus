@@ -63,7 +63,7 @@ public class AllHabitList_Adapter extends ArrayAdapter<Habit> {
         if(view == null){
             view = LayoutInflater.from(context).inflate(R.layout.content_all_habit_list, parent,false);
         }
-
+        //gets habit from list and formats listview box with habit information
         Habit habit = habits.get(position);
 
         TextView habitTitle = view.findViewById(R.id.habit_title_text);
