@@ -1,7 +1,16 @@
+/*
+ * Copyright (c) 2021.
+ * Sisyphus, CMPUT 301
+ * All Rights Reserved.
+ */
+
 package com.example.sisyphus.View;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
@@ -22,8 +31,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * A class to display a selectable calendar to display habit events of a day
+ */
 public class CalendarActivity extends AppCompatActivity {
-    private FirebaseAuth mauth;
+    private FirebaseAuth mAuth;
     private Calendar selectedDay;
 
     CalendarView calendar;
@@ -31,10 +43,14 @@ public class CalendarActivity extends AppCompatActivity {
     ArrayList<Habit> data;
     ArrayAdapter<Habit> adapter;
 
+    /**
+     * Create view to display calendar and habits
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.calendar_page);
+        setContentView(R.layout.activity_calendar);
 
         calendar = findViewById(R.id.calendar);
         habitsView = findViewById(R.id.calendar_events);
@@ -42,21 +58,55 @@ public class CalendarActivity extends AppCompatActivity {
         data = new ArrayList<>();
         adapter = new AllHabitList_Adapter(this, data);
         habitsView.setAdapter(adapter);
-
         // event listener to get up to date data for Habit list
-        mauth = FirebaseAuth.getInstance();
-        mauth.signInWithEmailAndPassword("ktbrown@ualberta.ca", "123456");
+        mAuth = FirebaseAuth.getInstance();
+        update(mAuth.getUid(), selectedDay);
         // click listener for changes to calendar widget
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             // get events from database for day year month day and populate habitsView
             public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
-                selectedDay.set(year, month - 1, day, 0, 0, 0);
+                selectedDay.set(year, (month - 1), day, 0, 0, 0);
                 // compare date_string to date field of calendar ref to get the correct group
-                update(mauth.getUid(), selectedDay);
+                update(mAuth.getUid(), selectedDay);
             }
         });
-        update(mauth.getUid(), selectedDay);
+
+        final Button button_home = findViewById(R.id.calendar_home);
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            /**
+             * function to open Home when clicked
+             */
+            public void onClick(View v) {
+                Intent intent = new Intent(CalendarActivity.this, EmptyMainMenu.class);
+                startActivity(intent);
+            }
+        });
+
+        final Button button_calendar = findViewById(R.id.calendar_calendar);
+        button_calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            /**
+             * function to open Calendar when clicked
+             */
+            public void onClick(View v) {
+                Intent intent = new Intent(CalendarActivity.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        final Button button_allHabitList = findViewById(R.id.calendar_habitlist);
+        button_allHabitList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            /**
+             * function to open AllHabits list when clicked
+             */
+            public void onClick(View view) {
+                Intent intent = new Intent(CalendarActivity.this,AllHabitListView.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -69,7 +119,7 @@ public class CalendarActivity extends AppCompatActivity {
     private void update(String userID, Calendar selectedDay) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Users")
-                .document("7uhtuTVJ95br7CvV5AgPY6nOT543")
+                .document(userID)
                 .collection("Habits")
                 .whereGreaterThanOrEqualTo("startDate", selectedDay.getTime())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -78,9 +128,9 @@ public class CalendarActivity extends AppCompatActivity {
                         data.clear();
                         if (value != null) {
                             for (QueryDocumentSnapshot d: value) {
-                                // TODO adapt data to Habit list
                                 Habit temp = d.toObject(Habit.class);
                                 boolean add = false;
+                                // check if habit repeats on selected day
                                 for (String e : temp.getFrequency()){
                                     if (e.equals(CalToStr(selectedDay))){
                                         add = true;
@@ -88,6 +138,7 @@ public class CalendarActivity extends AppCompatActivity {
                                     }
                                 }
                                 if (add) {
+                                    // add habit to list to be displayed
                                     data.add(temp);
                                 }
                             }

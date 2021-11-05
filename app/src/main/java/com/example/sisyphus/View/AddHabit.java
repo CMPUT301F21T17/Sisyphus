@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021.
+ * Sisyphus, CMPUT 301
+ * All Rights Reserved.
+ */
+
 package com.example.sisyphus.View;
 
 import android.annotation.SuppressLint;
@@ -26,6 +32,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * A class to Add or Edit Habits
+ */
 public class AddHabit extends AppCompatActivity {
     private TextInputLayout habitName, reason;
     private EditText startDate, frequency;
@@ -35,6 +44,10 @@ public class AddHabit extends AppCompatActivity {
     public AddHabit() {
     }
 
+    /**
+     * function to create habit creation view
+     * @param savedInstanceState
+     */
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

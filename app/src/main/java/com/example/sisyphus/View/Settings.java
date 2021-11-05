@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021.
+ * Sisyphus, CMPUT 301
+ * All Rights Reserved.
+ */
+
 package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.sisyphus.EmptyMainMenu;
 import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
 import com.example.sisyphus.View.Dialog.ChangePassword;

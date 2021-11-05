@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021.
+ * Sisyphus, CMPUT 301
+ * All Rights Reserved.
+ */
+
 package com.example.sisyphus.View;
 
 
@@ -20,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), Entry.class);
         startActivity(intent);
-        //Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
-        //startActivity(intent);
     }
 
 

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021.
+ * Sisyphus, CMPUT 301
+ * All Rights Reserved.
+ */
+
 package com.example.sisyphus.View;
 
 import androidx.annotation.Nullable;
@@ -25,7 +31,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-
+/**
+ * A class to display all Habits in a views list
+ */
 public class AllHabitListView extends AppCompatActivity {
     private ListView allhabitListView;
     private ArrayAdapter<Habit> habitAdapter;
@@ -34,7 +42,10 @@ public class AllHabitListView extends AppCompatActivity {
     private FirebaseAuth mAuth;
     final CollectionReference collectionReference = db.collection("Users");
 
-
+    /**
+     * create view to display all habit events
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +67,9 @@ public class AllHabitListView extends AppCompatActivity {
 
         allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
+            /**
+             * function to open ViewHabit when Habits clicked
+             */
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent (AllHabitListView.this, ViewHabit.class);
                 Habit clickedHabit = habitDataList.get(i);
@@ -64,9 +78,36 @@ public class AllHabitListView extends AppCompatActivity {
             }
         });
 
+        final Button button_home = findViewById(R.id.home_button);
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            /**
+             * function to open Home when clicked
+             */
+            public void onClick(View v) {
+                Intent intent = new Intent(AllHabitListView.this, EmptyMainMenu.class);
+                startActivity(intent);
+            }
+        });
+
+        final Button button_calendar = findViewById(R.id.calendar_button);
+        button_calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            /**
+             * function to open Calendar when clicked
+             */
+            public void onClick(View v) {
+                Intent intent = new Intent(AllHabitListView.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             * function to open AllHabits list when clicked
+             */
             public void onClick(View view) {
                 Intent intent = new Intent(AllHabitListView.this,AllHabitListView.class);
                 startActivity(intent);
@@ -77,6 +118,9 @@ public class AllHabitListView extends AppCompatActivity {
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             * function to open AddHabit
+             */
             public void onClick(View view) {
                 Intent toAddHabit = new Intent(AllHabitListView.this, AddHabit.class);
                 startActivity(toAddHabit);
