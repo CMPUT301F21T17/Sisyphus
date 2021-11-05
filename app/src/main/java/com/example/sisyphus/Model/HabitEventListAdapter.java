@@ -14,21 +14,40 @@ import com.example.sisyphus.R;
 
 import java.util.ArrayList;
 
+/**
+ * A class that adapts Habit Events from an array to their habit habit_event_content.xml
+ * Used in Habit event list
+ */
 public class HabitEventListAdapter extends ArrayAdapter<HabitEvent> {
 
     private ArrayList<HabitEvent> habitEvents;
     private Context context;
 
+    /**
+     * Constructor for HabitEventListAdapter
+     * @param context
+     *  current context
+     * @param habitEvents
+     *  list of habit events to add
+     */
     public HabitEventListAdapter( Context context, ArrayList<HabitEvent> habitEvents) {
         super(context,0, habitEvents);
         this.habitEvents = habitEvents;
         this.context = context;
     }
 
+    /**
+     * A function called when populating ListHabitEvent
+     * @param position
+     *  position in data list of current HabitEvent
+     * @param convertView
+     * @param parent
+     * @return
+     *  populated habit event content view
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        return super.getView(position, convertView, parent);
         View view = convertView;
 
         if(view == null){

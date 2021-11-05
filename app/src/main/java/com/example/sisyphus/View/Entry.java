@@ -11,11 +11,19 @@ import com.example.sisyphus.R;
 import com.example.sisyphus.View.Register;
 import com.example.sisyphus.View.SignIn;
 
+/**
+ * Initial screen of app
+ *  redirects to signIn and register
+ */
 public class Entry extends AppCompatActivity {
 
     Button signIn;
     Button signUp;
 
+    /**
+     * Creates view to provide option to sign in or sign up
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

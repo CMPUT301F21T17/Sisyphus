@@ -22,6 +22,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * A class to Edit Habit Events
+ */
 public class EditHabitEventView extends AppCompatActivity {
     FirebaseAuth mAuth;
 
@@ -35,7 +38,10 @@ public class EditHabitEventView extends AppCompatActivity {
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
-
+    /**
+     * Create editor for Habit Events
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +64,6 @@ public class EditHabitEventView extends AppCompatActivity {
         location.setText(EditEvent.getLocation());
         date.setText(new SimpleDateFormat("dd/MM/yyyy").format(EditEvent.getDate()));
         comment.setText(EditEvent.getComment());
-
-
 
         //RIPPED STRAIGHT FROM SIHAN'S CODE!!
 

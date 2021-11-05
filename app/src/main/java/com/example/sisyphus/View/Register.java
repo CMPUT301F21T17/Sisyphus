@@ -22,6 +22,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Date;
 
+/**
+ * A class for registering new users
+ */
 public class Register extends AppCompatActivity {
 
     EditText registerFirstName;
@@ -35,6 +38,10 @@ public class Register extends AppCompatActivity {
 
     private static final String TAG = "EmailPassword";
 
+    /**
+     * Create a view to get information to create a new user
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

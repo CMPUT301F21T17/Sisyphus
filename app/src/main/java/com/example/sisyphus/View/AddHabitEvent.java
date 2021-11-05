@@ -22,6 +22,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * A class to Add Habit Events
+ */
 public class AddHabitEvent extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -32,7 +35,10 @@ public class AddHabitEvent extends AppCompatActivity {
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
-
+    /**
+     * function to create HabitEvent creation view
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

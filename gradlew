@@ -61,7 +61,7 @@ die () {
 }
 
 # OS specific support (must be 'true' or 'false').
-cygwin=false
+cygwin=true
 msys=false
 darwin=false
 nonstop=false

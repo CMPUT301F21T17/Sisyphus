@@ -18,6 +18,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * A class for signing in users
+ */
 public class SignIn extends AppCompatActivity {
 
     EditText signInEmail;
@@ -28,6 +31,10 @@ public class SignIn extends AppCompatActivity {
 
     private static final String TAG = "EmailPassword";
 
+    /**
+     * Create a view to collect information to log in a user
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

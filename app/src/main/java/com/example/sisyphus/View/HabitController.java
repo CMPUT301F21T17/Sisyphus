@@ -33,7 +33,9 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
-
+/**
+ * Class for manipulating Habits from inside the app
+ */
 public class HabitController extends AppCompatActivity {
     private EditText startDate, frequency,reason;
     private TextView habitName;
@@ -42,6 +44,11 @@ public class HabitController extends AppCompatActivity {
     private FirebaseStore testbase = new FirebaseStore();
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+
+    /**
+     * create view to get information for creating a habit
+     * @param savedInstanceState
+     */
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

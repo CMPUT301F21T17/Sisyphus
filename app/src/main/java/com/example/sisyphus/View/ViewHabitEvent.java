@@ -15,11 +15,18 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
 
+/**
+ * A class for displaying the details of a habit event
+ */
 public class ViewHabitEvent extends AppCompatActivity {
     TextView habitEventTitleText, habitEventDateText, habitEventLocationText, habitEventCommentText;
     FirebaseAuth mAuth;
 
     @Override
+    /**
+     * onCreate
+     * a class to create and set the view for habit event
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_habit_event);
@@ -43,6 +50,9 @@ public class ViewHabitEvent extends AppCompatActivity {
         final Button editHabitEventButton = findViewById(R.id.edit_habitEvent_button);
         editHabitEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             * function called when a HabitEvent is to be edited
+             */
             public void onClick(View view) {
                 //do something
                 Intent editHabit = new Intent(view.getContext(), EditHabitEventView.class);
@@ -55,6 +65,9 @@ public class ViewHabitEvent extends AppCompatActivity {
         final Button deleteHabitEventButton = findViewById(R.id.delete_habitEvent_button);
         deleteHabitEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             * function called when a HabitEvent is to be deleted
+             */
             public void onClick(View view) {
                 deleteHabitEvent dialog = new deleteHabitEvent();
                 Bundle bundle = new Bundle();
@@ -69,6 +82,9 @@ public class ViewHabitEvent extends AppCompatActivity {
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             * function called when habitList button is clicked
+             */
             public void onClick(View view) {
                 Intent intent = new Intent(ViewHabitEvent.this, AllHabitListView.class);
                 startActivity(intent);
@@ -78,6 +94,9 @@ public class ViewHabitEvent extends AppCompatActivity {
         final Button button_backToList = findViewById(R.id.BackButton);
         button_backToList.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             * function called to return to previous view
+             */
             public void onClick(View view) {
                 Intent toEventList = new Intent(ViewHabitEvent.this, ListHabitEvent.class);
                 toEventList.putExtra("1",receivedHabitEvent.getHabitName());

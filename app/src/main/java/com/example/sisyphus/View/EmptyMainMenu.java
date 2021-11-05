@@ -10,10 +10,17 @@ import android.widget.Button;
 import com.example.sisyphus.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Homepage of app
+ */
 public class EmptyMainMenu extends AppCompatActivity {
     final String TAG = "Sample";
     FirebaseAuth mAuth;
 
+    /**
+     * Creates the homepage of the app with settings and menu bar
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +29,15 @@ public class EmptyMainMenu extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         String userID = mAuth.getCurrentUser().getUid();
 
+        final Button button_Settings = findViewById(R.id.settingsButton);
+        button_Settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                Intent intent = new Intent(EmptyMainMenu.this, Settings.class);
+                startActivity(intent);
+            }
+        });
 
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
