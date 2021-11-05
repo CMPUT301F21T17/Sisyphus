@@ -7,7 +7,7 @@
 package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.*;
+import android.os.Bundle;
 import com.example.sisyphus.R;
 
 /**
