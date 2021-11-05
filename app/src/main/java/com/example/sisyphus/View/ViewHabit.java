@@ -28,9 +28,10 @@ import java.util.ArrayList;
  * A class to view the details of a habit
  */
 public class ViewHabit extends AppCompatActivity {
-
+    //setting UI elements
     TextView habitTitleText, startDateText, frequencyText, habitReasonText;
 
+    //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
     /**
@@ -43,24 +44,27 @@ public class ViewHabit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_habit);
 
+        //setting authentication object to current session (signed in user) and setting log message
         mAuth = FirebaseAuth.getInstance();
         final String TAG = "Sample";
 
-
+        //attaching UI elements to variables
         habitTitleText = findViewById(R.id.habitTitleText);
         startDateText = findViewById(R.id.startDateText);
         frequencyText = findViewById(R.id.frequencyText);
         habitReasonText = findViewById(R.id.habitReasonText);
 
+        //getting habit from intent
         Intent intent = getIntent();
         Habit receivedHabit = (Habit) intent.getSerializableExtra("habit");
 
         String receivedUser = mAuth.getUid();
+
+        //setting up UI elements to display habit information
         ArrayList<String> receivedFrequency = receivedHabit.getFrequency();
         String receivedTitle = receivedHabit.getHabitName();
         String receivedDate = new SimpleDateFormat("dd/MM/yyyy").format(receivedHabit.getStartDate());
         String receivedReason = receivedHabit.getReason();
-
         habitTitleText.setText(receivedTitle);
         startDateText.setText(receivedDate);
         habitReasonText.setText(receivedReason);
@@ -125,6 +129,7 @@ public class ViewHabit extends AppCompatActivity {
              * A function to delete a habit
              */
             public void onClick(View view) {
+                //start fragment for deletion
                 deleteHabit dialog = new deleteHabit();
                 Bundle bundle = new Bundle();
                 bundle.putString("selectedTitle",receivedTitle);

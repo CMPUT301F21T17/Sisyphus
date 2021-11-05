@@ -35,9 +35,12 @@ import java.util.ArrayList;
  * A class to display all Habits in a views list
  */
 public class AllHabitListView extends AppCompatActivity {
+    //setting UI elements and initializing storage/formatting for listview
     private ListView allhabitListView;
     private ArrayAdapter<Habit> habitAdapter;
     private ArrayList<Habit> habitDataList;
+
+    //initializing firebase authentication (session) object and establishing database connection
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
     final CollectionReference collectionReference = db.collection("Users");
@@ -51,9 +54,12 @@ public class AllHabitListView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_habit_list);
 
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
         Intent intent = getIntent();
         String currentUserID = mAuth.getUid();
+
+        //attaching UI elements, and formatting listview boxes as well as storage array for habits
         allhabitListView= findViewById(R.id.allhabit_list);
         habitDataList = new ArrayList<>();
 
@@ -64,7 +70,6 @@ public class AllHabitListView extends AppCompatActivity {
 
 
 
-
         allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             /**
@@ -72,6 +77,7 @@ public class AllHabitListView extends AppCompatActivity {
              */
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent (AllHabitListView.this, ViewHabit.class);
+                //storing selected habit in intent
                 Habit clickedHabit = habitDataList.get(i);
                 intent.putExtra("habit",clickedHabit);
                 startActivity(intent);
@@ -138,6 +144,7 @@ public class AllHabitListView extends AppCompatActivity {
         habitRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                //clears data so list can be updated, then gets all habit data from firebase to display
                 habitDataList.clear();
                 for(QueryDocumentSnapshot doc:value){
                     Habit result = doc.toObject(Habit.class);

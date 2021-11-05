@@ -32,9 +32,10 @@ import java.util.Date;
  * A class to Add Habit Events
  */
 public class AddHabitEvent extends AppCompatActivity {
-
+    //initializing firebase authentication (session) object
     private FirebaseAuth mAuth;
 
+    //setting UI elements
     private EditText location,date,comment;
     private TextView habitTitle;
     private Button add,cancel;
@@ -50,8 +51,10 @@ public class AddHabitEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_event);
 
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
+        //attaching UI elements to variables
         location = findViewById(R.id.editTextLocation);
         date = findViewById(R.id.editTextDate);
         comment = findViewById(R.id.editTextComment);
@@ -59,6 +62,7 @@ public class AddHabitEvent extends AppCompatActivity {
         add = findViewById(R.id.buttonAdd);
         cancel = findViewById(R.id.buttonCancel);
 
+        //getting name of habit event and setting UI to display it
         Intent intent = getIntent();
         String habitName = intent.getStringExtra("1");
 
@@ -66,9 +70,9 @@ public class AddHabitEvent extends AppCompatActivity {
 
 
 
-        //RIPPED STRAIGHT FROM SIHAN'S CODE!!
 
-        //creating the calendar for user to input startdate
+
+        //creating the calendar for user to input date of habit event
         date.setOnClickListener(view -> {
             Calendar cal = Calendar.getInstance();
             int year = cal.get(Calendar.YEAR);
@@ -79,6 +83,7 @@ public class AddHabitEvent extends AppCompatActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE)); //Transparent Background
             dialog.show();
         });
+        //formatting date selected from calendar for output
         mDateSetListener = (datePicker, year, month, day) -> {
             month = month + 1;
             String newDate = day + "/" + month + "/" + year;
@@ -87,10 +92,11 @@ public class AddHabitEvent extends AppCompatActivity {
 
 
 
-        //METHOD CURRENTLY ASSUMES FRIENDLY USER INPUT!!!
+        //onClick method to get data from text entry fields and format into habit event to be added
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //getting input and creating event
                 Date newDate = null;
                 try {
                     newDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString().trim());
@@ -98,6 +104,8 @@ public class AddHabitEvent extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName);
+
+                //storing event in firebase and returning to previous menu
                 FirebaseStore fb = new FirebaseStore();
                 fb.storeHabitEvent(mAuth.getUid(), habitName, newEvent);
                 Intent toEventList = new Intent(AddHabitEvent.this, ListHabitEvent.class);
@@ -106,7 +114,7 @@ public class AddHabitEvent extends AppCompatActivity {
             }
         });
 
-
+        //onClick listener to cancel add and return to previous menu
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

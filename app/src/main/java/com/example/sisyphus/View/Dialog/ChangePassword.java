@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 // with the correct password and users are sent back to the settings page.
 //
 public class ChangePassword extends AppCompatActivity {
-
+    //setting UI elements
     EditText passwordCurrent;
     EditText passwordNew;
     EditText passwordConfirmNew;
@@ -36,6 +36,7 @@ public class ChangePassword extends AppCompatActivity {
     Button passCancel;
     Button passConfirm;
 
+    //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
     @Override
@@ -51,7 +52,7 @@ public class ChangePassword extends AppCompatActivity {
         passCancel = findViewById(R.id.passCancel);
         passConfirm = findViewById(R.id.passConfirm);
 
-
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
         // Cancel just switches to previous activity on click
@@ -63,13 +64,14 @@ public class ChangePassword extends AppCompatActivity {
             }
         });
 
+        //onClick listener which validates password in input and stores the new password
         passConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //validates password conditions
                 if (passwordNew.getText().toString().equals(passwordConfirmNew.getText().toString()) && passwordNew.getText().toString().length() > 5) {
-                    // Add another check here that the original password matches the current user password
-                    // If all things work properly, then we implement a password change and then
-                    // Switch activities back to the previous
+
+                    // Implements password change, then switch activities back to the previous
                     mAuth.getCurrentUser().updatePassword(passwordNew.getText().toString());
 
                     Intent confirmInt = new Intent(getApplicationContext(), Settings.class);

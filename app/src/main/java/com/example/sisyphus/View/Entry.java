@@ -22,7 +22,7 @@ import com.example.sisyphus.View.SignIn;
  *  redirects to signIn and register
  */
 public class Entry extends AppCompatActivity {
-
+    //setting UI elements
     Button signIn;
     Button signUp;
 
@@ -35,15 +35,19 @@ public class Entry extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.entry);
 
+        //attaching UI elements to variables
         signIn = findViewById(R.id.goToSignIn);
         signUp = findViewById(R.id.goToSignUp);
 
+        //transfers user to signIn page
         signIn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent signUpInt = new Intent(getApplicationContext(), SignIn.class);
                 startActivity(signUpInt);
             }
         });
+
+        //transfers user to register page
         signUp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent registerInt = new Intent(getApplicationContext(), Register.class);

@@ -23,11 +23,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+//Class that acts as a menu for deleting habit events after a user has confirmed their choice
 public class deleteHabitEvent extends DialogFragment {
+    //log message
     final String deleteTAG = "Sample";
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
+        //Setting up fragment
         LayoutInflater inflater = getActivity().getLayoutInflater();
         Bundle bundle = getArguments();
         String deleteTitle = bundle.getString("selectedHabit","");
@@ -43,6 +46,7 @@ public class deleteHabitEvent extends DialogFragment {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        //on "Yes" click, connect to database and attempt to delete selected habit event
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         db.collection("Users").document(deleteUser).collection("Habits").document(deleteTitle).collection("HabitEvent").document(deleteID)
                                 .delete()
@@ -58,12 +62,13 @@ public class deleteHabitEvent extends DialogFragment {
                                         Log.w(deleteTAG, "Error deleting document", e);
                                     }
                                 });
-
+                        //return to previous menu, as habit event is deleted.
                         Intent intent = new Intent(getContext(), ListHabitEvent.class);
                         intent.putExtra("1",deleteTitle);
                         startActivity(intent);
                     }
                 })
+                //on "No" click, close window
                 .setNegativeButton("No", null)
                 .create();
     }

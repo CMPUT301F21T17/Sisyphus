@@ -21,8 +21,8 @@ public class UserClassTest {
      */
     private User mockUser(){
         User user = new User();
-        user.setfirst("Bob");
-        user.setlast("Jones");
+        user.setFirst("Bob");
+        user.setLast("Jones");
         user.setDateJoined(new Date());
         return user;
     }
@@ -43,7 +43,7 @@ public class UserClassTest {
     public void testSetFirst(){
         User user = mockUser();
         String newFirst = "Bill";
-        user.setfirst(newFirst);
+        user.setFirst(newFirst);
         assertEquals(user.getFirst(), newFirst);
     }
 
@@ -63,7 +63,7 @@ public class UserClassTest {
     public void testSetLast(){
         User user = mockUser();
         String newLast = "James";
-        user.setlast(newLast);
+        user.setLast(newLast);
         assertEquals(user.getLast(), newLast);
     }
 

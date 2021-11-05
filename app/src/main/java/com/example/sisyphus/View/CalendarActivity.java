@@ -35,9 +35,11 @@ import java.util.GregorianCalendar;
  * A class to display a selectable calendar to display habit events of a day
  */
 public class CalendarActivity extends AppCompatActivity {
+    //initializing firebase authentication (session) object
     private FirebaseAuth mAuth;
     private Calendar selectedDay;
 
+    //setting UI elements
     CalendarView calendar;
     ListView habitsView;
     ArrayList<Habit> data;
@@ -52,6 +54,7 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
+        //attaching UI elements to variables
         calendar = findViewById(R.id.calendar);
         habitsView = findViewById(R.id.calendar_events);
         selectedDay = new GregorianCalendar();
@@ -59,6 +62,8 @@ public class CalendarActivity extends AppCompatActivity {
         adapter = new AllHabitList_Adapter(this, data);
         habitsView.setAdapter(adapter);
         // event listener to get up to date data for Habit list
+
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
         update(mAuth.getUid(), selectedDay);
         // click listener for changes to calendar widget
@@ -125,6 +130,7 @@ public class CalendarActivity extends AppCompatActivity {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        //clears list and pulls in new data to populate list for selected day (if data exists)
                         data.clear();
                         if (value != null) {
                             for (QueryDocumentSnapshot d: value) {

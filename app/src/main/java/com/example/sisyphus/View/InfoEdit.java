@@ -40,10 +40,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class InfoEdit extends AppCompatActivity {
 
+    //setting UI elements
     TextView infoCurrentItem;
     EditText infoEditItem;
     Button editCancel;
     Button editConfirm;
+
+    //initializing firebase authentication (session) object and setting up variables for
+    //properly accessing firebase.  User object references user to be edited
     FirebaseAuth mAuth;
     User activeUser;
     String TAG = "editUser";
@@ -60,18 +64,21 @@ public class InfoEdit extends AppCompatActivity {
         editCancel = findViewById(R.id.editCancel);
         editConfirm = findViewById(R.id.editConfirm);
 
+        //this UI has 3 settings, determined by what is passed in the intent (first, last, email)
         Intent intent = getIntent();
         String item = intent.getStringExtra(Settings.item);
 
-
+        //setting authentication object to current session (signed in user) and connecting to database
         mAuth = FirebaseAuth.getInstance();
         System.out.println(mAuth.getCurrentUser().getUid());
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        //connects to firebase to get user information to be edited
         DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                //selects what value to display based on mode passed via intent
                 activeUser = documentSnapshot.toObject(User.class);
                 if (item.equals("fName")) {
                     infoCurrentItem.setText(activeUser.getFirst());
@@ -96,14 +103,14 @@ public class InfoEdit extends AppCompatActivity {
             }
         });
 
+        //confirms edit and updates appropriate field in firebase
         editConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Eventually add error checking here
                 // Send data to database that changes the item specified
                 // If item is first name, then replace databases first name, and so on
                 if (item.equals("fName") && infoEditItem.getText().toString() != "") {
-                    //below is straight from firebase docs
+                    //connect to database and attempt to update selected field
                     DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
 
                     userRef
@@ -121,6 +128,7 @@ public class InfoEdit extends AppCompatActivity {
                                 }
                             });
                 } else if (item.equals("lName") && infoEditItem.getText().toString() != "") {
+                    //connect to database and attempt to update selected field
                     DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
 
                     userRef
@@ -138,6 +146,7 @@ public class InfoEdit extends AppCompatActivity {
                                 }
                             });
                 } else if (item.equals("email") && infoEditItem.getText().toString() != "") {
+                    //update user authentication data
                     mAuth.getCurrentUser().updateEmail(infoEditItem.getText().toString());
                 }
                 // Then eventually we switch back to settings
