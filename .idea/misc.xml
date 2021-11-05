@@ -3,7 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Dan/AndroidStudioProjects/Sisyphus/app/src/main/res/layout/activity_user_search.xml" value="0.25" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/actionbar.xml" value="0.4" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_add_habit.xml" value="0.264" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_add_habit_event.xml" value="0.2" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_all_habit_list.xml" value="0.2" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_edit_habit_event.xml" value="0.1" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_empty_main_menu.xml" value="0.264" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_habit_controller.xml" value="0.264" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_list_habit_event.xml" value="0.264" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_main.xml" value="0.15104166666666666" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_user_search.xml" value="0.264" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_view_habit.xml" value="0.2" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_view_habit_event.xml" value="0.10260416666666666" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/changepassword.xml" value="0.103125" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/content_all_habit_list.xml" value="0.103125" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/entry.xml" value="0.2" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/habit_event_content.xml" value="0.103125" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/infoedit.xml" value="0.103125" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/register.xml" value="0.264" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/signin.xml" value="0.10260416666666666" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/usersettings.xml" value="0.264" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.29074074074074074" />
         <entry key="app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.29074074074074074" />
         <entry key="app/src/main/res/layout/actionbar.xml" value="0.25" />

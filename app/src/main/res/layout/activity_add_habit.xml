@@ -19,6 +19,7 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/habitNameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="habit_name"
@@ -74,6 +75,7 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reasonInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
