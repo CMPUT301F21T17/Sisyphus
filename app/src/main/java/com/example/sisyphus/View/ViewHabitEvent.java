@@ -48,7 +48,7 @@ public class ViewHabitEvent extends AppCompatActivity {
         habitEventDateText = findViewById(R.id.habit_event_date);
         habitEventLocationText = findViewById(R.id.habit_event_location);
         habitEventCommentText = findViewById(R.id.habit_event_comment);
-        
+
         //getting habit event info and displaying in UI elements
         Intent intent = getIntent();
         String receivedUser = intent.getStringExtra("user");
