@@ -23,10 +23,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+//Fragment that provides the user with option to delete a chose habit after confirming their choice
 public class deleteHabit extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
+        //Setting up fragment
         LayoutInflater inflater = getActivity().getLayoutInflater();
         Bundle bundle = getArguments();
         String delectTitle = bundle.getString("selectedTitle","");
@@ -41,6 +43,7 @@ public class deleteHabit extends DialogFragment {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        //on "Yes" click, establishes database connection and then attempts to delete selected habit
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         db.collection("Users").document(delectUser).collection("Habits").document(delectTitle)
                                 .delete()
@@ -56,11 +59,12 @@ public class deleteHabit extends DialogFragment {
                                         Log.w(delectTAG, "Error deleting document", e);
                                     }
                                 });
-
+                        //returning to previous menu, as habit is deleted
                         Intent intent = new Intent(getContext(), AllHabitListView.class);
                         startActivity(intent);
                     }
                 })
+                //on "No" click, close menu
                 .setNegativeButton("No", null)
                 .create();
     }

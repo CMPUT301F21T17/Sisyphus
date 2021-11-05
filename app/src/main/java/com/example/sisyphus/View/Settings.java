@@ -36,7 +36,7 @@ public class Settings extends AppCompatActivity {
 
     public static String item;
 
-
+    //setting UI elements
     TextView fName;
     TextView lName;
     TextView email;
@@ -47,8 +47,10 @@ public class Settings extends AppCompatActivity {
     Button passwordEdit;
     Button back;
 
+    //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
+    //current user to display settings for
     User activeUser;
 
     @Override
@@ -70,11 +72,11 @@ public class Settings extends AppCompatActivity {
         passwordEdit = findViewById(R.id.passwordEdit);
         back = findViewById(R.id.back);
 
-        //intializing FirebasAuth object to get user
+        //setting authentication object to current session (signed in user) and connecting to database
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        //ripped from the firestore documentation with small edits
+        //gets passed user and displays their data in text-fields
         DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override

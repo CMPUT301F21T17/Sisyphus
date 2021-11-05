@@ -33,14 +33,17 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * A class to Add or Edit Habits
+ * A class that provides with a UI to add habits to firebase
  */
 public class AddHabit extends AppCompatActivity {
+    //setting UI elements
     private TextInputLayout habitName, reason;
     private EditText startDate, frequency;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
+    //initializing firebase authentication (session) object
     private FirebaseAuth mAuth;
+
     public AddHabit() {
     }
 
@@ -54,8 +57,11 @@ public class AddHabit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
 
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
         String currentUser = mAuth.getUid();
+
+        //attaching UI elements to variables
         ImageView checkButton = findViewById(R.id.checkButton);
         ImageView cancelButton = findViewById(R.id.cancelButton);
         ImageView backButton = findViewById(R.id.backButton);
@@ -63,10 +69,13 @@ public class AddHabit extends AppCompatActivity {
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
         reason = findViewById(R.id.reason);
+
+        //setting up storage for dates
         ArrayList<String> days = new ArrayList<>();
 
         //Onclick for the the check button and storing data
         checkButton.setOnClickListener(view -> {
+            //gets input from text entry fields and formats, creating new habit
             String habit = Objects.requireNonNull(habitName.getEditText()).getText().toString().trim();
             Date dateInput = null;
             try {
@@ -76,7 +85,8 @@ public class AddHabit extends AppCompatActivity {
             }
             String reasonInput = Objects.requireNonNull(reason.getEditText()).getText().toString().trim();
             Habit habitInput = new Habit(habit, dateInput, days, reasonInput);
-            //String dummyUser = "garbage";
+
+            //establishing connection to firebase, storing data, and then returning to previous menu
             FirebaseStore fb = new FirebaseStore();
             fb.storeHabit(currentUser,habitInput);
             Intent toHabitList = new Intent(AddHabit.this, AllHabitListView.class);
@@ -95,6 +105,7 @@ public class AddHabit extends AppCompatActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE)); //Black Background
             dialog.show();
         });
+        //formatting date selected from calendar for output
         mDateSetListener = (datePicker, year, month, day) -> {
             month = month + 1;
             String date = day + "/" + month + "/" + year;
@@ -108,6 +119,7 @@ public class AddHabit extends AppCompatActivity {
         //creating a multiselect day picker for frequency
         selectedDay = new boolean[dayArray.length];
 
+        //onClick method to get dates habit occurs via checkbox menu
         frequency.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(AddHabit.this);
             //Set title

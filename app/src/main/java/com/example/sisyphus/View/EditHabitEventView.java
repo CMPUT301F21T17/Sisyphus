@@ -32,9 +32,10 @@ import java.util.Date;
  * A class to Edit Habit Events
  */
 public class EditHabitEventView extends AppCompatActivity {
+    //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
-
+    //setting UI elements
     EditText location;
     EditText date;
     EditText comment;
@@ -53,8 +54,10 @@ public class EditHabitEventView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_habit_event);
 
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
+        //attaching UI elements to variables
         location = findViewById(R.id.editTextLocation);
         date = findViewById(R.id.editTextDate);
         comment = findViewById(R.id.editTextComment);
@@ -62,18 +65,20 @@ public class EditHabitEventView extends AppCompatActivity {
         add = findViewById(R.id.buttonAdd);
         cancel = findViewById(R.id.buttonCancel);
 
+        //getting habit name from intent (habit events require the name to be accessed)
         Intent intent = getIntent();
         HabitEvent EditEvent = (HabitEvent) intent.getSerializableExtra("editEvent");
         String EditEventID = intent.getStringExtra("editEventID");
         String habitName = EditEvent.getHabitName();
+
+        //setting UI to display data from selected habit event for editing
         habitTitle.setText(EditEvent.getHabitName());
         location.setText(EditEvent.getLocation());
         date.setText(new SimpleDateFormat("dd/MM/yyyy").format(EditEvent.getDate()));
         comment.setText(EditEvent.getComment());
 
-        //RIPPED STRAIGHT FROM SIHAN'S CODE!!
 
-        //creating the calendar for user to input startdate
+        //creating the calendar for user to input habit event date
         date.setOnClickListener(view -> {
             Calendar cal = Calendar.getInstance();
             int year = cal.get(Calendar.YEAR);
@@ -84,6 +89,7 @@ public class EditHabitEventView extends AppCompatActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE)); //Transparent Background
             dialog.show();
         });
+        //formatting date selected from calendar for output
         mDateSetListener = (datePicker, year, month, day) -> {
             month = month + 1;
             String newDate = day + "/" + month + "/" + year;
@@ -92,10 +98,11 @@ public class EditHabitEventView extends AppCompatActivity {
 
 
 
-        //METHOD CURRENTLY ASSUMES FRIENDLY USER INPUT!!!
+        //onClick method to get data from text entry fields and format into habit event fields to be edited
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //get data from text-entry fields and convert to habit event
                 Date newDate = null;
                 try {
                     newDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString());
@@ -103,9 +110,12 @@ public class EditHabitEventView extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName);
+
+                //connect to database and store modified habit event before returning to previous menu
                 FirebaseStore fb = new FirebaseStore();
                 fb.editHabitEvent(mAuth.getUid(), habitName,EditEventID,newEvent);
                 Intent toEventDetail = new Intent(EditHabitEventView.this, ViewHabitEvent.class);
+                //necessary details for previous menu
                 toEventDetail.putExtra("user",mAuth.getUid());
                 toEventDetail.putExtra("habit_event",newEvent);
                 toEventDetail.putExtra("habit_eventID", EditEventID);
@@ -113,7 +123,7 @@ public class EditHabitEventView extends AppCompatActivity {
             }
         });
 
-
+        //cancels edit and returns to previous menu
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -28,13 +28,13 @@ import com.google.firebase.auth.FirebaseUser;
  * A class for signing in users
  */
 public class SignIn extends AppCompatActivity {
-
+    //setting UI elements
     EditText signInEmail;
     EditText signInPassword;
     Button signInConfirm;
 
+    //initializing firebase authentication (session) object and setting log message
     private FirebaseAuth mAuth;
-
     private static final String TAG = "EmailPassword";
 
     /**
@@ -46,8 +46,10 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin);
 
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
+        //attaching UI elements to variables
         EditText signInEmail = findViewById(R.id.signInEmail);
         EditText signInPassword = findViewById(R.id.signInPassword);
         Button signInConfirm = findViewById(R.id.registerConfirm);
@@ -68,7 +70,7 @@ public class SignIn extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
+                                        //sets session to be associated with user info entered ("signs in")
                                         Log.d(TAG, "signInWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
 

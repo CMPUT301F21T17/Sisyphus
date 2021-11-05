@@ -59,7 +59,7 @@ public class HabitEventListAdapter extends ArrayAdapter<HabitEvent> {
         if(view == null){
             view = LayoutInflater.from(context).inflate(R.layout.habit_event_content, parent,false);
         }
-
+        //gets habit event from list and formats listview box with habit information
         HabitEvent habitEvent = habitEvents.get(position);
 
         TextView habitEventTitle = view.findViewById(R.id.habit_title);

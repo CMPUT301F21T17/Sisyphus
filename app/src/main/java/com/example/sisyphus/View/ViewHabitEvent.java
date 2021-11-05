@@ -25,7 +25,10 @@ import java.text.SimpleDateFormat;
  * A class for displaying the details of a habit event
  */
 public class ViewHabitEvent extends AppCompatActivity {
+    //setting UI elements
     TextView habitEventTitleText, habitEventDateText, habitEventLocationText, habitEventCommentText;
+
+    //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
     @Override
@@ -37,13 +40,16 @@ public class ViewHabitEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_habit_event);
 
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
+        //attaching UI elements to variables
         habitEventTitleText = findViewById(R.id.habit_title);
         habitEventDateText = findViewById(R.id.habit_event_date);
         habitEventLocationText = findViewById(R.id.habit_event_location);
         habitEventCommentText = findViewById(R.id.habit_event_comment);
-
+        
+        //getting habit event info and displaying in UI elements
         Intent intent = getIntent();
         String receivedUser = intent.getStringExtra("user");
         String receivedHabitEventID = intent.getStringExtra("habit_eventID");
@@ -60,7 +66,7 @@ public class ViewHabitEvent extends AppCompatActivity {
              * function called when a HabitEvent is to be edited
              */
             public void onClick(View view) {
-                //do something
+                //transfers to edit menu for selected habit event
                 Intent editHabit = new Intent(view.getContext(), EditHabitEventView.class);
                 editHabit.putExtra("editEvent",receivedHabitEvent);
                 editHabit.putExtra("editEventID",receivedHabitEventID);
@@ -75,6 +81,7 @@ public class ViewHabitEvent extends AppCompatActivity {
              * function called when a HabitEvent is to be deleted
              */
             public void onClick(View view) {
+                //start fragment for deletion
                 deleteHabitEvent dialog = new deleteHabitEvent();
                 Bundle bundle = new Bundle();
                 bundle.putString("selectedHabit",receivedHabitEvent.getHabitName());

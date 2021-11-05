@@ -17,9 +17,10 @@ import com.example.sisyphus.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
- * Homepage of app
+ * Homepage of app.  Will be modified and added to greatly as time goes on
  */
 public class EmptyMainMenu extends AppCompatActivity {
+    //initializing firebase authentication (session) object and default message for log
     final String TAG = "Sample";
     FirebaseAuth mAuth;
 
@@ -32,10 +33,12 @@ public class EmptyMainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empty_main_menu);
 
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
         String userID = mAuth.getCurrentUser().getUid();
 
         final Button button_Settings = findViewById(R.id.settingsButton);
+        //onClick listener to transfer user to settings page
         button_Settings.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -46,6 +49,7 @@ public class EmptyMainMenu extends AppCompatActivity {
         });
 
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
+        //onClick listener to transfer user to habit list page
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +59,7 @@ public class EmptyMainMenu extends AppCompatActivity {
         });
 
         final Button button_calendar = findViewById(R.id.calendar_button);
+        //onClick listener to transfer user to calendar page
         button_calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

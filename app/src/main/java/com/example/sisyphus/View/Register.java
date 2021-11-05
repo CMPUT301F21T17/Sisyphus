@@ -32,7 +32,7 @@ import java.util.Date;
  * A class for registering new users
  */
 public class Register extends AppCompatActivity {
-
+    //setting UI elements
     EditText registerFirstName;
     EditText registerLastName;
     EditText registerEmail;
@@ -40,8 +40,8 @@ public class Register extends AppCompatActivity {
     EditText registerPasswordConfirm;
     Button registerConfirm;
 
+    //initializing firebase authentication (session) object and setting up log message
     private FirebaseAuth mAuth;
-
     private static final String TAG = "EmailPassword";
 
     /**
@@ -53,6 +53,7 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
+        //attaching UI elements to variables
         EditText registerFirstName = findViewById(R.id.registerFirstName);
         EditText registerLastName = findViewById(R.id.registerLastName);
         EditText registerEmail = findViewById(R.id.registerEmail);
@@ -60,22 +61,26 @@ public class Register extends AppCompatActivity {
         EditText registerPasswordConfirm = findViewById(R.id.registerPasswordConfirm);
         Button registerConfirm = findViewById(R.id.registerConfirm);
 
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
+        //onClick listener that takes user info from text-entry fields and registers (creates user
+        //and authenticates new user) the current user
         registerConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //getting user input
                 String testNorm = registerPassword.getText().toString();
                 String testConfirm = registerPasswordConfirm.getText().toString();
 
+                //validating passwords match
                 if (testNorm.equals(testConfirm)) {
                     // Here is where you can tie the registering new user
                     // Data threads: registerEmail as new users email
                     // registerPassword as new users password
                     // registerPasswordConfirm is to strictly reinforce users password choice
 
-
+                    //getting email and password
                     String emailStore;
                     String passStore;
                     emailStore = registerEmail.getText().toString();
@@ -111,13 +116,13 @@ public class Register extends AppCompatActivity {
                     //can be modified to add security constraints in future
                     if(emailStore != "" && passStore != ""){
 
-                        //WHOLE SECTION BELOW COPIED WITH VERY LITTLE EDITING FROM FIREBASE DOCUMENTATION!! CITE!!
+                        //attempting user authentication with given data
                         mAuth.createUserWithEmailAndPassword(emailStore, passStore)
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
-                                            // Sign in success, update UI with the signed-in user's information
+                                            // Sign up worked, store new user and pass to main menu
                                             Log.d(TAG, "createUserWithEmail:success");
                                             FirebaseUser user = mAuth.getCurrentUser();
                                             FirebaseStore store = new FirebaseStore();
@@ -128,7 +133,7 @@ public class Register extends AppCompatActivity {
                                             startActivity(startEmptyMain);
 
                                         } else {
-                                            // If sign in fails, display a message to the user.
+                                            // Failed sign in, display message informing user
                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                             Toast.makeText(Register.this, "Authentication failed.",
                                                     Toast.LENGTH_SHORT).show();
