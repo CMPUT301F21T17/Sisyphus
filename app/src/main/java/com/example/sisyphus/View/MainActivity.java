@@ -18,8 +18,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, Entry.class);
+        Intent intent = new Intent(getApplicationContext(), Entry.class);
         startActivity(intent);
+        //Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+        //startActivity(intent);
     }
 
 

@@ -15,6 +15,7 @@
         android:layout_weight="9"
         android:text="Settings" />
 
+
     <TextView
     android:id="@+id/homepagetext"
     android:layout_width="wrap_content"
