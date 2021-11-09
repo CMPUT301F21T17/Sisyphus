@@ -6,6 +6,8 @@
 
 package com.example.sisyphus.Model;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,6 +19,7 @@ public class HabitEvent implements Serializable {
     private String location;
     private String comment;
     private String habitName;
+    private Bitmap image;
 
     public HabitEvent(){}
 
@@ -109,4 +112,23 @@ public class HabitEvent implements Serializable {
     public void setHabitName(String habitName) {
         this.habitName = habitName;
     }
+
+    /**
+     * function to get habit event image
+     * @return
+     *  habit event bitmap
+     */
+    public Bitmap getImage() {
+        return image;
+    }
+
+    /**
+     * function to set habit event bitmap image
+     * @param image
+     *  the bitmap image to set for habit event
+     */
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
+
 }
