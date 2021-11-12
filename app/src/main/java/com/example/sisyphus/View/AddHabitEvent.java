@@ -10,12 +10,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sisyphus.Model.FirebaseStore;
@@ -34,12 +37,14 @@ import java.util.Date;
 public class AddHabitEvent extends AppCompatActivity {
     //initializing firebase authentication (session) object
     private FirebaseAuth mAuth;
+    private Bitmap takenPhoto;
 
     //setting UI elements
     private EditText location,date,comment;
     private TextView habitTitle;
     private Button add,cancel;
-
+    private ImageView habitPhoto;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     /**
@@ -61,7 +66,7 @@ public class AddHabitEvent extends AppCompatActivity {
         habitTitle = findViewById(R.id.textViewHabitName);
         add = findViewById(R.id.buttonAdd);
         cancel = findViewById(R.id.buttonCancel);
-
+        habitPhoto = findViewById(R.id.photoView);
         //getting name of habit event and setting UI to display it
         Intent intent = getIntent();
         String habitName = intent.getStringExtra("1");
@@ -90,6 +95,13 @@ public class AddHabitEvent extends AppCompatActivity {
             date.setText(newDate);
         };
 
+        habitPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takePicture();
+            }
+        });
+
 
 
         //onClick method to get data from text entry fields and format into habit event to be added
@@ -103,7 +115,7 @@ public class AddHabitEvent extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName);
+                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,takenPhoto);
 
                 //storing event in firebase and returning to previous menu
                 FirebaseStore fb = new FirebaseStore();
@@ -127,4 +139,23 @@ public class AddHabitEvent extends AppCompatActivity {
 
 
     }
+
+    private void takePicture() {
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(i.resolveActivity(getPackageManager()) != null){
+            startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            takenPhoto = (Bitmap) extras.get("data");
+            habitPhoto.setImageBitmap(takenPhoto);
+        }
+    }
+
+
 }

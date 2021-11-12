@@ -10,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sisyphus.Model.FirebaseStore;
@@ -42,6 +44,7 @@ public class EditHabitEventView extends AppCompatActivity {
     TextView habitTitle;
     Button add;
     Button cancel;
+    ImageView photo;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -64,18 +67,21 @@ public class EditHabitEventView extends AppCompatActivity {
         habitTitle = findViewById(R.id.textViewHabitName);
         add = findViewById(R.id.buttonAdd);
         cancel = findViewById(R.id.buttonCancel);
+        photo = findViewById(R.id.editEventPhoto);
 
         //getting habit name from intent (habit events require the name to be accessed)
         Intent intent = getIntent();
         HabitEvent EditEvent = (HabitEvent) intent.getSerializableExtra("editEvent");
         String EditEventID = intent.getStringExtra("editEventID");
         String habitName = EditEvent.getHabitName();
+        Bitmap EditEventPhoto = EditEvent.getPhoto();
 
         //setting UI to display data from selected habit event for editing
         habitTitle.setText(EditEvent.getHabitName());
         location.setText(EditEvent.getLocation());
         date.setText(new SimpleDateFormat("dd/MM/yyyy").format(EditEvent.getDate()));
         comment.setText(EditEvent.getComment());
+        photo.setImageBitmap(EditEventPhoto);
 
 
         //creating the calendar for user to input habit event date
@@ -109,7 +115,7 @@ public class EditHabitEventView extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName);
+                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,EditEventPhoto);
 
                 //connect to database and store modified habit event before returning to previous menu
                 FirebaseStore fb = new FirebaseStore();

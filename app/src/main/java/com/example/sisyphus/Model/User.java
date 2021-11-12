@@ -88,4 +88,5 @@ public class User {
     public void setDateJoined(Date dateJoined) {
         this.dateJoined = dateJoined;
     }
+
 }

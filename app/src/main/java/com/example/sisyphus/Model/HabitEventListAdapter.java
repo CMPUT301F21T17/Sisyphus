@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,11 +67,13 @@ public class HabitEventListAdapter extends ArrayAdapter<HabitEvent> {
         TextView habitEventComment = view.findViewById(R.id.habit_event_comment);
         TextView habitEventDate = view.findViewById(R.id.habit_event_date);
         TextView habitEventLocation = view.findViewById(R.id.habit_event_location);
+        ImageView habitEventPhoto = view.findViewById(R.id.habit_event_picture);
 
         habitEventTitle.setText(habitEvent.getHabitName());
         habitEventComment.setText(habitEvent.getComment());
         habitEventDate.setText(habitEvent.getDate().toString().substring(0,10));
         habitEventLocation.setText(habitEvent.getLocation());
+        habitEventPhoto.setImageBitmap(habitEvent.getPhoto());
 
         return view;
 

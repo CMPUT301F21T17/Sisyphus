@@ -57,12 +57,11 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/textView5"
+    <ImageView
+        android:id="@+id/editEventPhoto"
         android:layout_width="208dp"
         android:layout_height="92dp"
         android:layout_marginBottom="16dp"
-        android:text="PHOTO TO GO HERE!"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextComment"
         app:layout_constraintEnd_toEndOf="parent"
@@ -142,7 +141,7 @@
         android:ems="10"
         android:hint="Enter Location"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintBottom_toTopOf="@+id/editEventPhoto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
