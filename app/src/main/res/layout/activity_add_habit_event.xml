@@ -67,7 +67,8 @@
         app:layout_constraintBottom_toTopOf="@+id/editTextComment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_crop" />
 
     <Button
         android:id="@+id/buttonAdd"

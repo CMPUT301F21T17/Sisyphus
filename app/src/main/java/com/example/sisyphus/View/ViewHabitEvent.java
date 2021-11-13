@@ -122,8 +122,13 @@ public class ViewHabitEvent extends AppCompatActivity {
                 startActivity(toEventList);
             }
         });
-
     }
+
+    /**
+     * function to decode the image code
+     * @param image
+     * @return Bitmap of image
+     */
     public static Bitmap decodeFromFirebase(String image){
         byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);

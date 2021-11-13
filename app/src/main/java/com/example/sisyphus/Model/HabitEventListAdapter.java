@@ -80,6 +80,11 @@ public class HabitEventListAdapter extends ArrayAdapter<HabitEvent> {
         return view;
 
     }
+
+    /**
+     * function to decode the image code
+     * @return Bitmap of image
+     */
     public static Bitmap decodeFromFirebase(String image){
         byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);

@@ -173,12 +173,21 @@ public class EditHabitEventView extends AppCompatActivity {
         }
     }
 
+    /**
+     * function to encode the image into a string and store in takenPhotoID
+     * @param bitmap
+     */
     public void encodeBitmap(Bitmap bitmap){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
         takenPhotoID = Base64.encodeToString(baos.toByteArray(), DEFAULT);
     }
 
+    /**
+     * function to decode the image code
+     * @param image
+     * @return Bitmap of image
+     */
     public static Bitmap decodeFromFirebase(String image){
         byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);

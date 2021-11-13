@@ -140,6 +140,9 @@ public class AddHabitEvent extends AppCompatActivity {
         });
     }
 
+    /**
+     * function to start the camera activity
+     */
     private void takePicture() {
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(i.resolveActivity(getPackageManager()) != null){
@@ -147,6 +150,9 @@ public class AddHabitEvent extends AppCompatActivity {
         }
     }
 
+    /**
+     * function to get the result image back
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -158,6 +164,10 @@ public class AddHabitEvent extends AppCompatActivity {
         }
     }
 
+    /**
+     * function to encode the image into a string and store in takenPhotoID
+     * @param bitmap
+     */
     public void encodeBitmap(Bitmap bitmap){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);

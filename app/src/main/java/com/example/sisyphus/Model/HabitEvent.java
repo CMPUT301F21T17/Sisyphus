@@ -79,7 +79,7 @@ public class HabitEvent implements Serializable {
     }
 
     /**
-     * function to get habit event photo
+     * function to get habit event photo ID
      * @return photoID
      *  habit event photo
      */
@@ -88,7 +88,7 @@ public class HabitEvent implements Serializable {
     }
 
     /**
-     * function to set habit event photo
+     * function to set habit event photo ID
      * @param photoID
      *  habit event photo to set
      */
