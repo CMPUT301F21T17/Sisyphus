@@ -6,6 +6,9 @@
 
 package com.example.sisyphus.View;
 
+import static android.util.Base64.DEFAULT;
+import static com.example.sisyphus.View.AddHabitEvent.REQUEST_IMAGE_CAPTURE;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -15,6 +18,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +31,7 @@ import com.example.sisyphus.Model.HabitEvent;
 import com.example.sisyphus.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,6 +54,8 @@ public class EditHabitEventView extends AppCompatActivity {
     ImageView photo;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private Bitmap takenPhoto;
+    private String takenPhotoID;
 
     /**
      * Create editor for Habit Events
@@ -104,6 +111,13 @@ public class EditHabitEventView extends AppCompatActivity {
             date.setText(newDate);
         };
 
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takePicture();
+            }
+        });
+
 
 
         //onClick method to get data from text entry fields and format into habit event fields to be edited
@@ -117,7 +131,7 @@ public class EditHabitEventView extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,EditEvent.getPhotoID());
+                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,takenPhotoID);
 
                 //connect to database and store modified habit event before returning to previous menu
                 FirebaseStore fb = new FirebaseStore();
@@ -140,6 +154,31 @@ public class EditHabitEventView extends AppCompatActivity {
         });
 
     }
+
+    private void takePicture() {
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(i.resolveActivity(getPackageManager()) != null){
+            startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            takenPhoto = (Bitmap) extras.get("data");
+            photo.setImageBitmap(takenPhoto);
+            encodeBitmap(takenPhoto);
+        }
+    }
+
+    public void encodeBitmap(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+        takenPhotoID = Base64.encodeToString(baos.toByteArray(), DEFAULT);
+    }
+
     public static Bitmap decodeFromFirebase(String image){
         byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);

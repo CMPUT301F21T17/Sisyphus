@@ -157,6 +157,7 @@ public class AddHabitEvent extends AppCompatActivity {
             encodeBitmap(takenPhoto);
         }
     }
+
     public void encodeBitmap(Bitmap bitmap){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
