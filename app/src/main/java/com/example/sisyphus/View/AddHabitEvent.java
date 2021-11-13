@@ -6,6 +6,8 @@
 
 package com.example.sisyphus.View;
 
+import static android.util.Base64.DEFAULT;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -15,6 +17,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +29,7 @@ import com.example.sisyphus.Model.HabitEvent;
 import com.example.sisyphus.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,6 +42,7 @@ public class AddHabitEvent extends AppCompatActivity {
     //initializing firebase authentication (session) object
     private FirebaseAuth mAuth;
     private Bitmap takenPhoto;
+    private String takenPhotoID;
 
     //setting UI elements
     private EditText location,date,comment;
@@ -115,7 +120,7 @@ public class AddHabitEvent extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,takenPhoto);
+                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,takenPhotoID);
 
                 //storing event in firebase and returning to previous menu
                 FirebaseStore fb = new FirebaseStore();
@@ -133,11 +138,6 @@ public class AddHabitEvent extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
-
-
     }
 
     private void takePicture() {
@@ -154,8 +154,13 @@ public class AddHabitEvent extends AppCompatActivity {
             Bundle extras = data.getExtras();
             takenPhoto = (Bitmap) extras.get("data");
             habitPhoto.setImageBitmap(takenPhoto);
+            encodeBitmap(takenPhoto);
         }
     }
-
+    public void encodeBitmap(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+        takenPhotoID = Base64.encodeToString(baos.toByteArray(), DEFAULT);
+    }
 
 }

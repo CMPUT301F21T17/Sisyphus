@@ -11,9 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,7 +76,7 @@ public class EditHabitEventView extends AppCompatActivity {
         HabitEvent EditEvent = (HabitEvent) intent.getSerializableExtra("editEvent");
         String EditEventID = intent.getStringExtra("editEventID");
         String habitName = EditEvent.getHabitName();
-        Bitmap EditEventPhoto = EditEvent.getPhoto();
+        Bitmap EditEventPhoto = decodeFromFirebase(EditEvent.getPhotoID());
 
         //setting UI to display data from selected habit event for editing
         habitTitle.setText(EditEvent.getHabitName());
@@ -115,7 +117,7 @@ public class EditHabitEventView extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,EditEventPhoto);
+                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,EditEvent.getPhotoID());
 
                 //connect to database and store modified habit event before returning to previous menu
                 FirebaseStore fb = new FirebaseStore();
@@ -137,5 +139,9 @@ public class EditHabitEventView extends AppCompatActivity {
             }
         });
 
+    }
+    public static Bitmap decodeFromFirebase(String image){
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);
     }
 }

@@ -7,6 +7,9 @@
 package com.example.sisyphus.Model;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,9 +76,12 @@ public class HabitEventListAdapter extends ArrayAdapter<HabitEvent> {
         habitEventComment.setText(habitEvent.getComment());
         habitEventDate.setText(habitEvent.getDate().toString().substring(0,10));
         habitEventLocation.setText(habitEvent.getLocation());
-        habitEventPhoto.setImageBitmap(habitEvent.getPhoto());
-
+        habitEventPhoto.setImageBitmap(decodeFromFirebase(habitEvent.getPhotoID()));
         return view;
 
+    }
+    public static Bitmap decodeFromFirebase(String image){
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);
     }
 }

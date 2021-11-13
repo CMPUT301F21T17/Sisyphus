@@ -9,7 +9,10 @@ package com.example.sisyphus.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -60,7 +63,7 @@ public class ViewHabitEvent extends AppCompatActivity {
         habitEventDateText.setText(new SimpleDateFormat("dd/MM/yyyy").format(receivedHabitEvent.getDate()));
         habitEventLocationText.setText(receivedHabitEvent.getLocation());
         habitEventCommentText.setText(receivedHabitEvent.getComment());
-        habitEventPhoto.setImageBitmap(receivedHabitEvent.getPhoto());
+        habitEventPhoto.setImageBitmap(decodeFromFirebase(receivedHabitEvent.getPhotoID()));
 
         final Button editHabitEventButton = findViewById(R.id.edit_habitEvent_button);
         editHabitEventButton.setOnClickListener(new View.OnClickListener() {
@@ -120,5 +123,9 @@ public class ViewHabitEvent extends AppCompatActivity {
             }
         });
 
+    }
+    public static Bitmap decodeFromFirebase(String image){
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);
     }
 }

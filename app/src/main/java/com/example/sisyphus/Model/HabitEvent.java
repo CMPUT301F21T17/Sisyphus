@@ -19,7 +19,7 @@ public class HabitEvent implements Serializable {
     private String location;
     private String comment;
     private String habitName;
-    private Bitmap photo;
+    private String photoID;
 
     public HabitEvent(){}
 
@@ -34,12 +34,12 @@ public class HabitEvent implements Serializable {
      * @param habitName
      *  name of habit event
      */
-    public HabitEvent(Date date, String location, String comment, String habitName,Bitmap photo) {
+    public HabitEvent(Date date, String location, String comment, String habitName,String photoID) {
         this.date = date;
         this.location = location;
         this.comment = comment;
         this.habitName = habitName;
-        this.photo = photo;
+        this.photoID = photoID;
     }
 
     /**
@@ -80,20 +80,20 @@ public class HabitEvent implements Serializable {
 
     /**
      * function to get habit event photo
-     * @return photo
+     * @return photoID
      *  habit event photo
      */
-    public Bitmap getPhoto() {
-        return photo;
+    public String getPhotoID() {
+        return photoID;
     }
 
     /**
      * function to set habit event photo
-     * @param photo
+     * @param photoID
      *  habit event photo to set
      */
-    public void setPhoto(Bitmap photo) {
-        this.photo = photo;
+    public void setPhotoID(String photoID) {
+        this.photoID = photoID;
     }
 
     /**

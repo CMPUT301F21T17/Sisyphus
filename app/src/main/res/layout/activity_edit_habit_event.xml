@@ -75,7 +75,7 @@
         android:layout_marginStart="61dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="112dp"
-        android:text="Add"
+        android:text="Confirm"
         app:backgroundTint="#17A6A6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonCancel"
