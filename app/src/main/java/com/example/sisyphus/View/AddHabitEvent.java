@@ -90,6 +90,12 @@ public class AddHabitEvent extends AppCompatActivity {
             date.setText(newDate);
         };
 
+        //create a map intent
+        location.setOnClickListener(view -> {
+            Intent googleMaps = new Intent(view.getContext(), GoogleMaps.class);
+            startActivity(googleMaps);
+        });
+
 
 
         //onClick method to get data from text entry fields and format into habit event to be added
