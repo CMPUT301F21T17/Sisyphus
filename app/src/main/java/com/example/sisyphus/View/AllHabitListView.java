@@ -8,6 +8,8 @@ package com.example.sisyphus.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,8 +38,8 @@ import java.util.ArrayList;
  */
 public class AllHabitListView extends AppCompatActivity {
     //setting UI elements and initializing storage/formatting for listview
-    private ListView allhabitListView;
-    private ArrayAdapter<Habit> habitAdapter;
+    private RecyclerView allhabitListView;
+    private AllHabitList_Adapter habitAdapter;
     private ArrayList<Habit> habitDataList;
 
     //initializing firebase authentication (session) object and establishing database connection
@@ -66,15 +68,12 @@ public class AllHabitListView extends AppCompatActivity {
         setUserHabit(currentUserID);
 
         habitAdapter = new AllHabitList_Adapter(this, habitDataList);
+        allhabitListView.setLayoutManager(new LinearLayoutManager(this));
         allhabitListView.setAdapter(habitAdapter);
 
-
-
+        /*
         allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            /**
-             * function to open ViewHabit when Habits clicked
-             */
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent (AllHabitListView.this, ViewHabit.class);
                 //storing selected habit in intent
@@ -83,6 +82,7 @@ public class AllHabitListView extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        */
 
         final Button button_home = findViewById(R.id.home_button);
         button_home.setOnClickListener(new View.OnClickListener() {
@@ -141,18 +141,19 @@ public class AllHabitListView extends AppCompatActivity {
      */
     public void setUserHabit(String ID){
         final CollectionReference habitRef = db.collection("Users").document(ID).collection("Habits");
-        habitRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                //clears data so list can be updated, then gets all habit data from firebase to display
-                habitDataList.clear();
-                for(QueryDocumentSnapshot doc:value){
-                    Habit result = doc.toObject(Habit.class);
-                    habitDataList.add(result);
-                }
-                habitAdapter.notifyDataSetChanged();
-            }
-        });
+        habitRef
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        //clears data so list can be updated, then gets all habit data from firebase to display
+                        habitDataList.clear();
+                        for(QueryDocumentSnapshot doc:value){
+                            Habit result = doc.toObject(Habit.class);
+                            habitDataList.add(result);
+                        }
+                        habitAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
 }

@@ -37,12 +37,12 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/allhabit_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="9">
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_habit_button"

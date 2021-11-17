@@ -18,6 +18,7 @@ public class Habit implements Serializable {
     private Date startDate;
     private ArrayList<String> frequency;
     private String reason;
+    private int position;
 
     public Habit() {
     }
@@ -110,6 +111,25 @@ public class Habit implements Serializable {
      */
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+
+    /**
+     * function to get the position of the Habit
+     * @return
+     *  position of habit
+     */
+    public int getPosition() {
+        return position;
+    }
+
+    /**
+     * function to set the position of the Habit
+     * @param position
+     *  the position of the habit to set
+     */
+    public void setPosition(int position) {
+        this.position = position;
     }
 }
 

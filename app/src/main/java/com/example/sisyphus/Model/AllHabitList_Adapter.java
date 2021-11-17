@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sisyphus.Model.Habit;
 import com.example.sisyphus.R;
@@ -27,10 +28,11 @@ import java.util.ArrayList;
  * A class that adapts Habit objects to their content_all_habit_list xml
  * Used in both AllHabitList and CalendarActivity
  */
-public class AllHabitList_Adapter extends ArrayAdapter<Habit> {
-
-    private ArrayList<Habit> habits;
+public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adapter.MyViewHolder> {
+    private LayoutInflater inflater;
     private Context context;
+    private ArrayList<Habit> habits;
+
 
     /**
      * Constructor for habit adapter
@@ -40,39 +42,40 @@ public class AllHabitList_Adapter extends ArrayAdapter<Habit> {
      *  list of Habits
      */
     public AllHabitList_Adapter( Context context, ArrayList<Habit> habits) {
-        super(context,0, habits);
+        inflater = LayoutInflater.from(context);
         this.habits = habits;
         this.context = context;
     }
 
-    /**
-     * Function called when populating Habit content
-     * @param position
-     *  position of current element in data list
-     * @param convertView
-     * @param parent
-     * @return
-     *  content view with fields populated
-     */
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        return super.getView(position, convertView, parent);
-        View view = convertView;
+    public AllHabitList_Adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.content_all_habit_list, parent, false);
+        MyViewHolder holder = new MyViewHolder(view);
+        return holder;
+    }
 
-        if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.content_all_habit_list, parent,false);
-        }
-        //gets habit from list and formats listview box with habit information
+    @Override
+    public void onBindViewHolder(@NonNull AllHabitList_Adapter.MyViewHolder holder, int position) {
         Habit habit = habits.get(position);
+        holder.habitTitle.setText(habit.getHabitName());
+        holder.habitDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(habit.getStartDate()));
 
-        TextView habitTitle = view.findViewById(R.id.habit_title_text);
-        TextView habitDate = view.findViewById(R.id.habit_date_text);
+    }
 
-        habitTitle.setText(habit.getHabitName());
-        habitDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(habit.getStartDate()));
+    @Override
+    public int getItemCount() {
+        return habits.size();
+    }
 
-        return view;
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        private TextView habitTitle;
+        private TextView habitDate;
 
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            habitTitle = (TextView) itemView.findViewById(R.id.habit_title_text);
+            habitDate = (TextView) itemView.findViewById(R.id.habit_date_text);
+        }
     }
 }
