@@ -23,7 +23,7 @@
 
     </CalendarView>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendar_events"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -32,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendar">
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/calendar_bar"

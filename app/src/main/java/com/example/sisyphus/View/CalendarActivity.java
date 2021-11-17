@@ -16,6 +16,8 @@ import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sisyphus.Model.AllHabitList_Adapter;
 import com.example.sisyphus.Model.Habit;
@@ -41,9 +43,9 @@ public class CalendarActivity extends AppCompatActivity {
 
     //setting UI elements
     CalendarView calendar;
-    ListView habitsView;
+    RecyclerView habitsView;
     ArrayList<Habit> data;
-    ArrayAdapter<Habit> adapter;
+    AllHabitList_Adapter adapter;
 
     /**
      * Create view to display calendar and habits
@@ -60,6 +62,7 @@ public class CalendarActivity extends AppCompatActivity {
         selectedDay = new GregorianCalendar();
         data = new ArrayList<>();
         adapter = new AllHabitList_Adapter(this, data);
+        habitsView.setLayoutManager(new LinearLayoutManager(this));
         habitsView.setAdapter(adapter);
         // event listener to get up to date data for Habit list
 
