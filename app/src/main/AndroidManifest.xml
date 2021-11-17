@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (c) 2021.
-  ~ Sisyphus, CMPUT 301
-  ~ All Rights Reserved.
-  -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sisyphus">
 
@@ -15,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sisyphus">
+        <activity
+            android:name=".View.SearchResults"
+            android:exported="true" />
         <activity
             android:name=".View.Dialog.ChangePassword"
             android:exported="false" />
@@ -71,6 +68,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
