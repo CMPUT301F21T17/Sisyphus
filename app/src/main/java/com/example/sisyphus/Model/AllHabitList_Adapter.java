@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * A class that adapts Habit objects to their content_all_habit_list xml
  * Used in both AllHabitList and CalendarActivity
  */
-public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adapter.MyViewHolder> {
+public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adapter.HabitViewHolder> {
     private LayoutInflater inflater;
     private Context context;
     private ArrayList<Habit> habits;
@@ -51,14 +51,13 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
 
     @NonNull
     @Override
-    public AllHabitList_Adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AllHabitList_Adapter.HabitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.content_all_habit_list, parent, false);
-        MyViewHolder holder = new MyViewHolder(view);
-        return holder;
+        return new HabitViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AllHabitList_Adapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AllHabitList_Adapter.HabitViewHolder holder, int position) {
         Habit habit = habits.get(position);
         holder.habitTitle.setText(habit.getHabitName());
         holder.habitDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(habit.getStartDate()));
@@ -77,11 +76,11 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
         return habits.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class HabitViewHolder extends RecyclerView.ViewHolder {
         private TextView habitTitle;
-        private TextView habitDate;
+        private  TextView habitDate;
 
-        public MyViewHolder(View itemView) {
+        public HabitViewHolder(View itemView) {
             super(itemView);
             habitTitle = (TextView) itemView.findViewById(R.id.habit_title_text);
             habitDate = (TextView) itemView.findViewById(R.id.habit_date_text);

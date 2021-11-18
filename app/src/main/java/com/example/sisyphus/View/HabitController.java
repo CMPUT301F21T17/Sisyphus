@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -113,7 +114,8 @@ public class HabitController extends AppCompatActivity {
                 e.printStackTrace();
             }
             String reasonInput = reason.getText().toString().trim();
-            Habit modifiedHabit = new Habit(dummyhabitname,dateInput,days,reasonInput);
+
+            Habit modifiedHabit = new Habit(dummyhabitname, dateInput, days, reasonInput, 0);
 
             //stores habit created above in firebase and returns to previous menu
             FirebaseStore fb = new FirebaseStore();

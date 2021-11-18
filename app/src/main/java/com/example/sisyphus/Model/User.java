@@ -15,6 +15,7 @@ public class User {
     private String nameFirst;
     private String nameLast;
     private Date dateJoined;
+    private int habitCount;
 
     public User(){
         //Default constructor
