@@ -34,11 +34,12 @@ public class Habit implements Serializable {
      * @param reason
      *  reason for habit
      */
-    public Habit(String habitName, Date startDate, ArrayList<String> frequency, String reason) {
+    public Habit(String habitName, Date startDate, ArrayList<String> frequency, String reason, int position) {
         setHabitName(habitName);
         setStartDate(startDate);
         setFrequency(frequency);
         setReason(reason);
+        setPosition(position);
     }
     
     /**

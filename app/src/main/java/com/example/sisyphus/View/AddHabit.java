@@ -16,13 +16,19 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,7 +39,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * A class that provides with a UI to add habits to firebase
+ * A class that provides a UI to add habits to firebase
  */
 public class AddHabit extends AppCompatActivity {
     //setting UI elements
@@ -48,7 +54,7 @@ public class AddHabit extends AppCompatActivity {
     }
 
     /**
-     * function to create habit creation view
+     * function to create a habit creation view
      * @param savedInstanceState
      */
     @SuppressLint("SimpleDateFormat")
@@ -84,7 +90,7 @@ public class AddHabit extends AppCompatActivity {
                 e.printStackTrace();
             }
             String reasonInput = Objects.requireNonNull(reason.getEditText()).getText().toString().trim();
-            Habit habitInput = new Habit(habit, dateInput, days, reasonInput);
+            Habit habitInput = new Habit(habit, dateInput, days, reasonInput, 0);
 
             //establishing connection to firebase, storing data, and then returning to previous menu
             FirebaseStore fb = new FirebaseStore();
