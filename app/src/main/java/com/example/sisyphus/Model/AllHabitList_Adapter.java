@@ -32,6 +32,7 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
     private LayoutInflater inflater;
     private Context context;
     private ArrayList<Habit> habits;
+    private ItemClickListener itemListener;
 
 
     /**
@@ -41,10 +42,11 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
      * @param habits
      *  list of Habits
      */
-    public AllHabitList_Adapter( Context context, ArrayList<Habit> habits) {
+    public AllHabitList_Adapter( Context context, ArrayList<Habit> habits, ItemClickListener itemListener) {
         inflater = LayoutInflater.from(context);
         this.habits = habits;
         this.context = context;
+        this.itemListener = itemListener;
     }
 
     @NonNull
@@ -61,6 +63,13 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
         holder.habitTitle.setText(habit.getHabitName());
         holder.habitDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(habit.getStartDate()));
 
+        holder.itemView.setOnClickListener(view -> {
+                itemListener.onItemClick(habits.get(position));
+            });
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(Habit habit);
     }
 
     @Override

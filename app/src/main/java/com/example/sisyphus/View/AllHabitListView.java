@@ -67,22 +67,16 @@ public class AllHabitListView extends AppCompatActivity {
 
         setUserHabit(currentUserID);
 
-        habitAdapter = new AllHabitList_Adapter(this, habitDataList);
-        allhabitListView.setLayoutManager(new LinearLayoutManager(this));
-        allhabitListView.setAdapter(habitAdapter);
-
-        /*
-        allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        habitAdapter = new AllHabitList_Adapter(this, habitDataList, new AllHabitList_Adapter.ItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(Habit clickedHabit) {
                 Intent intent = new Intent (AllHabitListView.this, ViewHabit.class);
-                //storing selected habit in intent
-                Habit clickedHabit = habitDataList.get(i);
                 intent.putExtra("habit",clickedHabit);
                 startActivity(intent);
             }
         });
-        */
+        allhabitListView.setLayoutManager(new LinearLayoutManager(this));
+        allhabitListView.setAdapter(habitAdapter);
 
         final Button button_home = findViewById(R.id.home_button);
         button_home.setOnClickListener(new View.OnClickListener() {

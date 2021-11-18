@@ -61,7 +61,12 @@ public class CalendarActivity extends AppCompatActivity {
         habitsView = findViewById(R.id.calendar_events);
         selectedDay = new GregorianCalendar();
         data = new ArrayList<>();
-        adapter = new AllHabitList_Adapter(this, data);
+        adapter = new AllHabitList_Adapter(this, data, new AllHabitList_Adapter.ItemClickListener() {
+            @Override
+            public void onItemClick(Habit habit) {
+                // do nothing
+            }
+        });
         habitsView.setLayoutManager(new LinearLayoutManager(this));
         habitsView.setAdapter(adapter);
         // event listener to get up to date data for Habit list
