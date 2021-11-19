@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.sisyphus.Model.followProtocol;
 import com.example.sisyphus.Model.searchAndRequest;
 import com.example.sisyphus.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -82,6 +83,27 @@ public class UserSearch extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(UserSearch.this, EmptyMainMenu.class);
                 startActivity(intent);
+            }
+        });
+
+
+
+        final Button send = findViewById(R.id.buttonProtocolSend);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                followProtocol test = new followProtocol();
+                test.sendRequest("hU7X0519jIhFrkefBhVflVokgVo2");
+            }
+        });
+
+        final Button accept = findViewById(R.id.buttonProtocolRequestAccept);
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                followProtocol test = new followProtocol();
+                test.handleRequest("CedJ4UrIarfLmIn1l6Bc6Ziwmdl2");
+                test.commitFollow("CedJ4UrIarfLmIn1l6Bc6Ziwmdl2");
             }
         });
 

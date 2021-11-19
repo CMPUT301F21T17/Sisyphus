@@ -32,6 +32,12 @@ public class searchAndRequest {
         //Default constructor
     }
 
+    /**
+     * Function that determines whether a user exists or not in the database
+     * @param id
+     * the id of the user to search for
+     * @return
+     */
     public boolean userValid(String id){
         final User[] retirevedUser = new User[1];
         //firebase documentation with a few edits
