@@ -205,34 +205,24 @@ public class AllHabitListView extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         //clears data so list can be updated, then gets all habit data from firebase to display
+                        WriteBatch batch = db.batch();
+
                         habitDataList.clear();
                         int updated_position = 0;
                         for(QueryDocumentSnapshot doc:value){
                             Habit result = doc.toObject(Habit.class);
                             result.setPosition(updated_position);
-                            updatePosition(ID, result.getHabitName(), updated_position);
+
+                            DocumentReference docRef = db.collection("Users").document(ID)
+                                    .collection("Habits").document(result.getHabitName());
+                            batch.update(docRef, "position", updated_position);
+
                             habitDataList.add(result);
                             updated_position = updated_position + 1;
                         }
+                        batch.commit();
                         habitAdapter.notifyDataSetChanged();
                     }
                 });
     }
-
-    /**
-     * Function used for updating a single habit position
-     * @param ID
-     *  the userID of the user to update data under
-     * @param habitTitle
-     *  the habitTitle of the habit to update data under
-     * @param newPosition
-     *  the new position to set
-     */
-    private void updatePosition(String ID, String habitTitle, int newPosition) {
-        // update position
-        db.collection("Users").document(ID)
-                .collection("Habits").document(habitTitle)
-                .update("position", newPosition);
-    }
-
 }
