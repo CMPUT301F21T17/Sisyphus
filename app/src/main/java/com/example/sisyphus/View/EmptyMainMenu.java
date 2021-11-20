@@ -48,6 +48,9 @@ public class EmptyMainMenu extends AppCompatActivity {
             }
         });
 
+
+        //INTENTS FOR THE BOTTOM BAR!
+
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         //onClick listener to transfer user to habit list page
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +71,29 @@ public class EmptyMainMenu extends AppCompatActivity {
             }
         });
 
+
+        final Button button_Home = findViewById(R.id.home_button);
+        button_Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmptyMainMenu.this, EmptyMainMenu.class);
+                startActivity(intent);
+            }
+        });
+
+        //currently sends to user search class.  May be worth changing later
+        final Button button_Prof = findViewById(R.id.profile_button);
+        button_Prof.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmptyMainMenu.this, UserSearch.class);
+                startActivity(intent);
+            }
+        });
+
+        //END OF INTENTS FOR THE BOTTOM BAR!
+
+
         final Button button_Search = findViewById(R.id.search_button);
         //onClick listener to transfer user to search page.  Currently a dummy access method, will be moved
         button_Search.setOnClickListener(new View.OnClickListener() {
@@ -77,8 +103,6 @@ public class EmptyMainMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 
 }
