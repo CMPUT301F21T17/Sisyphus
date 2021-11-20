@@ -93,7 +93,7 @@ public class UserSearch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 followProtocol test = new followProtocol();
-                test.sendRequest("hU7X0519jIhFrkefBhVflVokgVo2");
+                //test.sendRequest("hU7X0519jIhFrkefBhVflVokgVo2");
             }
         });
 
@@ -102,8 +102,8 @@ public class UserSearch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 followProtocol test = new followProtocol();
-                test.handleRequest("CedJ4UrIarfLmIn1l6Bc6Ziwmdl2");
-                test.commitFollow("CedJ4UrIarfLmIn1l6Bc6Ziwmdl2");
+                //test.handleRequest("CedJ4UrIarfLmIn1l6Bc6Ziwmdl2");
+                //test.commitFollow("CedJ4UrIarfLmIn1l6Bc6Ziwmdl2");
             }
         });
 

@@ -119,7 +119,6 @@ public class followProtocol {
                                     }
 
                                 });
-
                     }
                 } else {
                     Log.d(TAG, "get failed with ", task.getException());
