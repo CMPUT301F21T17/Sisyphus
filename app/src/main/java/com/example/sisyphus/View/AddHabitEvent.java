@@ -93,7 +93,15 @@ public class AddHabitEvent extends AppCompatActivity {
         //create a map intent
         location.setOnClickListener(view -> {
             Intent googleMaps = new Intent(view.getContext(), GoogleMaps.class);
+            Bundle extras = new Bundle();
+            googleMaps.putExtras(extras);
             startActivity(googleMaps);
+
+            int latitude = extras.getInt("LATITUDE");
+            int longitude = extras.getInt("LONGITUDE");
+
+            location.setText(String.format("%d, %d", latitude,longitude));
+
         });
 
 

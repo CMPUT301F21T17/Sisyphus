@@ -14,4 +14,15 @@
     android:layout_height="match_parent"
     map:uiZoomControls="true"
     map:uiRotateGestures="true"
-    tools:context=".View.GoogleMaps" />
+    tools:context=".View.GoogleMaps" >
+
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:text="Confirm">
+
+    </Button>
+
+</fragment>
