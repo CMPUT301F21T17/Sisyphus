@@ -58,12 +58,13 @@
         android:layout_width="189dp"
         android:layout_height="66dp"
         android:layout_marginTop="332dp"
-        android:layout_marginBottom="65dp"
+        android:layout_marginBottom="45dp"
         android:ems="10"
         android:hint="Enter User ID"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/buttonProtocolSend"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -103,8 +104,8 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="194dp"
-        android:layout_height="81dp"
+        android:layout_width="193dp"
+        android:layout_height="86dp"
         android:layout_marginTop="120dp"
         android:text="Connect with your friends and follow others' habits by seraching and following users!"
         android:textSize="14sp"
@@ -143,21 +144,19 @@
         android:id="@+id/buttonProtocolSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginBottom="24dp"
         android:text="CannedProtocolRequestSend"
+        app:layout_constraintBottom_toTopOf="@+id/buttonProtocolRequestAccept"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonProtocolRequestAccept"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="39dp"
         android:layout_marginBottom="32dp"
         android:text="CannedProtocolrequestAccept"
         app:layout_constraintBottom_toTopOf="@+id/search_user"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonProtocolSend" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
