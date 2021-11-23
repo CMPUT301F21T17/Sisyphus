@@ -14,7 +14,6 @@ import java.util.Date;
 public class User {
     private String nameFirst;
     private String nameLast;
-    //private String userId;
 
 
 

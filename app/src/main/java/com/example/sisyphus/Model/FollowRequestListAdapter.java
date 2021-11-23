@@ -46,8 +46,6 @@ import java.util.Map;
 public class FollowRequestListAdapter extends ArrayAdapter<String>{
     private ArrayList<String> followRequestList;
     private Context context;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseAuth mAuth;
 
     /**
      * Constructor for FollowRequestListAdapter
@@ -60,6 +58,7 @@ public class FollowRequestListAdapter extends ArrayAdapter<String>{
         super(context,0, followRequestList);
         this.followRequestList= followRequestList;
         this.context = context;
+        Log.d(TAG,"ADAPTER SUCCESS");
     }
 
 
@@ -82,10 +81,10 @@ public class FollowRequestListAdapter extends ArrayAdapter<String>{
         }
         //gets habit event from list and formats listview box with habit information
         String requestUser = followRequestList.get(position);
-
+        Log.d(TAG,"get view SUCCESS");
         TextView requestUserName = view.findViewById(R.id.follower_name_text);
         TextView requestUserId = view.findViewById(R.id.follower_id_text);
-
+        Log.d(TAG,"idmessage"+requestUser);
         //requestUserName.setText(requestUser.getFirst());
         requestUserId.setText(requestUser);
         return view;

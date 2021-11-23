@@ -103,6 +103,16 @@ public class EmptyMainMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        final Button button_Request = findViewById(R.id.request_button);
+        //onClick listener to transfer user to search page.  Currently a dummy access method, will be moved
+        button_Request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmptyMainMenu.this, FollowRequestListView.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }
