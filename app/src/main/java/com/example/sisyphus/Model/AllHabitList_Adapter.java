@@ -49,6 +49,15 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
         this.itemListener = itemListener;
     }
 
+    /**
+     * function for creating a Haibt ViewHolder
+     * @param parent
+     *  parent view of view holder
+     * @param viewType
+     *  type of ViewHolder
+     * @return
+     *  the habit ViewHolder created
+     */
     @NonNull
     @Override
     public AllHabitList_Adapter.HabitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -56,6 +65,11 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
         return new HabitViewHolder(view);
     }
 
+    /**
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull AllHabitList_Adapter.HabitViewHolder holder, int position) {
         Habit habit = habits.get(position);
@@ -67,19 +81,33 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
             });
     }
 
+    /**
+     *
+     */
     public interface ItemClickListener {
         void onItemClick(Habit habit);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return habits.size();
     }
 
+    /**
+     *
+     */
     public class HabitViewHolder extends RecyclerView.ViewHolder {
         private TextView habitTitle;
         private  TextView habitDate;
 
+        /**
+         *
+         * @param itemView
+         */
         public HabitViewHolder(View itemView) {
             super(itemView);
             habitTitle = (TextView) itemView.findViewById(R.id.habit_title_text);

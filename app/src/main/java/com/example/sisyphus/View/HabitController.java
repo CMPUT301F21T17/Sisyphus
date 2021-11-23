@@ -115,7 +115,7 @@ public class HabitController extends AppCompatActivity {
             }
             String reasonInput = reason.getText().toString().trim();
 
-            Habit modifiedHabit = new Habit(dummyhabitname, dateInput, days, reasonInput, 0);
+            Habit modifiedHabit = new Habit(dummyhabitname, dateInput, days, reasonInput, -1);
 
             //stores habit created above in firebase and returns to previous menu
             FirebaseStore fb = new FirebaseStore();

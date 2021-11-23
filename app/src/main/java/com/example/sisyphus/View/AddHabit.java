@@ -90,7 +90,7 @@ public class AddHabit extends AppCompatActivity {
                 e.printStackTrace();
             }
             String reasonInput = Objects.requireNonNull(reason.getEditText()).getText().toString().trim();
-            Habit habitInput = new Habit(habit, dateInput, days, reasonInput, 0);
+            Habit habitInput = new Habit(habit, dateInput, days, reasonInput, -1);
 
             //establishing connection to firebase, storing data, and then returning to previous menu
             FirebaseStore fb = new FirebaseStore();
