@@ -52,7 +52,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
     private static final String TAG = GoogleMaps.class.getSimpleName();
     private GoogleMap mMap;
 
-    private PlacesClient placesClient;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
@@ -80,7 +79,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
 
         // Construct a PlacesClient
         Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
-        placesClient = Places.createClient(this);
 
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -190,7 +188,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
     private void onConfirm(){
         Intent intent = new Intent();
         Bundle extras = new Bundle();
-        intent.putExtras(extras);
+
         if (marker != null) {
             LatLng userLocation = marker.getPosition();
 
@@ -199,6 +197,8 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
 
             extras.putFloat("LATITUDE", (float) userLocation.latitude);
             extras.putFloat("LONGITUDE", (float) userLocation.longitude);
+
+            intent.putExtras(extras);
             setResult(1, intent);
             finish();
         }
@@ -243,6 +243,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
             @Override
             public void onMarkerDragEnd(@NonNull Marker marker) {
                 Log.d("OOPS", "Drag end");
+
             }
 
             @Override

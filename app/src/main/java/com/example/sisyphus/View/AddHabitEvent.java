@@ -116,7 +116,8 @@ public class AddHabitEvent extends AppCompatActivity {
         //create a map intent
         location.setOnClickListener(view -> {
             Intent googleMaps = new Intent(view.getContext(), GoogleMaps.class);
-            startActivity(googleMaps);
+            startActivityForResult(googleMaps, 1);
+
         });
 
 
