@@ -6,6 +6,7 @@
 
 package com.example.sisyphus.View;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -20,6 +21,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.sisyphus.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -44,7 +47,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
+public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
 
     private static final String TAG = GoogleMaps.class.getSimpleName();
     private GoogleMap mMap;
@@ -59,15 +62,11 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
     private Location lastKnownLocation;
     private Marker marker;
+    private LatLng markerPos = new LatLng(0,0);
 
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
-    private static final int M_MAX_ENTRIES = 5;
-    private String[] likelyPlaceNames;
-    private String[] likelyPlaceAddresses;
-    private ArrayList[] likelyPlaceAttributions;
-    private LatLng[] likelyPlaceLatLngs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +84,15 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        final Button confirm = findViewById(R.id.confirm_button);
+        confirm.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                onConfirm();
+            }
+        });
+
+
     }
 
     private void getLocationPermission() {
@@ -142,10 +150,10 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     }
 
     private void getDeviceLocation() {
-        /*
+        /**
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
-         */
+        */
         try {
             if (locationPermissionGranted) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
@@ -159,9 +167,9 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                         new LatLng(lastKnownLocation.getLatitude(),
                                                 lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                                LatLng userLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-                                marker = mMap.addMarker(new MarkerOptions().position(userLocation).title("Location"));
-                                marker.setDraggable(true);
+                                markerPos = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                                marker.setPosition(markerPos);
+
                             }
 
                         } else {
@@ -179,6 +187,23 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
+    private void onConfirm(){
+        Intent intent = new Intent();
+        Bundle extras = new Bundle();
+        intent.putExtras(extras);
+        if (marker != null) {
+            LatLng userLocation = marker.getPosition();
+
+            Log.d("OOPS", String.format("Latitude: %f", userLocation.latitude));
+            Log.d("OOPS", String.format("Longitude: %f", userLocation.longitude));
+
+            extras.putFloat("LATITUDE", (float) userLocation.latitude);
+            extras.putFloat("LONGITUDE", (float) userLocation.longitude);
+            setResult(1, intent);
+            finish();
+        }
+
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -201,29 +226,31 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        Log.d("OOPS", String.format("%f", markerPos.latitude));
+        Log.d("OOPS", String.format("%f", markerPos.longitude));
+        marker = mMap.addMarker(new MarkerOptions().position(markerPos).title("Location"));
+        assert marker != null;
+        marker.setDraggable(true);
         getLocationPermission();
-
         updateLocationUI();
-
         getDeviceLocation();
+        GoogleMap.OnMarkerDragListener dragListener = new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDrag(@NonNull Marker marker) {
+                Log.d("OOPS", "Dragging");
+            }
 
-        Intent intent = this.getIntent();
-        Bundle extras = intent.getExtras();
+            @Override
+            public void onMarkerDragEnd(@NonNull Marker marker) {
+                Log.d("OOPS", "Drag end");
+            }
 
-        if (marker != null){
-            LatLng userLocation = marker.getPosition();
+            @Override
+            public void onMarkerDragStart(@NonNull Marker marker) {
+                Log.d("OOPS", "Dragging start");
+            }
 
-            extras.putInt("LATITUDE", (int) userLocation.latitude);
-            extras.putInt("LONGITUDE", (int) userLocation.longitude);
-        }
-
-
-
-        // showCurrentPlace();
-
-
-
-        // mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        };
+        mMap.setOnMarkerDragListener(dragListener);
     }
 }
