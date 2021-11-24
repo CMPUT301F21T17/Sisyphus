@@ -93,7 +93,7 @@ public class UserSearch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 followProtocol test = new followProtocol();
-                //test.sendRequest("hU7X0519jIhFrkefBhVflVokgVo2");
+                test.sendRequest("hU7X0519jIhFrkefBhVflVokgVo2");
             }
         });
 

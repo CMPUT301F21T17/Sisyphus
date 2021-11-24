@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,9 +31,12 @@ import androidx.annotation.Nullable;
 
 import com.example.sisyphus.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -46,6 +50,9 @@ import java.util.Map;
 public class FollowRequestListAdapter extends ArrayAdapter<String>{
     private ArrayList<String> followRequestList;
     private Context context;
+    followProtocol requestHandler = new followProtocol();
+    //FirebaseSearch userSearcher = new FirebaseSearch();
+    private FirebaseFirestore db=FirebaseFirestore.getInstance();;
 
     /**
      * Constructor for FollowRequestListAdapter
@@ -84,10 +91,68 @@ public class FollowRequestListAdapter extends ArrayAdapter<String>{
         Log.d(TAG,"get view SUCCESS");
         TextView requestUserName = view.findViewById(R.id.follower_name_text);
         TextView requestUserId = view.findViewById(R.id.follower_id_text);
+        Button confirmButton = view.findViewById(R.id.confirm_Follow_button);
+        Button rejectButton = view.findViewById(R.id.reject_Follow_button);
+
         Log.d(TAG,"idmessage"+requestUser);
-        //requestUserName.setText(requestUser.getFirst());
+        DocumentReference docRef = db.collection("Users").document(requestUser);
+        final User[] searchedUser = {new User()};
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                searchedUser[0] = documentSnapshot.toObject(User.class);
+                requestUserName.setText(searchedUser[0].getFirst()+" "+ searchedUser[0].getLast());
+                Log.d(TAG,"Get user name:"+searchedUser[0].getFirst());
+            }
+        });
+        Log.d(TAG,"Usernamemessage"+ searchedUser[0].getFirst());
+        //requestUserName.setText(user.getFirst()+" "+ user.getLast());
         requestUserId.setText(requestUser);
+
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestHandler.commitFollow(requestUser);
+                requestHandler.handleRequest(requestUser);
+                followRequestList.remove(position);
+                FollowRequestListAdapter.this.notifyDataSetChanged();
+            }
+        });
+
+        rejectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestHandler.handleRequest(requestUser);
+                followRequestList.remove(position);
+                FollowRequestListAdapter.this.notifyDataSetChanged();
+            }
+        });
+
+
         return view;
+    }
+
+    /**
+     * An example method for data retrieval.  Can be expanded in scope and complexity for
+     * sake of reusability.
+     * @param ID
+     * @return
+     */
+    public User searchUser(String ID){
+        DocumentReference docRef = db.collection("Users").document(ID);
+        //retrieves given user from database
+        //note that user will be a dummy user (no data) on failure!
+        //furthermore, this was actually a solution recommended to me by android studios to
+        //evade the need for "final" or making searchedUser global.
+        final User[] searchedUser = {new User()};
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                searchedUser[0] = documentSnapshot.toObject(User.class);
+                Log.d(TAG,"Get user name:"+searchedUser[0].getFirst());
+            }
+        });
+        return searchedUser[0];
     }
 
 

@@ -54,19 +54,18 @@
             android:layout_weight="50"
             app:backgroundTint="#17A6A6"
             android:layout_marginRight="2dp"
-            android:textSize="10sp"
+            android:textSize="9sp"
             android:text="Confirm" >
         </Button>
 
         <Button
-            android:id="@+id/delete_Follow_button"
+            android:id="@+id/reject_Follow_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            app:backgroundTint="#17A6A6"
-            android:textSize="10sp"
-            android:text="Delete" >
-        </Button>
+            android:text="Reject"
+            android:textSize="9sp"
+            app:backgroundTint="#D2E91E47"></Button>
 
     </LinearLayout>
 

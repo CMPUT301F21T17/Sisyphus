@@ -54,6 +54,8 @@ public class HabitController extends AppCompatActivity {
     private FirebaseStore testbase = new FirebaseStore();
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private String editHabitCreator;
+    private Boolean editHabitState;
 
     /**
      * create view to get information for creating a habit
@@ -94,6 +96,8 @@ public class HabitController extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 //setting UI fields to display habit info
                 Habit habit1 = documentSnapshot.toObject(Habit.class);
+                editHabitCreator = habit1.getCreator();
+                editHabitState = habit1.getPrivateIndicator();
                 days.addAll(habit1.getFrequency());
                 habitName.setText(dummyhabitname);
                 String pattern = "dd/MM/yyyy";
@@ -115,7 +119,7 @@ public class HabitController extends AppCompatActivity {
             }
             String reasonInput = reason.getText().toString().trim();
 
-            Habit modifiedHabit = new Habit(dummyhabitname, dateInput, days, reasonInput, -1);
+            Habit modifiedHabit = new Habit(dummyhabitname, dateInput, days, reasonInput, -1,editHabitCreator,editHabitState);
 
             //stores habit created above in firebase and returns to previous menu
             FirebaseStore fb = new FirebaseStore();

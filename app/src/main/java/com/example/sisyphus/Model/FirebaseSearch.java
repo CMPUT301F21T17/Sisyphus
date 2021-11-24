@@ -7,6 +7,10 @@
 
 package com.example.sisyphus.Model;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
+
 import com.example.sisyphus.Model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -20,7 +24,7 @@ public class FirebaseSearch {
 
     //all (most) meaningful searches will require a userID of the user to begin with
     private String userID;
-    private FirebaseFirestore db;
+    private FirebaseFirestore db=FirebaseFirestore.getInstance();;
 
     public FirebaseSearch(){
         //Default constructor
@@ -48,6 +52,7 @@ public class FirebaseSearch {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 searchedUser[0] = documentSnapshot.toObject(User.class);
+                Log.d(TAG,"Get user name:"+searchedUser[0].getFirst());
             }
         });
         return searchedUser[0];

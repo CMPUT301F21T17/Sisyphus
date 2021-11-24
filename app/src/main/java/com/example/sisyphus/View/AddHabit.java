@@ -15,6 +15,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +47,7 @@ public class AddHabit extends AppCompatActivity {
     private TextInputLayout habitName, reason;
     private EditText startDate, frequency;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private Switch state;
 
     //initializing firebase authentication (session) object
     private FirebaseAuth mAuth;
@@ -75,6 +77,7 @@ public class AddHabit extends AppCompatActivity {
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
         reason = findViewById(R.id.reason);
+        state = findViewById(R.id.stateSwitch);
 
         //setting up storage for dates
         ArrayList<String> days = new ArrayList<>();
@@ -90,7 +93,8 @@ public class AddHabit extends AppCompatActivity {
                 e.printStackTrace();
             }
             String reasonInput = Objects.requireNonNull(reason.getEditText()).getText().toString().trim();
-            Habit habitInput = new Habit(habit, dateInput, days, reasonInput, -1);
+            Boolean habitState = state.isChecked();
+            Habit habitInput = new Habit(habit, dateInput, days, reasonInput, -1,mAuth.getUid(),habitState);
 
             //establishing connection to firebase, storing data, and then returning to previous menu
             FirebaseStore fb = new FirebaseStore();

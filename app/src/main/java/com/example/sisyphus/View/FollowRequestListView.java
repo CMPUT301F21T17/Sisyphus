@@ -14,7 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,6 +47,7 @@ public class FollowRequestListView extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference collectionReference = db.collection("Users");
     FirebaseAuth mAuth;
+    followProtocol test = new followProtocol();
 
     /**
      * Create a view to display all follow request
@@ -54,6 +57,9 @@ public class FollowRequestListView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_request_list_view);
+
+        //Send request to followTest2
+        test.sendRequest("sVonWg6rYWgHoVasXngUunAbz6J2");
         //getting name of habit to display events for from intent
         Intent intent = getIntent();
         //String currentHabit = intent.getStringExtra("1");
@@ -69,6 +75,42 @@ public class FollowRequestListView extends AppCompatActivity {
         followRequestAdapter = new FollowRequestListAdapter(this,followRequestList);
         listFollowRequest.setAdapter(followRequestAdapter);
         setFollowRequest(mAuth.getUid());
+
+        final Button button_home = findViewById(R.id.home_button);
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            /**
+             * function to open Home when clicked
+             */
+            public void onClick(View v) {
+                Intent intent = new Intent(FollowRequestListView.this, EmptyMainMenu.class);
+                startActivity(intent);
+            }
+        });
+
+        final Button button_calendar = findViewById(R.id.calendar_button);
+        button_calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            /**
+             * function to open Calendar when clicked
+             */
+            public void onClick(View v) {
+                Intent intent = new Intent(FollowRequestListView.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
+        button_allHabitList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            /**
+             * function to open AllHabits list when clicked
+             */
+            public void onClick(View view) {
+                Intent intent = new Intent(FollowRequestListView.this,AllHabitListView.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**

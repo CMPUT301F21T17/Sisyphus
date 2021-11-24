@@ -19,6 +19,8 @@ public class Habit implements Serializable {
     private ArrayList<String> frequency;
     private String reason;
     private int position;
+    private String creator;
+    private Boolean privateIndicator;
 
     public Habit() {
     }
@@ -34,14 +36,52 @@ public class Habit implements Serializable {
      * @param reason
      *  reason for habit
      */
-    public Habit(String habitName, Date startDate, ArrayList<String> frequency, String reason, int position) {
+    public Habit(String habitName, Date startDate, ArrayList<String> frequency, String reason, int position,String creator,Boolean state) {
         setHabitName(habitName);
         setStartDate(startDate);
         setFrequency(frequency);
         setReason(reason);
         setPosition(position);
+        setCreator(creator);
+        setPrivateIndicator(state);
     }
-    
+
+    /**
+     * function to get Habit's state
+     * @return
+     *  id of habit creator
+     */
+    public Boolean getPrivateIndicator() {
+        return privateIndicator;
+    }
+
+    /**
+     * function to set habit creator
+     * @param privateIndicator
+     *  creator to set habit to
+     */
+    public void setPrivateIndicator(Boolean privateIndicator) {
+        this.privateIndicator = privateIndicator;
+    }
+
+    /**
+     * function to get Habit creator
+     * @return
+     *  id of habit creator
+     */
+    public String getCreator() {
+        return creator;
+    }
+
+    /**
+     * function to set habit creator
+     * @param creator
+     *  creator to set habit to
+     */
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
     /**
      * function to get Habit name
      * @return
