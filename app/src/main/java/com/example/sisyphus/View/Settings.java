@@ -40,6 +40,7 @@ public class Settings extends AppCompatActivity {
     TextView fName;
     TextView lName;
     TextView email;
+    TextView idDisplay;
 
     Button fNameEdit;
     Button lNameEdit;
@@ -65,6 +66,9 @@ public class Settings extends AppCompatActivity {
         fName = findViewById(R.id.settingsFNameView);
         lName = findViewById(R.id.settingsLNameView);
         email = findViewById(R.id.settingsEmailView);
+        idDisplay = findViewById(R.id.textViewIDDisplay);
+
+
         // Initializing Buttons
         fNameEdit = findViewById(R.id.fNameEdit);
         lNameEdit = findViewById(R.id.lNameEdit);
@@ -75,6 +79,8 @@ public class Settings extends AppCompatActivity {
         //setting authentication object to current session (signed in user) and connecting to database
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        idDisplay.setText("Your ID: " + mAuth.getUid());
 
         //gets passed user and displays their data in text-fields
         DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
