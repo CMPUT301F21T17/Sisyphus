@@ -17,6 +17,7 @@
             android:exported="true" />
         <activity
             android:name=".View.SearchResults"
+            android:name=".View.DisplaySearch"
             android:exported="true" />
         <activity
             android:name=".View.Dialog.ChangePassword"
