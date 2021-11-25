@@ -8,12 +8,14 @@ package com.example.sisyphus.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +25,7 @@ import android.widget.ListView;
 
 import com.example.sisyphus.Model.AllHabitList_Adapter;
 import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.habitFollowCalculator;
 import com.example.sisyphus.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,6 +61,7 @@ public class AllHabitListView extends AppCompatActivity {
      * create view to display all habit events
      * @param savedInstanceState
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +78,14 @@ public class AllHabitListView extends AppCompatActivity {
 
         setUserHabit(currentUserID);
 
+        habitAdapter = new AllHabitList_Adapter(this, habitDataList);
+        allhabitListView.setAdapter(habitAdapter);
+
+
+
+
+
+        allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         // make habit clickable
         habitAdapter = new AllHabitList_Adapter(this, habitDataList, new AllHabitList_Adapter.ItemClickListener() {
             /**
@@ -83,6 +95,13 @@ public class AllHabitListView extends AppCompatActivity {
              *  The habit that was clicked to be passed to new intent
              */
             @Override
+            /**
+             * function to open ViewHabit when Habits clicked
+             */
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                habitFollowCalculator c = new habitFollowCalculator();
+                int a = c.calculateCloseness(habitDataList.get(i), mAuth.getUid());
+
             public void onItemClick(Habit clickedHabit) {
                 Intent intent = new Intent (AllHabitListView.this, ViewHabit.class);
                 intent.putExtra("habit",clickedHabit);
