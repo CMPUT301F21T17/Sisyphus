@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="habit_name"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:inputType="text"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -44,7 +44,7 @@
             android:id="@+id/startDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:hint="yyyy_dd_mm"
             android:importantForAutofill="no"
             android:inputType="none"
@@ -63,7 +63,7 @@
             android:id="@+id/frequency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:focusable="false"
             android:hint="Select_days"
             android:importantForAutofill="no"
@@ -84,7 +84,7 @@
             android:id="@+id/reasonInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:hint="reason"
             android:inputType="text"/>
 
