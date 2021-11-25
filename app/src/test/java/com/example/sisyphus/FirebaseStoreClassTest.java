@@ -30,21 +30,17 @@ public class FirebaseStoreClassTest {
     //private FirebaseAuth mAuth = FirebaseAuth.getInstance()
 
     String PROJECT_ID = "sisyphus-846e7";
-    FirebaseFirestore db =
 
     private User testUser(){
         User user = new User();
-        user.setfirst("Test");
-        user.setlast("User");
+        user.setFirst("Test");
+        user.setLast("User");
         user.setDateJoined(new Date());
         return user;
     }
 
     @Test
     public void testStoreUser(){
-
-
-});
 
         FirebaseStore store = new FirebaseStore();
 
