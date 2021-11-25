@@ -11,14 +11,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sisyphus.Model.Habit;
 import com.example.sisyphus.R;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,17 +23,15 @@ import com.google.firebase.firestore.WriteBatch;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * A class that adapts Habit objects to their content_all_habit_list xml
  * Used in both AllHabitList and CalendarActivity
  */
 public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adapter.HabitViewHolder> {
-    private LayoutInflater inflater;
-    private Context context;
-    private ArrayList<Habit> habits;
-    private ItemClickListener itemListener;
+    private final LayoutInflater inflater;
+    private final ArrayList<Habit> habits;
+    private final ItemClickListener itemListener;
 
 
     /**
@@ -49,7 +44,6 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
     public AllHabitList_Adapter( Context context, ArrayList<Habit> habits, ItemClickListener itemListener) {
         inflater = LayoutInflater.from(context);
         this.habits = habits;
-        this.context = context;
         this.itemListener = itemListener;
     }
 
@@ -70,9 +64,11 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
     }
 
     /**
-     *
+     *  Function to populate habit ViewHolder
      * @param holder
+     *  holder to populate with data
      * @param position
+     *  position of view to be populated
      */
     @Override
     public void onBindViewHolder(@NonNull AllHabitList_Adapter.HabitViewHolder holder, int position) {
@@ -80,9 +76,7 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
         holder.habitTitle.setText(habit.getHabitName());
         holder.habitDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(habit.getStartDate()));
 
-        holder.itemView.setOnClickListener(view -> {
-                itemListener.onItemClick(habits.get(position));
-            });
+        holder.itemView.setOnClickListener(view -> itemListener.onItemClick(habits.get(position)));
     }
 
     /**
@@ -134,13 +128,14 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
     /**
      *
      */
-    public class HabitViewHolder extends RecyclerView.ViewHolder {
-        private TextView habitTitle;
-        private  TextView habitDate;
+    public static class HabitViewHolder extends RecyclerView.ViewHolder {
+        private final TextView habitTitle;
+        private final TextView habitDate;
 
         /**
-         *
+         * Construct a View holder for Habit
          * @param itemView
+         *  current item being referenced
          */
         public HabitViewHolder(View itemView) {
             super(itemView);
