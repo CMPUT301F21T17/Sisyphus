@@ -46,6 +46,8 @@ public class AllHabitListView extends AppCompatActivity {
     private RecyclerView allhabitListView;
     private AllHabitList_Adapter habitAdapter;
     private ArrayList<Habit> habitDataList;
+    private int fromPosition;
+    private int toPosition;
 
     //initializing firebase authentication (session) object and establishing database connection
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -106,29 +108,30 @@ public class AllHabitListView extends AppCompatActivity {
              */
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                int fromPosition = viewHolder.getAdapterPosition();
-                int toPosition = target.getAdapterPosition();
+                fromPosition = viewHolder.getAdapterPosition();
+                toPosition = target.getAdapterPosition();
 
                 // update position field in habit
                 habitDataList.get(fromPosition).setPosition(toPosition);
                 habitDataList.get(toPosition).setPosition(fromPosition);
 
-                // update position field in habit in db, Must be done at same time otherwise SnapshotListener messes with it
-                WriteBatch batch = db.batch();
-                DocumentReference fromRef = db.collection("Users").document(currentUserID)
-                        .collection("Habits").document(habitDataList.get(fromPosition).getHabitName());
-                DocumentReference toRef = db.collection("Users").document(currentUserID)
-                        .collection("Habits").document(habitDataList.get(toPosition).getHabitName());
-
-                batch.update(fromRef, "position", toPosition);
-                batch.update(toRef, "position", fromPosition);
-
-                batch.commit();
-
                 // update position inside data list
                 Collections.swap(habitDataList, fromPosition, toPosition);
                 recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
                 return false;
+            }
+
+            /**
+             * Function called at end of Drag and Drop
+             * @param recyclerView
+             *  recycler view to drop in
+             * @param viewHolder
+             *  dragged view
+             */
+            @Override
+            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                habitAdapter.editPosition(db, currentUserID, habitDataList.get(fromPosition), habitDataList.get(toPosition));
             }
 
             // used for swipe gestures
@@ -143,10 +146,12 @@ public class AllHabitListView extends AppCompatActivity {
 
         final Button button_home = findViewById(R.id.home_button);
         button_home.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
-             * function to open Home when clicked
+             * function called when home clicked
+             * @param v
+             *  current view
              */
+            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AllHabitListView.this, EmptyMainMenu.class);
                 startActivity(intent);
@@ -155,10 +160,12 @@ public class AllHabitListView extends AppCompatActivity {
 
         final Button button_calendar = findViewById(R.id.calendar_button);
         button_calendar.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
-             * function to open Calendar when clicked
+             * function called to open calendar when clicked
+             * @param v
+             *  current view
              */
+            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AllHabitListView.this, CalendarActivity.class);
                 startActivity(intent);
@@ -167,10 +174,12 @@ public class AllHabitListView extends AppCompatActivity {
 
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
-             * function to open AllHabits list when clicked
+             * function called when all habits list button clicked
+             * @param view
+             *  current view
              */
+            @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AllHabitListView.this,AllHabitListView.class);
                 startActivity(intent);
@@ -180,10 +189,12 @@ public class AllHabitListView extends AppCompatActivity {
 
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
-             * function to open AddHabit
+             * function called to add new habit
+             * @param view
+             *  current view
              */
+            @Override
             public void onClick(View view) {
                 Intent toAddHabit = new Intent(AllHabitListView.this, AddHabit.class);
                 startActivity(toAddHabit);

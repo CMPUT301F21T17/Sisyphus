@@ -75,7 +75,7 @@
         app:srcCompat="@android:drawable/ic_input_add"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/allhabit_list"
         style="@android:style/Widget.Material.ListView"
         android:layout_width="match_parent"
@@ -93,7 +93,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_bar">
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/bottom_bar"
