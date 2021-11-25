@@ -20,9 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sisyphus.Model.Habit;
 import com.example.sisyphus.R;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * A class that adapts Habit objects to their content_all_habit_list xml
@@ -82,20 +86,50 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
     }
 
     /**
+     * function to get the count of items
+     * @return
+     *  Count of items in habits
+     */
+    @Override
+    public int getItemCount() {
+        return habits.size();
+    }
+
+    /**
+     * Updates positions of from and to habits in database
+     * @param db
+     *  database to update
+     * @param currentUserID
+     *  current user who owns habits
+     * @param from
+     *  from habit
+     * @param to
+     *  to habit
+     */
+    public void editPosition(FirebaseFirestore db, String currentUserID, Habit from, Habit to) {
+        // update position field in habit in db, Must be done at same time otherwise SnapshotListener messes with it
+        WriteBatch batch = db.batch();
+        DocumentReference fromRef = db.collection("Users").document(currentUserID)
+                .collection("Habits").document(from.getHabitName());
+        DocumentReference toRef = db.collection("Users").document(currentUserID)
+                .collection("Habits").document(to.getHabitName());
+
+        batch.update(fromRef, "position", from.getPosition());
+        batch.update(toRef, "position", to.getPosition());
+
+        batch.commit();
+
+        notifyItemMoved(from.getPosition(), to.getPosition());
+    }
+
+
+    /**
      *
      */
     public interface ItemClickListener {
         void onItemClick(Habit habit);
     }
 
-    /**
-     *
-     * @return
-     */
-    @Override
-    public int getItemCount() {
-        return habits.size();
-    }
 
     /**
      *
