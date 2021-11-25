@@ -85,7 +85,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-        final Button button_home = findViewById(R.id.calendar_home);
+        final Button button_home = findViewById(R.id.home_button);
         button_home.setOnClickListener(new View.OnClickListener() {
             @Override
             /**
@@ -97,7 +97,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-        final Button button_calendar = findViewById(R.id.calendar_calendar);
+        final Button button_calendar = findViewById(R.id.calendar_button);
         button_calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             /**
@@ -109,7 +109,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-        final Button button_allHabitList = findViewById(R.id.calendar_habitlist);
+        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
             @Override
             /**

@@ -33,7 +33,7 @@ public class ChangePassword extends AppCompatActivity {
     EditText passwordNew;
     EditText passwordConfirmNew;
 
-    Button passCancel;
+    Button back;
     Button passConfirm;
 
     //initializing firebase authentication (session) object
@@ -49,14 +49,15 @@ public class ChangePassword extends AppCompatActivity {
         passwordNew = findViewById(R.id.passwordNew);
         passwordConfirmNew = findViewById(R.id.passwordConfirmNew);
         // Initializing Buttons
-        passCancel = findViewById(R.id.passCancel);
+        back = findViewById(R.id.back);
         passConfirm = findViewById(R.id.passConfirm);
+
 
         //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
         // Cancel just switches to previous activity on click
-        passCancel.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent cancelInt = new Intent(getApplicationContext(), Settings.class);
