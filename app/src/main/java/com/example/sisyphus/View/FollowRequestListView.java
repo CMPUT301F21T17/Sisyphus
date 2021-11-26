@@ -58,19 +58,13 @@ public class FollowRequestListView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_request_list_view);
 
-        //Send request to followTest2
-        test.sendRequest("sVonWg6rYWgHoVasXngUunAbz6J2");
-        //getting name of habit to display events for from intent
-        Intent intent = getIntent();
-        //String currentHabit = intent.getStringExtra("1");
-
         //attaching UI elements to variables
         listFollowRequest= findViewById(R.id.list_follow_request);
 
         //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
-        //setting up listview and getting habitEvents properly stored in array
+        //setting up listview and getting follow request properly stored in array
         followRequestList = new ArrayList<>();
         followRequestAdapter = new FollowRequestListAdapter(this,followRequestList);
         listFollowRequest.setAdapter(followRequestAdapter);
@@ -114,7 +108,7 @@ public class FollowRequestListView extends AppCompatActivity {
     }
 
     /**
-     * Insert all habit's events and their documentID into lists
+     * Insert all follow request and the follower ID into lists
      * @param ID
      * The userID of the user to store data under
      */

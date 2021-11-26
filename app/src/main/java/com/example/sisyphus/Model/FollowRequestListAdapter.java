@@ -51,7 +51,6 @@ public class FollowRequestListAdapter extends ArrayAdapter<String>{
     private ArrayList<String> followRequestList;
     private Context context;
     followProtocol requestHandler = new followProtocol();
-    //FirebaseSearch userSearcher = new FirebaseSearch();
     private FirebaseFirestore db=FirebaseFirestore.getInstance();;
 
     /**
@@ -65,12 +64,12 @@ public class FollowRequestListAdapter extends ArrayAdapter<String>{
         super(context,0, followRequestList);
         this.followRequestList= followRequestList;
         this.context = context;
-        Log.d(TAG,"ADAPTER SUCCESS");
+        //Log.d(TAG,"ADAPTER SUCCESS");
     }
 
 
     /**
-     * A function called when populating ListHabitEvent
+     * A function called when populating FollowRequestListView
      * @param position
      *  position in data list of current HabitEvent
      * @param convertView
@@ -86,15 +85,17 @@ public class FollowRequestListAdapter extends ArrayAdapter<String>{
         if(view == null){
             view = LayoutInflater.from(context).inflate(R.layout.content_follow_request_list, parent,false);
         }
-        //gets habit event from list and formats listview box with habit information
+
+        //gets follow request from list and formats listview box with request's information
         String requestUser = followRequestList.get(position);
-        Log.d(TAG,"get view SUCCESS");
+        //Log.d(TAG,"get view SUCCESS");
         TextView requestUserName = view.findViewById(R.id.follower_name_text);
         TextView requestUserId = view.findViewById(R.id.follower_id_text);
         Button confirmButton = view.findViewById(R.id.confirm_Follow_button);
         Button rejectButton = view.findViewById(R.id.reject_Follow_button);
+        //Log.d(TAG,"idmessage"+requestUser);
 
-        Log.d(TAG,"idmessage"+requestUser);
+        //Search the user's name from ID and set them in the list
         DocumentReference docRef = db.collection("Users").document(requestUser);
         final User[] searchedUser = {new User()};
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -102,13 +103,12 @@ public class FollowRequestListAdapter extends ArrayAdapter<String>{
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 searchedUser[0] = documentSnapshot.toObject(User.class);
                 requestUserName.setText(searchedUser[0].getFirst()+" "+ searchedUser[0].getLast());
-                Log.d(TAG,"Get user name:"+searchedUser[0].getFirst());
+                //Log.d(TAG,"Get user name:"+searchedUser[0].getFirst());
             }
         });
-        Log.d(TAG,"Usernamemessage"+ searchedUser[0].getFirst());
-        //requestUserName.setText(user.getFirst()+" "+ user.getLast());
         requestUserId.setText(requestUser);
 
+        //Commit the request
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,6 +119,7 @@ public class FollowRequestListAdapter extends ArrayAdapter<String>{
             }
         });
 
+        //Reject the request
         rejectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

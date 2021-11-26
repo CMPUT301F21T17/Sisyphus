@@ -13,6 +13,7 @@
         android:id="@+id/socialExpandedListItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:paddingTop="10dp"
         android:paddingBottom="10dp" />
