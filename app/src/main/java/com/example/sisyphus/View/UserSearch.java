@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sisyphus.Model.followProtocol;
-import com.example.sisyphus.Model.searchAndRequest;
 import com.example.sisyphus.R;
 import com.google.firebase.auth.FirebaseAuth;
 

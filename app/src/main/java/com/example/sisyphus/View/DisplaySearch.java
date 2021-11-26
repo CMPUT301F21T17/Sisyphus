@@ -211,12 +211,6 @@ public class DisplaySearch extends AppCompatActivity {
                                 }
                             }
 
-                            //try{
-                           //     Thread.sleep(5000);
-                           // }
-                            //catch (Exception e){
-                            //    System.out.println("Sleep interrupted!");
-                            //}
 
                             System.out.println(test[0]);
 

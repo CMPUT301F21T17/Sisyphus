@@ -11,6 +11,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +35,9 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
     private final ArrayList<Habit> habits;
     private final ItemClickListener itemListener;
 
+    private ArrayList<Habit> habits;
+    private Context context;
+    private ArrayList<String> completionPercents;
 
     /**
      * Constructor for habit adapter
@@ -43,8 +48,12 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
      */
     public AllHabitList_Adapter( Context context, ArrayList<Habit> habits, ItemClickListener itemListener) {
         inflater = LayoutInflater.from(context);
+    public AllHabitList_Adapter( Context context, ArrayList<Habit> habits, ArrayList<String> percents) {
+        super(context,0, habits);
         this.habits = habits;
         this.itemListener = itemListener;
+        this.context = context;
+        this.completionPercents= percents;
     }
 
     /**
@@ -110,6 +119,12 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
 
         batch.update(fromRef, "position", from.getPosition());
         batch.update(toRef, "position", to.getPosition());
+        TextView habitTitle = view.findViewById(R.id.habit_title_text);
+        TextView habitDate = view.findViewById(R.id.habit_date_text);
+        ProgressBar indicator = view.findViewById(R.id.progressIndicator);
+
+        System.out.println("Set indicator progress to be: " + completionPercents.get(position));
+        indicator.setProgress(Integer.valueOf(completionPercents.get(position)));
 
         batch.commit();
 
