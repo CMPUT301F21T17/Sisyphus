@@ -7,6 +7,7 @@
 package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -54,8 +55,7 @@ public class HabitController extends AppCompatActivity {
     private FirebaseStore testbase = new FirebaseStore();
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    private String editHabitCreator;
-    private Boolean editHabitState;
+    private SwitchCompat privateToggle;
 
     /**
      * create view to get information for creating a habit
@@ -80,6 +80,7 @@ public class HabitController extends AppCompatActivity {
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
         reason = findViewById(R.id.reason);
+        privateToggle = findViewById(R.id.privateSwitch);
 
         //setting up storage for days habit occurs, and getting info for firebase search from
         //intent and auth object
@@ -96,8 +97,6 @@ public class HabitController extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 //setting UI fields to display habit info
                 Habit habit1 = documentSnapshot.toObject(Habit.class);
-                editHabitCreator = habit1.getCreator();
-                editHabitState = habit1.getPrivateIndicator();
                 days.addAll(habit1.getFrequency());
                 habitName.setText(dummyhabitname);
                 String pattern = "dd/MM/yyyy";
@@ -119,7 +118,7 @@ public class HabitController extends AppCompatActivity {
             }
             String reasonInput = reason.getText().toString().trim();
 
-            Habit modifiedHabit = new Habit(dummyhabitname, dateInput, days, reasonInput, -1,editHabitCreator,editHabitState);
+            Habit modifiedHabit = new Habit(dummyhabitname,privateToggle.isChecked() ,dateInput, days, reasonInput, -1);
 
             //stores habit created above in firebase and returns to previous menu
             FirebaseStore fb = new FirebaseStore();

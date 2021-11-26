@@ -86,7 +86,7 @@ public class EmptyMainMenu extends AppCompatActivity {
         button_Prof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EmptyMainMenu.this, UserSearch.class);
+                Intent intent = new Intent(EmptyMainMenu.this, SocialView.class);
                 startActivity(intent);
             }
         });

@@ -90,13 +90,22 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Switch
-        android:id="@+id/stateSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="59dp"
-        android:layout_marginLeft="250sp"
-        android:text="Private"
-        android:textSize="30dp" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/privatise"
+        android:padding="16dp"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/privateSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/white"
+            android:text="Private Habit"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </LinearLayout>

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sisyphus">
         <activity
+            android:name=".View.SocialView"
+            android:exported="true" />
+        <activity
             android:name=".View.FollowRequestListView"
             android:exported="true" />
         <activity

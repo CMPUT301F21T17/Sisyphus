@@ -15,12 +15,11 @@ import java.util.Date;
  */
 public class Habit implements Serializable {
     private String habitName;
+    private boolean isPrivate;
     private Date startDate;
     private ArrayList<String> frequency;
     private String reason;
     private int position;
-    private String creator;
-    private Boolean privateIndicator;
 
     public Habit() {
     }
@@ -36,50 +35,30 @@ public class Habit implements Serializable {
      * @param reason
      *  reason for habit
      */
-    public Habit(String habitName, Date startDate, ArrayList<String> frequency, String reason, int position,String creator,Boolean state) {
+    public Habit(String habitName, boolean isPrivate,Date startDate, ArrayList<String> frequency, String reason, int position) {
         setHabitName(habitName);
+        setPrivate(isPrivate);
         setStartDate(startDate);
         setFrequency(frequency);
         setReason(reason);
         setPosition(position);
-        setCreator(creator);
-        setPrivateIndicator(state);
     }
 
     /**
-     * function to get Habit's state
-     * @return
-     *  id of habit creator
+     * function to get private state
+     * @return habit private state
      */
-    public Boolean getPrivateIndicator() {
-        return privateIndicator;
+    public boolean isPrivate() {
+        return isPrivate;
     }
 
     /**
-     * function to set habit creator
-     * @param privateIndicator
-     *  creator to set habit to
+     * function to set habit frequency
+     * @param aPrivate
+     *  frequency to set habit to
      */
-    public void setPrivateIndicator(Boolean privateIndicator) {
-        this.privateIndicator = privateIndicator;
-    }
-
-    /**
-     * function to get Habit creator
-     * @return
-     *  id of habit creator
-     */
-    public String getCreator() {
-        return creator;
-    }
-
-    /**
-     * function to set habit creator
-     * @param creator
-     *  creator to set habit to
-     */
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
     }
 
     /**
