@@ -43,7 +43,29 @@ public class EditHabitEventView extends AppCompatActivity {
     Button add;
     Button cancel;
 
+    private String place;
+
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+
+    /**
+     * Activity result handler to receive data data from map activity
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == 1) {
+            Bundle extras = data.getExtras();
+            // longitude = extras.getFloat("LONGITUDE");
+            // latitude = extras.getFloat("LATITUDE");
+            place = extras.getString("LOCATION");
+            location.setText(String.format(place));
+
+        }
+    }
 
     /**
      * Create editor for Habit Events
@@ -95,6 +117,13 @@ public class EditHabitEventView extends AppCompatActivity {
             String newDate = day + "/" + month + "/" + year;
             date.setText(newDate);
         };
+
+        //create a map intent
+        location.setOnClickListener(view -> {
+            Intent googleMaps = new Intent(view.getContext(), GoogleMaps.class);
+            startActivityForResult(googleMaps, 1);
+
+        });
 
 
 

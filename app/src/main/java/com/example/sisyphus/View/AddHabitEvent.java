@@ -48,18 +48,26 @@ public class AddHabitEvent extends AppCompatActivity {
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
-    private float longitude;
-    private float latitude;
+    // private float longitude;
+    // private float latitude;
+    private String place;
 
+    /**
+     * Activity result handler to receive data data from map activity
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1 && resultCode == 1) {
             Bundle extras = data.getExtras();
-            longitude = extras.getFloat("LONGITUDE");
-            latitude = extras.getFloat("LATITUDE");
-            location.setText(String.format("%f, %f", latitude,longitude));
+            // longitude = extras.getFloat("LONGITUDE");
+            // latitude = extras.getFloat("LATITUDE");
+            place = extras.getString("LOCATION");
+            location.setText(String.format(place));
 
         }
     }

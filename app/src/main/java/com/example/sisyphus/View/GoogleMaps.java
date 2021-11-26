@@ -14,15 +14,19 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.sisyphus.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -47,7 +51,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
+public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
     private static final String TAG = GoogleMaps.class.getSimpleName();
     private GoogleMap mMap;
@@ -61,35 +65,38 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
 
     private Location lastKnownLocation;
     private Marker marker;
-    private LatLng markerPos = new LatLng(0,0);
+    private LatLng markerPos = new LatLng(0, 0);
+
+    private String pickedPlace = null;
 
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
+    private Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_maps);
 
+        Context context = this.getApplicationContext();
+
+        geocoder = new Geocoder(context);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        // Construct a PlacesClient
-        Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
-
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         final Button confirm = findViewById(R.id.confirm_button);
-        confirm.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
+        confirm.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
                 onConfirm();
             }
         });
-
 
     }
 
@@ -151,7 +158,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
         /**
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
-        */
+         */
         try {
             if (locationPermissionGranted) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
@@ -167,7 +174,9 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
                                                 lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                                 markerPos = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
                                 marker.setPosition(markerPos);
-
+                                getAddress(marker);
+                                marker.setSnippet(pickedPlace);
+                                marker.showInfoWindow();
                             }
 
                         } else {
@@ -185,24 +194,41 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
         }
     }
 
-    private void onConfirm(){
-        Intent intent = new Intent();
-        Bundle extras = new Bundle();
-
+    private void getAddress(Marker marker){
         if (marker != null) {
             LatLng userLocation = marker.getPosition();
 
-            Log.d("OOPS", String.format("Latitude: %f", userLocation.latitude));
-            Log.d("OOPS", String.format("Longitude: %f", userLocation.longitude));
+            List<Address> addresses;
+            try {
+                addresses = geocoder.getFromLocation(userLocation.latitude, userLocation.longitude, 5);
+                if (addresses.size() > 0) {
+                    Log.d("OOPS", "Location: " + addresses.get(0).getAddressLine(0));
+                    pickedPlace = addresses.get(0).getAddressLine(0);
 
-            extras.putFloat("LATITUDE", (float) userLocation.latitude);
-            extras.putFloat("LONGITUDE", (float) userLocation.longitude);
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
 
-            intent.putExtras(extras);
-            setResult(1, intent);
-            finish();
+    private void onConfirm() {
+        Intent intent = new Intent();
+        Bundle extras = new Bundle();
+
+        // Log.d("OOPS", String.format("Latitude: %f", userLocation.latitude));
+        // Log.d("OOPS", String.format("Longitude: %f", userLocation.longitude));
+
+        // extras.putFloat("LATITUDE", (float) userLocation.latitude);
+        // extras.putFloat("LONGITUDE", (float) userLocation.longitude);
+
+        if (pickedPlace != null) {
+            extras.putString("LOCATION", pickedPlace);
         }
 
+        intent.putExtras(extras);
+        setResult(1, intent);
+        finish();
     }
 
     @Override
@@ -214,15 +240,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
         super.onSaveInstanceState(outState);
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -231,9 +248,11 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
         marker = mMap.addMarker(new MarkerOptions().position(markerPos).title("Location"));
         assert marker != null;
         marker.setDraggable(true);
+
         getLocationPermission();
         updateLocationUI();
         getDeviceLocation();
+
         GoogleMap.OnMarkerDragListener dragListener = new GoogleMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDrag(@NonNull Marker marker) {
@@ -243,15 +262,19 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback{
             @Override
             public void onMarkerDragEnd(@NonNull Marker marker) {
                 Log.d("OOPS", "Drag end");
-
+                getAddress(marker);
+                marker.setSnippet(pickedPlace);
+                marker.showInfoWindow();
             }
 
             @Override
             public void onMarkerDragStart(@NonNull Marker marker) {
                 Log.d("OOPS", "Dragging start");
+                marker.hideInfoWindow();
             }
 
         };
+
         mMap.setOnMarkerDragListener(dragListener);
     }
 }
