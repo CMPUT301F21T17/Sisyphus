@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,6 +51,7 @@ public class UserSearchAdapter extends ArrayAdapter<SimpleUser> {
         TextView userName = view.findViewById(R.id.user_name);
         TextView userID = view.findViewById(R.id.user_id);
         Button follow = view.findViewById(R.id.follow_button);
+
 
         userName.setText(user.getNameFirst() + " " + user.getNameLast());
         userID.setText(user.getId());

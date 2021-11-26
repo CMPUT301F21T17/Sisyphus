@@ -50,45 +50,12 @@ public class habitFollowCalculator {
      * EVENTS EXIST, ONlY 1 EVENT PER DAY, NO EVENTS IN THE FUTURE OR BEFORE THE START DATE
      * @param habit
      * the habit to perform the calculation on
-     * @param ID
-     * the ID of the user whom the habit belongs to (necessary for non-current user habits)
      * @return
      * the integer representation of the percent of days the habit was performed on (ie 25 = 25%)
      */
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public int calculateCloseness(Habit habit, String ID){
-
-        //arrayList with # entries = to # habit events.  Done this way to circumvent onCOmpleteListener
-        //not being able to return or properly store calculated value
-        ArrayList<String> storageList = new ArrayList<>();
-        ArrayList<String> flagArray = new ArrayList<>();
-
-        collectionReference.document(ID).collection("Habits").document(habit.getHabitName()).collection("HabitEvent")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                System.out.println("YIKES");
-                                storageList.add("temp");
-
-                            }
-                            flagArray.add("DONE");
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
-
-
-
-
-
-
+    public int calculateCloseness(Habit habit){
 
 
         //Get number of days from habit
@@ -102,7 +69,7 @@ public class habitFollowCalculator {
 
         //getting day of week to start
         int startEncode = habit.getStartDate().getDay();
-        System.out.println(startEncode);
+        //System.out.println(startEncode);
 
 
         ArrayList<String> dates = habit.getFrequency();
@@ -171,21 +138,8 @@ public class habitFollowCalculator {
         //note: at this point activeDaysCounter should always be at least 1, so no divide by 0
         //issues should arise
 
-        System.out.println(storageList.size());
-        int percentClose = (int) Math.floor((storageList.size()/activeDaysCounter)*100);
-        System.out.println(percentClose);
-        return percentClose;
+        return activeDaysCounter;
 
-        //get number of habit events associated with habit
-
-
-        //if #days < # events, just make 100%....
-
-        //else, check what days habit occurs on
-
-        //determine expected number of completions between then and now
-
-        //THE REST OF THE WORK NEEDS TO BE DONE IN THE HABIT EVENT ADD CLASS
 
     }
 }

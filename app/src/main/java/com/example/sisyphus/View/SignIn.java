@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sisyphus.R;
+import com.example.sisyphus.View.Dialog.errorFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -64,7 +65,7 @@ public class SignIn extends AppCompatActivity {
 
                 //if username and password non-null
                 //can be modified to add security constraints in future
-                if(emailStore != "" && passStore != ""){
+                if((emailStore.equals("") == false) && (passStore.equals("") == false)){
                     mAuth.signInWithEmailAndPassword(emailStore, passStore)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -83,11 +84,12 @@ public class SignIn extends AppCompatActivity {
                                         } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                        Toast.makeText(SignIn.this, "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
+                                        new errorFragment("Authentication failed.  Either email or password is invalid.").show(getSupportFragmentManager(), "Display_Error");
                                     }
                                 }
                             });
+                } else {
+                    new errorFragment("Authentication failed.  Email and password cannot be empty.").show(getSupportFragmentManager(), "Display_Error");
                 }
             }
         });

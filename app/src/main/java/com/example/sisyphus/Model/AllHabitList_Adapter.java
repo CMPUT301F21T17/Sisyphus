@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class AllHabitList_Adapter extends ArrayAdapter<Habit> {
 
     private ArrayList<Habit> habits;
     private Context context;
+    private ArrayList<String> completionPercents;
 
     /**
      * Constructor for habit adapter
@@ -39,10 +41,11 @@ public class AllHabitList_Adapter extends ArrayAdapter<Habit> {
      * @param habits
      *  list of Habits
      */
-    public AllHabitList_Adapter( Context context, ArrayList<Habit> habits) {
+    public AllHabitList_Adapter( Context context, ArrayList<Habit> habits, ArrayList<String> percents) {
         super(context,0, habits);
         this.habits = habits;
         this.context = context;
+        this.completionPercents= percents;
     }
 
     /**
@@ -68,6 +71,10 @@ public class AllHabitList_Adapter extends ArrayAdapter<Habit> {
 
         TextView habitTitle = view.findViewById(R.id.habit_title_text);
         TextView habitDate = view.findViewById(R.id.habit_date_text);
+        ProgressBar indicator = view.findViewById(R.id.progressIndicator);
+
+        System.out.println("Set indicator progress to be: " + completionPercents.get(position));
+        indicator.setProgress(Integer.valueOf(completionPercents.get(position)));
 
         habitTitle.setText(habit.getHabitName());
         habitDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(habit.getStartDate()));
