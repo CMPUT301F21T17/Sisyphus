@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class Habit implements Serializable {
     private String habitName;
+    private boolean isPrivate;
     private Date startDate;
     private ArrayList<String> frequency;
     private String reason;
@@ -13,14 +14,22 @@ public class Habit implements Serializable {
     public Habit() {
     }
 
-    public Habit(String habitName, Date startDate, ArrayList<String> frequency, String reason) {
+    public Habit(String habitName,boolean isPrivate, Date startDate, ArrayList<String> frequency, String reason) {
         setHabitName(habitName);
+        setPrivate(isPrivate);
         setStartDate(startDate);
         setFrequency(frequency);
         setReason(reason);
     }
 
 
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean aPrivate) {
+        this.isPrivate = aPrivate;
+    }
 
     public String getHabitName() {
         return habitName;

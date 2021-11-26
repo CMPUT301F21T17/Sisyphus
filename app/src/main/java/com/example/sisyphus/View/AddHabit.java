@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
@@ -30,8 +32,8 @@ public class AddHabit extends AppCompatActivity {
     private TextInputLayout habitName, reason;
     private EditText startDate, frequency;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private SwitchCompat privateToggle;
 
-    private FirebaseAuth mAuth;
     public AddHabit() {
     }
 
@@ -41,11 +43,12 @@ public class AddHabit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String currentUser = mAuth.getUid();
         ImageView checkButton = findViewById(R.id.checkButton);
         ImageView cancelButton = findViewById(R.id.cancelButton);
         ImageView backButton = findViewById(R.id.backButton);
+        privateToggle = findViewById(R.id.privateSwitch);
         habitName = findViewById(R.id.habitName);
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
@@ -62,7 +65,7 @@ public class AddHabit extends AppCompatActivity {
                 e.printStackTrace();
             }
             String reasonInput = Objects.requireNonNull(reason.getEditText()).getText().toString().trim();
-            Habit habitInput = new Habit(habit, dateInput, days, reasonInput);
+            Habit habitInput = new Habit(habit,privateToggle.isChecked(), dateInput, days, reasonInput);
             //String dummyUser = "garbage";
             FirebaseStore fb = new FirebaseStore();
             fb.storeHabit(currentUser,habitInput);

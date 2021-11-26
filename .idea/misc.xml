@@ -6,7 +6,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.29074074074074074" />
         <entry key="app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.29074074074074074" />
         <entry key="app/src/main/res/layout/actionbar.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_add_habit.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_habit_event.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_all_habit_list.xml" value="0.30572916666666666" />
         <entry key="app/src/main/res/layout/activity_daily_habit_list_view.xml" value="0.2916666666666667" />

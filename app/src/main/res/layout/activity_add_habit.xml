@@ -92,7 +92,21 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/privatise"
+        android:padding="16dp"
+        android:layout_height="wrap_content"
+        >
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/privateSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Private Habit"
+            android:backgroundTint="@color/white"
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </LinearLayout>
