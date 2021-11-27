@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.sisyphus.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -121,6 +122,16 @@ public class EmptyMainMenu extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(EmptyMainMenu.this, FollowRequestListView.class);
                 startActivity(intent);
+            }
+        });
+
+        //Add Button Intent
+        final Button seeDaily = findViewById(R.id.dailyButton);
+        seeDaily.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toAddHabit = new Intent(EmptyMainMenu.this, DailyHabitListView.class);
+                startActivity(toAddHabit);
             }
         });
     }

@@ -55,9 +55,6 @@ public class Habit implements Serializable {
     }
 
 
-    public boolean isPrivate() {
-        return isPrivate;
-    }
 
 
     /**

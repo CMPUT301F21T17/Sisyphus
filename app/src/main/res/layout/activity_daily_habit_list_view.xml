@@ -10,7 +10,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/teal_700"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,7 +36,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_toEndOf="@id/backButton"
                 android:text="Daily Habits"
-                android:textColor="@color/white"
+
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
@@ -51,7 +51,7 @@
         android:gravity="center"
         android:isScrollContainer="false"
         android:text="Today's Habit"
-        android:textColor="@color/teal_700"
+
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,11 +77,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/dailyHabits"
                 android:layout_width="match_parent"
-                android:layout_height="446dp"
-                tools:ignore="NestedScrolling" />
+                android:layout_height="486dp" />
+
         </LinearLayout>
     </ScrollView>
 
