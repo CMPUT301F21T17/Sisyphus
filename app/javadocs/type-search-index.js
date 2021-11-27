@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"com.example.sisyphus.Model","l":"Habit"},{"p":"com.example.sisyphus.Model","l":"HabitEvent"},{"p":"com.example.sisyphus.Model","l":"User"}]

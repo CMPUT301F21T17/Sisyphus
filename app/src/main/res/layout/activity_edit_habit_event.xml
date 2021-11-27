@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021.
+  ~ Sisyphus, CMPUT 301
+  ~ All Rights Reserved.
+  -->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -51,16 +57,22 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/textView5"
+    <ImageView
+        android:id="@+id/editEventPhoto"
         android:layout_width="208dp"
         android:layout_height="92dp"
-        android:text="PHOTO TO GO HERE!"
+
+        android:layout_marginBottom="16dp"
+
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toBottomOf="@+id/editTextLocation" />
+
+        app:srcCompat="@android:drawable/ic_menu_crop"/>
+
 
     <Button
         android:id="@+id/buttonAdd"
@@ -69,7 +81,7 @@
         android:layout_marginStart="61dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="112dp"
-        android:text="Add"
+        android:text="Confirm"
         app:backgroundTint="#17A6A6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonCancel"
@@ -126,8 +138,12 @@
         android:layout_marginStart="62dp"
         android:layout_marginEnd="55dp"
         android:ems="10"
-        android:hint="Enter Location"
+        android:focusable="false"
+        android:hint="Select Location"
         android:inputType="textPersonName"
+
+        app:layout_constraintBottom_toTopOf="@+id/editEventPhoto"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

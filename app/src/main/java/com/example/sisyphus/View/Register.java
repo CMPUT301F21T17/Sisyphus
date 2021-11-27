@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021.
+ * Sisyphus, CMPUT 301
+ * All Rights Reserved.
+ */
+
 package com.example.sisyphus.View;
 
 import androidx.annotation.NonNull;
@@ -14,6 +20,7 @@ import android.widget.Toast;
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.R;
 import com.example.sisyphus.Model.User;
+import com.example.sisyphus.View.Dialog.errorFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,8 +29,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Date;
 
+/**
+ * A class for registering new users
+ */
 public class Register extends AppCompatActivity {
-
+    //setting UI elements
     EditText registerFirstName;
     EditText registerLastName;
     EditText registerEmail;
@@ -31,15 +41,20 @@ public class Register extends AppCompatActivity {
     EditText registerPasswordConfirm;
     Button registerConfirm;
 
+    //initializing firebase authentication (session) object and setting up log message
     private FirebaseAuth mAuth;
-
     private static final String TAG = "EmailPassword";
 
+    /**
+     * Create a view to get information to create a new user
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
+        //attaching UI elements to variables
         EditText registerFirstName = findViewById(R.id.registerFirstName);
         EditText registerLastName = findViewById(R.id.registerLastName);
         EditText registerEmail = findViewById(R.id.registerEmail);
@@ -47,29 +62,31 @@ public class Register extends AppCompatActivity {
         EditText registerPasswordConfirm = findViewById(R.id.registerPasswordConfirm);
         Button registerConfirm = findViewById(R.id.registerConfirm);
 
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
+        //onClick listener that takes user info from text-entry fields and registers (creates user
+        //and authenticates new user) the current user
         registerConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //getting user input
                 String testNorm = registerPassword.getText().toString();
                 String testConfirm = registerPasswordConfirm.getText().toString();
 
+                //validating passwords match
                 if (testNorm.equals(testConfirm)) {
                     // Here is where you can tie the registering new user
                     // Data threads: registerEmail as new users email
                     // registerPassword as new users password
                     // registerPasswordConfirm is to strictly reinforce users password choice
 
-
+                    //getting email and password
                     String emailStore;
                     String passStore;
                     emailStore = registerEmail.getText().toString();
                     passStore = registerPassword.getText().toString();
 
-                    System.out.println(emailStore);
-                    System.out.println(passStore);
 
                     //getting data entry fields
                     //TO-DO once UI complete!
@@ -94,17 +111,18 @@ public class Register extends AppCompatActivity {
 
 
 
-                    //if username and password non-null
+                    //if username, email and password non-null
                     //can be modified to add security constraints in future
-                    if(emailStore != "" && passStore != ""){
-
-                        //WHOLE SECTION BELOW COPIED WITH VERY LITTLE EDITING FROM FIREBASE DOCUMENTATION!! CITE!!
+                    if(emailStore.equals("") || passStore.equals("") || userFirst.equals("") || userLast.equals("")) {
+                        new errorFragment("Please ensure all fields are filled out!").show(getSupportFragmentManager(), "Display_Error");
+                    } else {
+                        //attempting user authentication with given data
                         mAuth.createUserWithEmailAndPassword(emailStore, passStore)
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
-                                            // Sign in success, update UI with the signed-in user's information
+                                            // Sign up worked, store new user and pass to main menu
                                             Log.d(TAG, "createUserWithEmail:success");
                                             FirebaseUser user = mAuth.getCurrentUser();
                                             FirebaseStore store = new FirebaseStore();
@@ -115,14 +133,15 @@ public class Register extends AppCompatActivity {
                                             startActivity(startEmptyMain);
 
                                         } else {
-                                            // If sign in fails, display a message to the user.
+                                            // Failed sign in, display message informing user
                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                            Toast.makeText(Register.this, "Authentication failed.",
-                                                    Toast.LENGTH_SHORT).show();
+                                            new errorFragment("Please ensure email is a valid format, and password is 6 or more characters! (eg. JohnDoe@email.com, 123456)").show(getSupportFragmentManager(), "Display_Error");
                                         }
                                     }
                                 });
                     }
+                } else {
+                    new errorFragment("Passwords do not match!").show(getSupportFragmentManager(), "Display_Error");
                 }
             }
         });

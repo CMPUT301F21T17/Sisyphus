@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021.
+  ~ Sisyphus, CMPUT 301
+  ~ All Rights Reserved.
+  -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/teal_700">
+
+    android:background="?attr/colorOnPrimary">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,7 +34,7 @@
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@id/backButton"
             android:text="Add/Edit Habit"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnBackground"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:ignore="HardcodedText" />

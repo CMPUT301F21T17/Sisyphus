@@ -1,5 +1,12 @@
+/*
+ * Copyright (c) 2021.
+ * Sisyphus, CMPUT 301
+ * All Rights Reserved.
+ */
+
 package com.example.sisyphus.View.Dialog;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +17,8 @@ import android.widget.EditText;
 
 import com.example.sisyphus.R;
 import com.example.sisyphus.View.Settings;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 //
@@ -22,14 +31,15 @@ import com.google.firebase.auth.FirebaseAuth;
 // with the correct password and users are sent back to the settings page.
 //
 public class ChangePassword extends AppCompatActivity {
-
+    //setting UI elements
     EditText passwordCurrent;
     EditText passwordNew;
     EditText passwordConfirmNew;
 
-    Button passCancel;
+    Button back;
     Button passConfirm;
 
+    //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
     @Override
@@ -42,14 +52,15 @@ public class ChangePassword extends AppCompatActivity {
         passwordNew = findViewById(R.id.passwordNew);
         passwordConfirmNew = findViewById(R.id.passwordConfirmNew);
         // Initializing Buttons
-        passCancel = findViewById(R.id.passCancel);
+        back = findViewById(R.id.back);
         passConfirm = findViewById(R.id.passConfirm);
 
 
+        //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
         // Cancel just switches to previous activity on click
-        passCancel.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent cancelInt = new Intent(getApplicationContext(), Settings.class);
@@ -57,17 +68,34 @@ public class ChangePassword extends AppCompatActivity {
             }
         });
 
+        //onClick listener which validates password in input and stores the new password
         passConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (passwordNew.getText().toString().equals(passwordConfirmNew.getText().toString()) && passwordNew.getText().toString().length() > 5) {
-                    // Add another check here that the original password matches the current user password
-                    // If all things work properly, then we implement a password change and then
-                    // Switch activities back to the previous
-                    mAuth.getCurrentUser().updatePassword(passwordNew.getText().toString());
+                //validates password conditions
+                if (passwordNew.getText().toString().equals(passwordConfirmNew.getText().toString())) {
+                    if (passwordNew.getText().toString().length() > 5){
+                        // Implements password change, then switch activities back to the previous
+                        mAuth.getCurrentUser().updatePassword(passwordNew.getText().toString())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Intent confirmInt = new Intent(getApplicationContext(), Settings.class);
+                                startActivity(confirmInt);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                new errorFragment("Password failed to update! Please log out and log in again!").show(getSupportFragmentManager(), "Display_Error");
+                            }
+                        });
 
-                    Intent confirmInt = new Intent(getApplicationContext(), Settings.class);
-                    startActivity(confirmInt);
+                    } else {
+                        new errorFragment("Password must be at least 6 characters!").show(getSupportFragmentManager(), "Display_Error");
+                    }
+
+                } else {
+                    new errorFragment("Passwords do not match!").show(getSupportFragmentManager(), "Display_Error");
                 }
             }
         });

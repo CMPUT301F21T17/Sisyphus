@@ -117,7 +117,7 @@ public class HabitEventTest {
         solo.clickOnView(eventItem);
         solo.clickOnButton("Delete");
         solo.clickOnButton("Yes");
-        assertFalse(solo.searchText("EditComment"));
+        assertFalse(solo.searchText("EditComent"));
     }
 
     @After

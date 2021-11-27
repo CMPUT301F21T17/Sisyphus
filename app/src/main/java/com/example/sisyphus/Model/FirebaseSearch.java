@@ -1,4 +1,15 @@
+
+/*
+ * Copyright (c) 2021.
+ * Sisyphus, CMPUT 301
+ * All Rights Reserved.
+ */
+
 package com.example.sisyphus.Model;
+
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
 
 import com.example.sisyphus.Model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -13,7 +24,7 @@ public class FirebaseSearch {
 
     //all (most) meaningful searches will require a userID of the user to begin with
     private String userID;
-    private FirebaseFirestore db;
+    private FirebaseFirestore db=FirebaseFirestore.getInstance();;
 
     public FirebaseSearch(){
         //Default constructor
@@ -32,15 +43,16 @@ public class FirebaseSearch {
      */
     public User searchUser(String ID){
         DocumentReference docRef = db.collection("Users").document(ID);
-
+        //retrieves given user from database
         //note that user will be a dummy user (no data) on failure!
         //furthermore, this was actually a solution recommended to me by android studios to
-        //evade the need for "final" or making this global.
+        //evade the need for "final" or making searchedUser global.
         final User[] searchedUser = {new User()};
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 searchedUser[0] = documentSnapshot.toObject(User.class);
+                Log.d(TAG,"Get user name:"+searchedUser[0].getFirst());
             }
         });
         return searchedUser[0];

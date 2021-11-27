@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021.
+  ~ Sisyphus, CMPUT 301
+  ~ All Rights Reserved.
+  -->
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,11 +31,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="habit_name"
-            android:backgroundTint="@color/white"
-            android:inputType="text"
+
+            
             android:maxLength="20"
             app:counterMaxLength="20"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText" 
+
+            android:backgroundTint="?attr/colorOnPrimary"
+            android:inputType="text"/>
+
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,7 +53,7 @@
             android:id="@+id/startDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:hint="yyyy_dd_mm"
             android:importantForAutofill="no"
             android:inputType="none"
@@ -62,7 +72,7 @@
             android:id="@+id/frequency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:focusable="false"
             android:hint="Select_days"
             android:importantForAutofill="no"
@@ -83,7 +93,7 @@
             android:id="@+id/reasonInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="?attr/colorOnPrimary"
             android:hint="reason"
             android:maxLength="30"
             app:counterMaxLength="30"
@@ -98,13 +108,16 @@
         android:padding="16dp"
         android:layout_height="wrap_content"
         >
+
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/privateSwitch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+
+            android:backgroundTint="@android:color/white"
             android:text="Private Habit"
-            android:backgroundTint="@color/white"
+
             tools:ignore="HardcodedText" />
     </com.google.android.material.textfield.TextInputLayout>
 
