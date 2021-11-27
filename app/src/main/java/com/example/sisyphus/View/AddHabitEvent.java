@@ -6,9 +6,16 @@
 
 package com.example.sisyphus.View;
 
+
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import static android.util.Base64.DEFAULT;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +25,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+
+import android.net.Uri;
+
 import android.os.Build;
+
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -49,8 +60,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import java.util.ArrayList;
+
 import java.time.LocalDate;
 import java.time.format.TextStyle;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -74,7 +89,34 @@ public class AddHabitEvent extends AppCompatActivity {
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
+
+    // private float longitude;
+    // private float latitude;
+    private String place;
+
+    /**
+     * Activity result handler to receive data data from map activity
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == 1) {
+            Bundle extras = data.getExtras();
+            // longitude = extras.getFloat("LONGITUDE");
+            // latitude = extras.getFloat("LATITUDE");
+            place = extras.getString("LOCATION");
+            location.setText(String.format(place));
+
+        }
+    }
+
+
     String TAG = "Query duplicate habit events";
+
 
     /**
      * function to create HabitEvent creation view
@@ -124,12 +166,20 @@ public class AddHabitEvent extends AppCompatActivity {
             date.setText(newDate);
         };
 
+
+        //create a map intent
+        location.setOnClickListener(view -> {
+            Intent googleMaps = new Intent(view.getContext(), GoogleMaps.class);
+            startActivityForResult(googleMaps, 1);
+        });
+
         habitPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 takePicture();
             }
+
         });
 
 
