@@ -227,7 +227,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         }
 
         intent.putExtras(extras);
-        setResult(1, intent);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
