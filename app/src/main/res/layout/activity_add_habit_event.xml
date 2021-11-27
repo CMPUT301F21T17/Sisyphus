@@ -57,17 +57,18 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="208dp"
-        android:layout_height="92dp"
+    <ImageView
+        android:id="@+id/photoView"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="16dp"
         android:text="PHOTO TO GO HERE!"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextComment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_crop" />
 
     <Button
         android:id="@+id/buttonAdd"
@@ -108,15 +109,14 @@
         android:ems="10"
         android:focusable="false"
         android:hint="Select Date"
-        android:inputType="textPersonName"
         android:importantForAutofill="no"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/editTextLocation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewHabitName"
-        tools:ignore="SpeakableTextPresentCheck,TextFields"
-        />
+        tools:ignore="SpeakableTextPresentCheck,TextFields" />
 
     <TextView
         android:id="@+id/textViewHabitName"
@@ -147,7 +147,7 @@
         android:focusable="false"
         android:hint="Select Location"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintBottom_toTopOf="@+id/photoView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -159,7 +159,7 @@
         android:layout_height="56dp"
         android:layout_marginStart="58dp"
         android:layout_marginEnd="64dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="64dp"
         android:ems="10"
         android:hint="Enter Comment"
         android:inputType="textPersonName"

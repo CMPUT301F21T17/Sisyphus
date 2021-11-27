@@ -7,10 +7,14 @@
 package com.example.sisyphus.Model;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,13 +70,23 @@ public class HabitEventListAdapter extends ArrayAdapter<HabitEvent> {
         TextView habitEventComment = view.findViewById(R.id.habit_event_comment);
         TextView habitEventDate = view.findViewById(R.id.habit_event_date);
         TextView habitEventLocation = view.findViewById(R.id.habit_event_location);
+        ImageView habitEventPhoto = view.findViewById(R.id.habit_event_picture);
 
         habitEventTitle.setText(habitEvent.getHabitName());
-        habitEventComment.setText(habitEvent.getComment());
+        habitEventComment.setText("Comment: " + habitEvent.getComment());
         habitEventDate.setText(habitEvent.getDate().toString().substring(0,10));
-        habitEventLocation.setText(habitEvent.getLocation());
-
+        habitEventLocation.setText("Location: " + habitEvent.getLocation());
+        habitEventPhoto.setImageBitmap(decodeFromFirebase(habitEvent.getPhotoID()));
         return view;
 
+    }
+
+    /**
+     * function to decode the image code
+     * @return Bitmap of image
+     */
+    public static Bitmap decodeFromFirebase(String image){
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);
     }
 }

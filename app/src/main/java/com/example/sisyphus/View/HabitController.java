@@ -7,6 +7,7 @@
 package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,6 +55,7 @@ public class HabitController extends AppCompatActivity {
     private FirebaseStore testbase = new FirebaseStore();
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private SwitchCompat privateToggle;
 
     /**
      * create view to get information for creating a habit
@@ -77,6 +80,7 @@ public class HabitController extends AppCompatActivity {
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
         reason = findViewById(R.id.reason);
+        privateToggle = findViewById(R.id.privateSwitch);
 
         //setting up storage for days habit occurs, and getting info for firebase search from
         //intent and auth object
@@ -113,7 +117,8 @@ public class HabitController extends AppCompatActivity {
                 e.printStackTrace();
             }
             String reasonInput = reason.getText().toString().trim();
-            Habit modifiedHabit = new Habit(dummyhabitname,dateInput,days,reasonInput);
+
+            Habit modifiedHabit = new Habit(dummyhabitname,privateToggle.isChecked() ,dateInput, days, reasonInput, -1);
 
             //stores habit created above in firebase and returns to previous menu
             FirebaseStore fb = new FirebaseStore();

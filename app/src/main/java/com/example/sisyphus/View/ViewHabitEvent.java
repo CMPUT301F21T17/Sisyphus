@@ -9,9 +9,13 @@ package com.example.sisyphus.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sisyphus.Model.HabitEvent;
@@ -27,7 +31,7 @@ import java.text.SimpleDateFormat;
 public class ViewHabitEvent extends AppCompatActivity {
     //setting UI elements
     TextView habitEventTitleText, habitEventDateText, habitEventLocationText, habitEventCommentText;
-
+    ImageView habitEventPhoto;
     //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
@@ -48,6 +52,7 @@ public class ViewHabitEvent extends AppCompatActivity {
         habitEventDateText = findViewById(R.id.habit_event_date);
         habitEventLocationText = findViewById(R.id.habit_event_location);
         habitEventCommentText = findViewById(R.id.habit_event_comment);
+        habitEventPhoto = findViewById(R.id.habit_event_image);
 
         //getting habit event info and displaying in UI elements
         Intent intent = getIntent();
@@ -56,8 +61,15 @@ public class ViewHabitEvent extends AppCompatActivity {
         HabitEvent receivedHabitEvent = (HabitEvent) intent.getSerializableExtra("habit_event");
         habitEventTitleText.setText(receivedHabitEvent.getHabitName());
         habitEventDateText.setText(new SimpleDateFormat("dd/MM/yyyy").format(receivedHabitEvent.getDate()));
-        habitEventLocationText.setText(receivedHabitEvent.getLocation());
-        habitEventCommentText.setText(receivedHabitEvent.getComment());
+        habitEventLocationText.setText("Location: " + receivedHabitEvent.getLocation());
+        habitEventCommentText.setText("Comment: " + receivedHabitEvent.getComment());
+
+        if(receivedHabitEvent.getPhotoID().equals("")){
+            //do nothing!
+        } else {
+            habitEventPhoto.setImageBitmap(decodeFromFirebase(receivedHabitEvent.getPhotoID()));
+        }
+
 
         final Button editHabitEventButton = findViewById(R.id.edit_habitEvent_button);
         editHabitEventButton.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +128,15 @@ public class ViewHabitEvent extends AppCompatActivity {
                 startActivity(toEventList);
             }
         });
+    }
 
+    /**
+     * function to decode the image code
+     * @param image
+     * @return Bitmap of image
+     */
+    public static Bitmap decodeFromFirebase(String image){
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);
     }
 }

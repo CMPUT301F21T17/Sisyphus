@@ -35,6 +35,15 @@
             android:exported="false"
             android:label="@string/title_activity_google_maps" />
         <activity
+            android:name=".View.SocialView"
+            android:exported="true" />
+        <activity
+            android:name=".View.FollowRequestListView"
+            android:exported="true" />
+        <activity
+            android:name=".View.DisplaySearch"
+            android:exported="true" />
+        <activity
             android:name=".View.Dialog.ChangePassword"
             android:exported="false" />
         <activity

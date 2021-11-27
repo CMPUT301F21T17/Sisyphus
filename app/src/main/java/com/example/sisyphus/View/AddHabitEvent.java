@@ -6,33 +6,69 @@
 
 package com.example.sisyphus.View;
 
+
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import static android.util.Base64.DEFAULT;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+
 import android.net.Uri;
+
+import android.os.Build;
+
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sisyphus.Model.FirebaseStore;
+import com.example.sisyphus.Model.Habit;
 import com.example.sisyphus.Model.HabitEvent;
 import com.example.sisyphus.R;
+import com.example.sisyphus.View.Dialog.errorFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * A class to Add Habit Events
@@ -40,13 +76,19 @@ import java.util.Date;
 public class AddHabitEvent extends AppCompatActivity {
     //initializing firebase authentication (session) object
     private FirebaseAuth mAuth;
+    private Bitmap takenPhoto;
+    private String takenPhotoID = "";
 
     //setting UI elements
     private EditText location,date,comment;
     private TextView habitTitle;
     private Button add,cancel;
+    private ImageView habitPhoto;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+
 
     // private float longitude;
     // private float latitude;
@@ -73,6 +115,9 @@ public class AddHabitEvent extends AppCompatActivity {
     }
 
 
+    String TAG = "Query duplicate habit events";
+
+
     /**
      * function to create HabitEvent creation view
      * @param savedInstanceState
@@ -92,7 +137,7 @@ public class AddHabitEvent extends AppCompatActivity {
         habitTitle = findViewById(R.id.textViewHabitName);
         add = findViewById(R.id.buttonAdd);
         cancel = findViewById(R.id.buttonCancel);
-
+        habitPhoto = findViewById(R.id.photoView);
         //getting name of habit event and setting UI to display it
         Intent intent = getIntent();
         String habitName = intent.getStringExtra("1");
@@ -121,10 +166,19 @@ public class AddHabitEvent extends AppCompatActivity {
             date.setText(newDate);
         };
 
+
         //create a map intent
         location.setOnClickListener(view -> {
             Intent googleMaps = new Intent(view.getContext(), GoogleMaps.class);
             startActivityForResult(googleMaps, 1);
+        });
+
+        habitPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                takePicture();
+            }
 
         });
 
@@ -134,6 +188,17 @@ public class AddHabitEvent extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
+                //error checking:
+                //-not a duplicate date
+                //-on a date the habit occurs
+                //-after or on start date
+                //-before or on current date
+                //-comment is character limited (get Sihan's code)
+
+
                 //getting input and creating event
                 Date newDate = null;
                 try {
@@ -141,16 +206,108 @@ public class AddHabitEvent extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName);
+                //HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,takenPhotoID);
 
-                //storing event in firebase and returning to previous menu
-                FirebaseStore fb = new FirebaseStore();
-                fb.storeHabitEvent(mAuth.getUid(), habitName, newEvent);
-                Intent toEventList = new Intent(AddHabitEvent.this, ListHabitEvent.class);
-                toEventList.putExtra("1",habitName);
-                startActivity(toEventList);
+                //initializing firebase authentication (session) object and establishing database connection
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                final CollectionReference collectionReference = db.collection("Users");
+                Query namedUsers = collectionReference.document(mAuth.getUid()).collection("Habits")
+                .document(habitName).collection("HabitEvent").whereEqualTo("date", newDate);
+
+                Date finalNewDate = newDate;
+                namedUsers
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                Boolean eventExists = false;
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        eventExists = true;
+                                    }
+
+                                    if(eventExists == false) {
+                                        //remaining error checking in here!
+                                        System.out.println("got here!");
+
+                                        DocumentReference habitRef = db.collection("Users").document(mAuth.getUid())
+                                                .collection("Habits").document(habitName);
+                                        habitRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @RequiresApi(api = Build.VERSION_CODES.O)
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+
+                                                    //should always execute, since we know the habit exists
+                                                    if (document.exists()) {
+                                                        Habit currentHabit = document.toObject(Habit.class);
+
+                                                        if(finalNewDate.compareTo(currentHabit.getStartDate()) >= 0){
+                                                            Date today = new Date();
+                                                            String dateConvert = new SimpleDateFormat("yyyy-MM-dd").format(finalNewDate);
+                                                            if(finalNewDate.compareTo(today) <= 0){
+                                                                //converting date to char version for comparison to freq array
+                                                                LocalDate selected = LocalDate.parse(dateConvert);
+
+
+                                                                Boolean dateValid = false;
+                                                                for(String s: currentHabit.getFrequency()){
+
+                                                                    if(s.equals(selected.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("CANADA")).toUpperCase(Locale.ROOT))){
+                                                                        dateValid = true;
+                                                                    }
+                                                                }
+
+                                                                if(dateValid == true){
+                                                                    //date good!
+                                                                    HabitEvent newEvent = new HabitEvent(finalNewDate, location.getText().toString(), comment.getText().toString(), habitName, takenPhotoID);
+                                                                    //storing event in firebase and returning to previous menu
+                                                                    FirebaseStore fb = new FirebaseStore();
+                                                                    fb.storeHabitEvent(mAuth.getUid(), habitName, newEvent);
+                                                                    Intent toEventList = new Intent(AddHabitEvent.this, ListHabitEvent.class);
+                                                                    toEventList.putExtra("1",habitName);
+                                                                    startActivity(toEventList);
+                                                                } else {
+                                                                    //date not a valid date habit occurs on!
+                                                                    new errorFragment("Cannot add event on day habit does not occur on! See habit details for valid days!").show(getSupportFragmentManager(), "Display_Error");
+                                                                }
+
+
+                                                            } else {
+                                                                //date after today!
+                                                                new errorFragment("Cannot add event in the future! Today's date is: " + today).show(getSupportFragmentManager(), "Display_Error");
+
+                                                            }
+                                                        } else {
+                                                            //date before start date!
+                                                            new errorFragment("Cannot add event before habit start date! Start date is: " + currentHabit.getStartDate()).show(getSupportFragmentManager(), "Display_Error");
+
+                                                        }
+
+
+                                                    } else {
+                                                        Log.d(TAG, "No such document");
+                                                    }
+                                                } else {
+                                                    Log.d(TAG, "get failed with ", task.getException());
+                                                }
+                                            }
+                                        });
+                                    } else {
+
+                                        new errorFragment("Event already exists for this date!").show(getSupportFragmentManager(), "Display_Error");
+
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
             }
         });
+
+
 
         //onClick listener to cancel add and return to previous menu
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -159,9 +316,48 @@ public class AddHabitEvent extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
-
     }
+
+    /**
+     * function to start the camera activity
+     */
+    private void takePicture() {
+        System.out.println("Got here");
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+        //if(i.resolveActivity(getPackageManager()) != null){
+            //System.out.println("ran");
+            //startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+        //}
+    }
+
+    /**
+     * function to get the result image back
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("did this");
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            takenPhoto = (Bitmap) extras.get("data");
+            habitPhoto.setImageBitmap(takenPhoto);
+            encodeBitmap(takenPhoto);
+        }
+    }
+
+    /**
+     * function to encode the image into a string and store in takenPhotoID
+     * @param bitmap
+     */
+    public void encodeBitmap(Bitmap bitmap){
+        System.out.println("Running");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+        takenPhotoID = Base64.encodeToString(baos.toByteArray(), DEFAULT);
+        System.out.println(takenPhotoID);
+    }
+
+
+
 }

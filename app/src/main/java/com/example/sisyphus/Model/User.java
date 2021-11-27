@@ -14,7 +14,11 @@ import java.util.Date;
 public class User {
     private String nameFirst;
     private String nameLast;
+
+
+
     private Date dateJoined;
+    private int habitCount;
 
     public User(){
         //Default constructor
@@ -34,6 +38,7 @@ public class User {
         this.nameLast = nameLast;
         this.dateJoined = dateJoined;
     }
+
 
     /**
      * function to return first name
@@ -88,4 +93,6 @@ public class User {
     public void setDateJoined(Date dateJoined) {
         this.dateJoined = dateJoined;
     }
+
+
 }
