@@ -256,7 +256,6 @@ public class AllHabitListView extends AppCompatActivity {
 
     //method that polls each habit in the list and gets the completion result
     public void setHabitCompletion(){
-        System.out.println("got to habitComp");
         for(int i = 0; i < habitDataList.size(); i++){
             int finalI = i;
             collectionReference.document(mAuth.getUid()).collection("Habits").document(habitDataList.get(i).getHabitName()).collection("HabitEvent")

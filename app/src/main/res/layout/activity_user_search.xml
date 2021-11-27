@@ -71,11 +71,9 @@
         android:layout_width="189dp"
         android:layout_height="66dp"
         android:layout_marginTop="410dp"
-        android:layout_marginBottom="30dp"
         android:ems="10"
         android:hint="Enter Last Name"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/buttonProtocolRequestAccept"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
@@ -153,29 +151,4 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/buttonProtocolSend"
-        android:layout_width="121dp"
-        android:layout_height="106dp"
-        android:layout_marginTop="139dp"
-        android:layout_marginBottom="32dp"
-        android:text="CannedProtocolRequestSend"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_bar3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.944"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextFirstName" />
-
-    <Button
-        android:id="@+id/buttonProtocolRequestAccept"
-        android:layout_width="92dp"
-        android:layout_height="92dp"
-        android:layout_marginTop="138dp"
-        android:layout_marginBottom="47dp"
-        android:text="CannedProtocolrequestAccept"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_bar3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.095"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextFirstName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

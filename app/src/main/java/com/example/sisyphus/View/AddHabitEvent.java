@@ -62,7 +62,7 @@ public class AddHabitEvent extends AppCompatActivity {
     //initializing firebase authentication (session) object
     private FirebaseAuth mAuth;
     private Bitmap takenPhoto;
-    private String takenPhotoID;
+    private String takenPhotoID = "";
 
     //setting UI elements
     private EditText location,date,comment;
@@ -156,7 +156,7 @@ public class AddHabitEvent extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,takenPhotoID);
+                //HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,takenPhotoID);
 
                 //initializing firebase authentication (session) object and establishing database connection
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -193,7 +193,7 @@ public class AddHabitEvent extends AppCompatActivity {
                                                     if (document.exists()) {
                                                         Habit currentHabit = document.toObject(Habit.class);
 
-                                                        if(finalNewDate.compareTo(currentHabit.getStartDate()) > 0){
+                                                        if(finalNewDate.compareTo(currentHabit.getStartDate()) >= 0){
                                                             Date today = new Date();
                                                             String dateConvert = new SimpleDateFormat("yyyy-MM-dd").format(finalNewDate);
                                                             if(finalNewDate.compareTo(today) <= 0){
@@ -211,7 +211,6 @@ public class AddHabitEvent extends AppCompatActivity {
 
                                                                 if(dateValid == true){
                                                                     //date good!
-
                                                                     HabitEvent newEvent = new HabitEvent(finalNewDate, location.getText().toString(), comment.getText().toString(), habitName, takenPhotoID);
                                                                     //storing event in firebase and returning to previous menu
                                                                     FirebaseStore fb = new FirebaseStore();
@@ -275,10 +274,11 @@ public class AddHabitEvent extends AppCompatActivity {
     private void takePicture() {
         System.out.println("Got here");
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(i.resolveActivity(getPackageManager()) != null){
-            System.out.println("ran");
-            startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
-        }
+        startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+        //if(i.resolveActivity(getPackageManager()) != null){
+            //System.out.println("ran");
+            //startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+        //}
     }
 
     /**
@@ -286,6 +286,7 @@ public class AddHabitEvent extends AppCompatActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("did this");
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
@@ -300,9 +301,11 @@ public class AddHabitEvent extends AppCompatActivity {
      * @param bitmap
      */
     public void encodeBitmap(Bitmap bitmap){
+        System.out.println("Running");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
         takenPhotoID = Base64.encodeToString(baos.toByteArray(), DEFAULT);
+        System.out.println(takenPhotoID);
     }
 
 

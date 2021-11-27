@@ -66,6 +66,12 @@ public class habitFollowCalculator {
 
         Period sinceStart = Period.between(start, end);
 
+        //when start = end, period = 0, so return 1 (the current day)
+        if(sinceStart.getDays() == 0){
+            return 1;
+        }
+
+
 
         //getting day of week to start
         int startEncode = habit.getStartDate().getDay();

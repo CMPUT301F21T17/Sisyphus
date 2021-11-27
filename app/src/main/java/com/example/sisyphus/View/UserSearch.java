@@ -89,27 +89,5 @@ public class UserSearch extends AppCompatActivity {
         });
 
 
-
-        final Button send = findViewById(R.id.buttonProtocolSend);
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                followProtocol test = new followProtocol();
-                test.sendRequest("hU7X0519jIhFrkefBhVflVokgVo2");
-            }
-        });
-
-        final Button accept = findViewById(R.id.buttonProtocolRequestAccept);
-        accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                followProtocol test = new followProtocol();
-                //test.handleRequest("CedJ4UrIarfLmIn1l6Bc6Ziwmdl2");
-                //test.commitFollow("CedJ4UrIarfLmIn1l6Bc6Ziwmdl2");
-            }
-        });
-
-
-
     }
 }

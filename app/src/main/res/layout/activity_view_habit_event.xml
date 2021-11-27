@@ -110,7 +110,8 @@
         android:layout_marginTop="232dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        app:srcCompat="@android:drawable/ic_menu_crop"/>
 
     <TextView
         android:id="@+id/habit_event_comment"
