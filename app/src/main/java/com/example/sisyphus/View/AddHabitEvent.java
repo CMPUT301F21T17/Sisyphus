@@ -6,6 +6,7 @@
 
 package com.example.sisyphus.View;
 
+import static android.content.ContentValues.TAG;
 import static android.util.Base64.DEFAULT;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -146,6 +148,7 @@ public class AddHabitEvent extends AppCompatActivity {
     private void takePicture() {
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(i.resolveActivity(getPackageManager()) != null){
+            Log.d(TAG,"getPackage"+getPackageManager());
             startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
         }
     }
