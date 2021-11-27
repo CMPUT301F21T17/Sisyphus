@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import static android.content.ContentValues.TAG;
 import static android.util.Base64.DEFAULT;
 
 
@@ -337,6 +338,24 @@ public class AddHabitEvent extends AppCompatActivity {
             //System.out.println("ran");
             //startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
         //}
+        if(i.resolveActivity(getPackageManager()) != null){
+            Log.d(TAG,"getPackage"+getPackageManager());
+            startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    /**
+     * function to get the result image back
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            takenPhoto = (Bitmap) extras.get("data");
+            habitPhoto.setImageBitmap(takenPhoto);
+            encodeBitmap(takenPhoto);
+        }
     }
 
     /**
