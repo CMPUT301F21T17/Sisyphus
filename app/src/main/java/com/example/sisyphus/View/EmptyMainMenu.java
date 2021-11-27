@@ -71,6 +71,16 @@ public class EmptyMainMenu extends AppCompatActivity {
             }
         });
 
+        final Button home_button = findViewById(R.id.home_button);
+        home_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmptyMainMenu.this, DailyHabitListView.class);
+                intent.putExtra("1",userID);
+                startActivity(intent);
+            }
+        });
+
 
         final Button button_Home = findViewById(R.id.home_button);
         button_Home.setOnClickListener(new View.OnClickListener() {

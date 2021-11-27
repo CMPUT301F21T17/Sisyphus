@@ -54,10 +54,12 @@
                 android:text="Habits"
                 android:textColor="#F8F9FA"
                 android:textSize="20sp"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/dropDown"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -66,6 +68,7 @@
         android:id="@+id/add_habit_button"
         android:layout_width="wrap_content"
         android:layout_height="78dp"
+
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:background="?attr/colorPrimaryDark"
@@ -95,6 +98,7 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
@@ -119,12 +123,14 @@
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+
                 android:text="Home"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/calendar_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
             <Button
                 android:id="@+id/calendar_button"
@@ -137,9 +143,11 @@
                 android:text="CALENDAR"
                 android:textSize="12sp"
                 app:backgroundTint="#17A6A6"
+
                 app:layout_constraintBaseline_toBaselineOf="@+id/home_button"
                 app:layout_constraintEnd_toStartOf="@+id/allhabitlist_button"
                 app:layout_constraintStart_toEndOf="@+id/home_button" />
+
 
             <Button
                 android:id="@+id/allhabitlist_button"
@@ -149,9 +157,11 @@
                 android:text="Habit"
                 android:textSize="12sp"
                 app:backgroundTint="#17A6A6"
+
                 app:layout_constraintBaseline_toBaselineOf="@+id/calendar_button"
                 app:layout_constraintEnd_toStartOf="@+id/profile_button"
                 app:layout_constraintStart_toEndOf="@+id/calendar_button" />
+
 
             <Button
                 android:id="@+id/profile_button"
@@ -161,11 +171,13 @@
                 android:text="Prof"
                 android:textSize="12sp"
                 app:backgroundTint="#17A6A6"
+
                 app:layout_constraintBaseline_toBaselineOf="@+id/allhabitlist_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/allhabitlist_button" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.appcompat.widget.Toolbar>
 
 

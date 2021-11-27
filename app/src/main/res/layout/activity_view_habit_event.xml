@@ -113,21 +113,36 @@
         tools:ignore="MissingConstraints"
         app:srcCompat="@android:drawable/ic_menu_crop"/>
 
-    <TextView
-        android:id="@+id/habit_event_comment"
-        android:layout_width="366dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="36dp"
-        android:text="Comment"
-        android:textColor="#002440"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        app:errorEnabled="false"
         app:layout_constraintBottom_toTopOf="@+id/BackButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_event_image"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/habit_event_image">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/habit_event_comment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Comment"
+            android:textColor="#002440"
+            android:backgroundTint="@color/white"
+            android:maxLength="20"
+            app:counterMaxLength="20"
+            app:layout_constraintBottom_toTopOf="@+id/BackButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.488"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/habit_event_image"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/BackButton"
@@ -139,8 +154,6 @@
         app:backgroundTint="#17A6A6"
         app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/habit_event_comment"
-        app:layout_constraintVertical_bias="0"
         tools:ignore="MissingConstraints"></Button>
 
     <androidx.appcompat.widget.Toolbar

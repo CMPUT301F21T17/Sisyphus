@@ -12,17 +12,14 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
@@ -49,6 +46,7 @@ public class HabitController extends AppCompatActivity {
     private EditText startDate, frequency,reason;
     private TextView habitName;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+
     private Button confirm,cancel,deleteButton;
 
     //initializing firebase authentication (session) object and starting firebase connection
@@ -61,21 +59,25 @@ public class HabitController extends AppCompatActivity {
      * create view to get information for creating a habit
      * @param savedInstanceState
      */
+
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_controller);
 
+
         //setting authentication object to current session (signed in user) and connecting to database
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         //attaching UI elements to variables
+
         ImageView backButton = findViewById(R.id.backButton);
-        confirm = findViewById(R.id.confirm);
-        cancel = findViewById(R.id.cancel);
-        deleteButton = findViewById(R.id.deleteButton);
+        privateToggle = findViewById(R.id.privateSwitch);
+        Button confirm = findViewById(R.id.confirm);
+        Button cancel = findViewById(R.id.cancel);
+        Button deleteButton = findViewById(R.id.deleteButton);
         habitName = findViewById(R.id.habitName);
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
@@ -99,6 +101,7 @@ public class HabitController extends AppCompatActivity {
                 Habit habit1 = documentSnapshot.toObject(Habit.class);
                 days.addAll(habit1.getFrequency());
                 habitName.setText(dummyhabitname);
+                privateToggle.setChecked(habit1.isPrivate());
                 String pattern = "dd/MM/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                 startDate.setText(simpleDateFormat.format(habit1.getStartDate()));
@@ -118,15 +121,18 @@ public class HabitController extends AppCompatActivity {
             }
             String reasonInput = reason.getText().toString().trim();
 
+
             Habit modifiedHabit = new Habit(dummyhabitname,privateToggle.isChecked() ,dateInput, days, reasonInput, -1);
 
             //stores habit created above in firebase and returns to previous menu
+
             FirebaseStore fb = new FirebaseStore();
             fb.storeHabit(dummyUser,modifiedHabit);
             Intent intent = new Intent(view.getContext(),ViewHabit.class);
             intent.putExtra("habit",modifiedHabit);
             startActivity(intent);
         });
+
 
         //cancels edit
         cancel.setOnClickListener(view -> {
@@ -137,6 +143,7 @@ public class HabitController extends AppCompatActivity {
             finish();
         });
 
+
         //Deleting a Habit from database
         deleteButton.setOnClickListener(view -> {
                     //setting up fragment
@@ -145,6 +152,7 @@ public class HabitController extends AppCompatActivity {
                     builder.setTitle("Message");
                     builder.setMessage("Are you sure you want to delete this habit");
                     builder.setPositiveButton("Confirm",
+
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -153,12 +161,9 @@ public class HabitController extends AppCompatActivity {
                                     Intent intent = new Intent(view.getContext(),AllHabitListView.class);
                                     startActivity(intent);
                                 }
-                            });
-                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
 
+                            });
+                    builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {
                     });
         AlertDialog deleteDialog = builder.create();
         deleteDialog.show();

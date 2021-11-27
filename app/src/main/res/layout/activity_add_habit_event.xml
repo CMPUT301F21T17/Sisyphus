@@ -57,6 +57,7 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
+
     <ImageView
         android:id="@+id/photoView"
         android:layout_width="300dp"
@@ -64,11 +65,14 @@
         android:layout_marginBottom="16dp"
         android:text="PHOTO TO GO HERE!"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextComment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/editTextLocation" 
+
         app:srcCompat="@android:drawable/ic_menu_crop" />
+
 
     <Button
         android:id="@+id/buttonAdd"
@@ -88,7 +92,6 @@
         android:layout_width="120dp"
         android:layout_height="55dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="31dp"
         android:layout_marginEnd="74dp"
         android:layout_marginBottom="60dp"
         android:text="Cancel"
@@ -96,22 +99,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonAdd"
-        app:layout_constraintTop_toBottomOf="@+id/editTextComment" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
 
     <EditText
         android:id="@+id/editTextDate"
         android:layout_width="297dp"
         android:layout_height="52dp"
         android:layout_marginStart="61dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="53dp"
-        android:layout_marginBottom="24dp"
         android:ems="10"
         android:focusable="false"
         android:hint="Select Date"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
+
         app:layout_constraintBottom_toTopOf="@+id/editTextLocation"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,11 +128,9 @@
         android:layout_marginStart="61dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="57dp"
-        android:layout_marginBottom="8dp"
         android:text="TextView"
-        android:textSize="34sp"
         android:textColor="#002440"
-        app:layout_constraintBottom_toTopOf="@+id/editTextDate"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -141,12 +142,12 @@
         android:layout_height="52dp"
         android:layout_marginStart="62dp"
         android:layout_marginEnd="55dp"
-        android:layout_marginBottom="8dp"
         android:ems="10"
         android:importantForAutofill="no"
         android:focusable="false"
         android:hint="Select Location"
         android:inputType="textPersonName"
+
         app:layout_constraintBottom_toTopOf="@+id/photoView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -164,8 +165,23 @@
         android:hint="Enter Comment"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextComment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:hint="Enter Comment"
+            android:backgroundTint="@color/white"
+            android:maxLength="20"
+            app:counterMaxLength="20"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="58dp"
+            tools:layout_editor_absoluteY="429dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
