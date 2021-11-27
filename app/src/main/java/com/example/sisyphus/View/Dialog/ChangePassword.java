@@ -45,7 +45,6 @@ public class ChangePassword extends AppCompatActivity {
         setContentView(R.layout.changepassword);
 
         // Initializing Edit Texts
-        passwordCurrent = findViewById(R.id.passwordCurrent);
         passwordNew = findViewById(R.id.passwordNew);
         passwordConfirmNew = findViewById(R.id.passwordConfirmNew);
         // Initializing Buttons
@@ -60,8 +59,7 @@ public class ChangePassword extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cancelInt = new Intent(getApplicationContext(), Settings.class);
-                startActivity(cancelInt);
+                finish();
             }
         });
 
@@ -75,8 +73,7 @@ public class ChangePassword extends AppCompatActivity {
                     // Implements password change, then switch activities back to the previous
                     mAuth.getCurrentUser().updatePassword(passwordNew.getText().toString());
 
-                    Intent confirmInt = new Intent(getApplicationContext(), Settings.class);
-                    startActivity(confirmInt);
+                    finish();
                 }
             }
         });

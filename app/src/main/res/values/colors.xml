@@ -51,5 +51,24 @@
     <color name="md_theme_dark_inverseOnSurface">#191C1C</color>
     <color name="md_theme_dark_inverseSurface">#E0E3E2</color>
     <color name="md_theme_dark_primaryInverse">#006A6A</color>
-    <color name="seed">#17A6A6</color><color name="error">#BA1B1B</color>
+    <color name="seed">#17A6A6</color>
+    <color name="error">#BA1B1B</color>
+
+    <color name="primaryColor">#99feff</color>
+    <color name="primaryLightColor">#ceffff</color>
+    <color name="primaryDarkColor">#65cbcc</color>
+    <color name="secondaryColor">#94daff</color>
+    <color name="secondaryLightColor">#c8ffff</color>
+    <color name="secondaryDarkColor">#61a8cc</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#000000</color>
+
+
+    <color name="background">#18191A</color>
+    <color name="cardColor">#242526</color>
+    <color name="hoverColor">#3A3B3C</color>
+    <color name="primaryTextW">#E4E6EB</color>
+    <color name="primaryTextB">#191C1C</color>
+    <color name="secondaryText">#B0B3B8</color>
+
 </resources>

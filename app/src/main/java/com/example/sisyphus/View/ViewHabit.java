@@ -29,8 +29,8 @@ import java.util.ArrayList;
  */
 public class ViewHabit extends AppCompatActivity {
     //setting UI elements
-    TextView habitTitleText, startDateText, frequencyText, habitReasonText;
-
+    TextView habitTitleText, startDateText, frequencyText, habitReasonText, topbarText;
+    Button back;
     //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
@@ -53,6 +53,7 @@ public class ViewHabit extends AppCompatActivity {
         startDateText = findViewById(R.id.startDateText);
         frequencyText = findViewById(R.id.frequencyText);
         habitReasonText = findViewById(R.id.habitReasonText);
+        topbarText = findViewById(R.id.topbarText);
 
         //getting habit from intent
         Intent intent = getIntent();
@@ -66,6 +67,7 @@ public class ViewHabit extends AppCompatActivity {
         String receivedDate = new SimpleDateFormat("dd/MM/yyyy").format(receivedHabit.getStartDate());
         String receivedReason = receivedHabit.getReason();
         habitTitleText.setText(receivedTitle);
+        topbarText.setText(receivedTitle);
         startDateText.setText(receivedDate);
         habitReasonText.setText(receivedReason);
         frequencyText.setText(setFrequencyText(receivedFrequency));
@@ -110,18 +112,6 @@ public class ViewHabit extends AppCompatActivity {
             }
         });
 
-        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
-        button_allHabitList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            /**
-             * A function to switch to lost of all habits
-             */
-            public void onClick(View view) {
-                Intent intent = new Intent(ViewHabit.this, AllHabitListView.class);
-                startActivity(intent);
-            }
-        });
-
         final Button deleteHabitButton = findViewById(R.id.deleteHabitButton);
         deleteHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +129,14 @@ public class ViewHabit extends AppCompatActivity {
                 dialog.show(getSupportFragmentManager(), "DELETE");
             }
         });
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     /**

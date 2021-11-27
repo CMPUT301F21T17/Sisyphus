@@ -63,7 +63,7 @@ public class ListHabitEvent extends AppCompatActivity {
 
         //attaching UI elements to variables
         listHabitEvent= findViewById(R.id.list_habit_event);
-        topBarTitle = findViewById(R.id.habit_event_title);
+        topBarTitle = findViewById(R.id.topbarText);
 
         //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();

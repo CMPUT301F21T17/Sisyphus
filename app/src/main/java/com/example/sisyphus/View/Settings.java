@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
 import com.example.sisyphus.View.Dialog.ChangePassword;
-import com.example.sisyphus.View.InfoEdit;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -138,8 +137,7 @@ public class Settings extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent passInt = new Intent(getApplicationContext(), EmptyMainMenu.class);
-                startActivity(passInt);
+                finish();
             }
         });
     }

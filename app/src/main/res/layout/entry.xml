@@ -10,7 +10,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorOnPrimary">
+    android:background="?android:attr/colorBackground">
 
     <ImageView
         android:id="@+id/imageView"
@@ -28,11 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="75dp"
         android:layout_marginEnd="75dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:elevation="05dp"
+        android:elevation="02dp"
         android:text="Sign In"
-        android:textColor="?attr/colorOnPrimary"
-        app:cornerRadius="5dp"
+        app:cornerRadius="14dp"
         app:layout_constraintBottom_toTopOf="@+id/goToSignUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -45,11 +43,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="75dp"
         android:layout_marginEnd="75dp"
+        android:backgroundTint="?attr/colorPrimary"
         android:elevation="05dp"
         android:text="Sign Up"
-        android:backgroundTint="?attr/colorPrimary"
         android:textColor="?attr/colorOnPrimary"
-        app:cornerRadius="5dp"
+        app:cornerRadius="14dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

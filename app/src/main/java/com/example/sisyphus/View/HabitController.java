@@ -18,10 +18,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
@@ -69,14 +67,14 @@ public class HabitController extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //attaching UI elements to variables
-        ImageView backButton = findViewById(R.id.backButton);
+        ImageView backButton = findViewById(R.id.back);
         confirm = findViewById(R.id.confirm);
         cancel = findViewById(R.id.cancel);
         deleteButton = findViewById(R.id.deleteButton);
-        habitName = findViewById(R.id.habitName);
+        habitName = findViewById(R.id.habitNameContainer);
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
-        reason = findViewById(R.id.reason);
+        reason = findViewById(R.id.reasonContainer);
 
         //setting up storage for days habit occurs, and getting info for firebase search from
         //intent and auth object
