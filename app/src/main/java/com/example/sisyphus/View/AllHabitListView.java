@@ -80,42 +80,29 @@ public class AllHabitListView extends AppCompatActivity {
         String currentUserID = mAuth.getUid();
 
         //attaching UI elements, and formatting listview boxes as well as storage array for habits
-        allhabitListView= findViewById(R.id.allhabit_list);
+        allhabitListView = findViewById(R.id.allhabit_list);
         habitDataList = new ArrayList<>();
 
         percents = new ArrayList<>();
 
         setUserHabit(currentUserID);
 
-        habitAdapter = new AllHabitList_Adapter(this, habitDataList, percents);
-        allhabitListView.setAdapter(habitAdapter);
 
-
-
-
-
-        allhabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         // make habit clickable
-        habitAdapter = new AllHabitList_Adapter(this, habitDataList, new AllHabitList_Adapter.ItemClickListener() {
+        habitAdapter = new AllHabitList_Adapter(this, habitDataList, percents, new AllHabitList_Adapter.ItemClickListener() {
             /**
              * A custom onItemClick Listener function to handle when habits are clicked.
-             *  Opens a ViewHabit intent
-             * @param clickedHabit
-             *  The habit that was clicked to be passed to new intent
+             * Opens a ViewHabit intent
+             *
+             * @param clickedHabit The habit that was clicked to be passed to new intent
              */
             @Override
-            /**
-             * function to open ViewHabit when Habits clicked
-             */
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                habitFollowCalculator c = new habitFollowCalculator();
-                //int a = c.calculateCloseness(habitDataList.get(i), mAuth.getUid());
-
             public void onItemClick(Habit clickedHabit) {
-                Intent intent = new Intent (AllHabitListView.this, ViewHabit.class);
-                intent.putExtra("habit",clickedHabit);
+                Intent intent = new Intent(AllHabitListView.this, ViewHabit.class);
+                intent.putExtra("habit", clickedHabit);
                 startActivity(intent);
             }
+
         });
         allhabitListView.setLayoutManager(new LinearLayoutManager(this));
         allhabitListView.setAdapter(habitAdapter);
@@ -125,14 +112,11 @@ public class AllHabitListView extends AppCompatActivity {
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
             /**
              * Position updater for reordering habits
-             * @param recyclerView
-             *  the view in which reordering occurs
-             * @param viewHolder
-             *  the location to move from
-             * @param target
-             *  the location to move to
-             * @return
-             *  boolean false?
+             *
+             * @param recyclerView the view in which reordering occurs
+             * @param viewHolder   the location to move from
+             * @param target       the location to move to
+             * @return boolean false?
              */
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -143,18 +127,19 @@ public class AllHabitListView extends AppCompatActivity {
                 habitDataList.get(fromPosition).setPosition(toPosition);
                 habitDataList.get(toPosition).setPosition(fromPosition);
 
+
                 // update position inside data list
                 Collections.swap(habitDataList, fromPosition, toPosition);
+                Collections.swap(percents, fromPosition, toPosition);
                 recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
                 return false;
             }
 
             /**
              * Function called at end of Drag and Drop
-             * @param recyclerView
-             *  recycler view to drop in
-             * @param viewHolder
-             *  dragged view
+             *
+             * @param recyclerView recycler view to drop in
+             * @param viewHolder   dragged view
              */
             @Override
             public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
@@ -176,8 +161,8 @@ public class AllHabitListView extends AppCompatActivity {
         button_home.setOnClickListener(new View.OnClickListener() {
             /**
              * function called when home clicked
-             * @param v
-             *  current view
+             *
+             * @param v current view
              */
             @Override
             public void onClick(View v) {
@@ -190,8 +175,8 @@ public class AllHabitListView extends AppCompatActivity {
         button_calendar.setOnClickListener(new View.OnClickListener() {
             /**
              * function called to open calendar when clicked
-             * @param v
-             *  current view
+             *
+             * @param v current view
              */
             @Override
             public void onClick(View v) {
@@ -204,12 +189,12 @@ public class AllHabitListView extends AppCompatActivity {
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
             /**
              * function called when all habits list button clicked
-             * @param view
-             *  current view
+             *
+             * @param view current view
              */
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AllHabitListView.this,AllHabitListView.class);
+                Intent intent = new Intent(AllHabitListView.this, AllHabitListView.class);
                 startActivity(intent);
             }
         });
@@ -219,8 +204,8 @@ public class AllHabitListView extends AppCompatActivity {
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             /**
              * function called to add new habit
-             * @param view
-             *  current view
+             *
+             * @param view current view
              */
             @Override
             public void onClick(View view) {
@@ -236,6 +221,7 @@ public class AllHabitListView extends AppCompatActivity {
      * The userID of the user to store data under
      */
     public void setUserHabit(String ID){
+
         final CollectionReference habitRef = db.collection("Users").document(ID).collection("Habits");
         habitRef
                 // get the habits in the correct order
@@ -257,30 +243,20 @@ public class AllHabitListView extends AppCompatActivity {
                             batch.update(docRef, "position", updated_position);
 
                             habitDataList.add(result);
+                            percents.add("0");
                             updated_position = updated_position + 1;
+
                         }
                         batch.commit();
                         habitAdapter.notifyDataSetChanged();
+                        setHabitCompletion();
                     }
                 });
-        habitRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                //clears data so list can be updated, then gets all habit data from firebase to display
-                habitDataList.clear();
-                for(QueryDocumentSnapshot doc:value){
-                    Habit result = doc.toObject(Habit.class);
-                    habitDataList.add(result);
-                    percents.add("0");
-                }
-                habitAdapter.notifyDataSetChanged();
-                setHabitCompletion();
-            }
-        });
     }
 
     //method that polls each habit in the list and gets the completion result
     public void setHabitCompletion(){
+        System.out.println("got to habitComp");
         for(int i = 0; i < habitDataList.size(); i++){
             int finalI = i;
             collectionReference.document(mAuth.getUid()).collection("Habits").document(habitDataList.get(i).getHabitName()).collection("HabitEvent")

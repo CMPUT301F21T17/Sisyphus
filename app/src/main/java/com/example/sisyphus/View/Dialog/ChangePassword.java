@@ -89,7 +89,7 @@ public class ChangePassword extends AppCompatActivity {
                                 new errorFragment("Password failed to update! Please log out and log in again!").show(getSupportFragmentManager(), "Display_Error");
                             }
                         });
-                        
+
                     } else {
                         new errorFragment("Password must be at least 6 characters!").show(getSupportFragmentManager(), "Display_Error");
                     }

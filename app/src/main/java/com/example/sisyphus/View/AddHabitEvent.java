@@ -127,6 +127,7 @@ public class AddHabitEvent extends AppCompatActivity {
         habitPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 takePicture();
             }
         });
@@ -211,7 +212,7 @@ public class AddHabitEvent extends AppCompatActivity {
                                                                 if(dateValid == true){
                                                                     //date good!
 
-                                                                    HabitEvent newEvent = new HabitEvent(finalNewDate, location.getText().toString(), comment.getText().toString(), habitName);
+                                                                    HabitEvent newEvent = new HabitEvent(finalNewDate, location.getText().toString(), comment.getText().toString(), habitName, takenPhotoID);
                                                                     //storing event in firebase and returning to previous menu
                                                                     FirebaseStore fb = new FirebaseStore();
                                                                     fb.storeHabitEvent(mAuth.getUid(), habitName, newEvent);
@@ -226,7 +227,7 @@ public class AddHabitEvent extends AppCompatActivity {
 
                                                             } else {
                                                                 //date after today!
-                                                                new errorFragment("Cannot add event in the future! Today's date is: " + dateConvert).show(getSupportFragmentManager(), "Display_Error");
+                                                                new errorFragment("Cannot add event in the future! Today's date is: " + today).show(getSupportFragmentManager(), "Display_Error");
 
                                                             }
                                                         } else {
@@ -272,8 +273,10 @@ public class AddHabitEvent extends AppCompatActivity {
      * function to start the camera activity
      */
     private void takePicture() {
+        System.out.println("Got here");
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(i.resolveActivity(getPackageManager()) != null){
+            System.out.println("ran");
             startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
         }
     }

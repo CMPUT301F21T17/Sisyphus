@@ -75,8 +75,8 @@ public class CalendarActivity extends AppCompatActivity {
         data = new ArrayList<>();
         percents = new ArrayList<>();
 
-        adapter = new AllHabitList_Adapter(this, data, percents);
-        adapter = new AllHabitList_Adapter(this, data, new AllHabitList_Adapter.ItemClickListener() {
+
+        adapter = new AllHabitList_Adapter(this, data, percents,  new AllHabitList_Adapter.ItemClickListener() {
             @Override
             public void onItemClick(Habit habit) {
                 // do nothing

@@ -35,7 +35,6 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
     private final ArrayList<Habit> habits;
     private final ItemClickListener itemListener;
 
-    private ArrayList<Habit> habits;
     private Context context;
     private ArrayList<String> completionPercents;
 
@@ -46,13 +45,10 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
      * @param habits
      *  list of Habits
      */
-    public AllHabitList_Adapter( Context context, ArrayList<Habit> habits, ItemClickListener itemListener) {
+    public AllHabitList_Adapter( Context context, ArrayList<Habit> habits, ArrayList<String> percents, ItemClickListener itemListener) {
         inflater = LayoutInflater.from(context);
-    public AllHabitList_Adapter( Context context, ArrayList<Habit> habits, ArrayList<String> percents) {
-        super(context,0, habits);
         this.habits = habits;
         this.itemListener = itemListener;
-        this.context = context;
         this.completionPercents= percents;
     }
 
@@ -84,7 +80,8 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
         Habit habit = habits.get(position);
         holder.habitTitle.setText(habit.getHabitName());
         holder.habitDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(habit.getStartDate()));
-
+        System.out.println("Set indicator progress to be: " + completionPercents.get(position));
+        holder.indicator.setProgress(Integer.valueOf(completionPercents.get(position)));
         holder.itemView.setOnClickListener(view -> itemListener.onItemClick(habits.get(position)));
     }
 
@@ -119,12 +116,8 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
 
         batch.update(fromRef, "position", from.getPosition());
         batch.update(toRef, "position", to.getPosition());
-        TextView habitTitle = view.findViewById(R.id.habit_title_text);
-        TextView habitDate = view.findViewById(R.id.habit_date_text);
-        ProgressBar indicator = view.findViewById(R.id.progressIndicator);
 
-        System.out.println("Set indicator progress to be: " + completionPercents.get(position));
-        indicator.setProgress(Integer.valueOf(completionPercents.get(position)));
+
 
         batch.commit();
 
@@ -146,6 +139,7 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
     public static class HabitViewHolder extends RecyclerView.ViewHolder {
         private final TextView habitTitle;
         private final TextView habitDate;
+        private final ProgressBar indicator;
 
         /**
          * Construct a View holder for Habit
@@ -156,6 +150,7 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
             super(itemView);
             habitTitle = (TextView) itemView.findViewById(R.id.habit_title_text);
             habitDate = (TextView) itemView.findViewById(R.id.habit_date_text);
+            indicator = itemView.findViewById(R.id.progressIndicator);
         }
     }
 }
