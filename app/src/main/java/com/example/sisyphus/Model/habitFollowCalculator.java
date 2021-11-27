@@ -144,6 +144,10 @@ public class habitFollowCalculator {
         //note: at this point activeDaysCounter should always be at least 1, so no divide by 0
         //issues should arise
 
+        if(activeDaysCounter == 0){
+            return 1;
+        }
+
         return activeDaysCounter;
 
 
