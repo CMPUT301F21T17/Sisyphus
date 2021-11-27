@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.sisyphus.R;
@@ -32,12 +33,14 @@ public class SocialListAdapter extends BaseExpandableListAdapter{
     private Context context;
     private List<String> expandableListTitle;//List of following User's name
     private HashMap<String, ArrayList<Habit>> expandableListDetail;//Storing a HabitList(value) for each following User(Key)
+    private HashMap<String, ArrayList<String>> expandableListPercents; //Storing the percent completion of each followed user habit
     private FirebaseFirestore db=FirebaseFirestore.getInstance();
 
-    public SocialListAdapter(Context context, List<String> expandableListTitle, HashMap<String, ArrayList<Habit>> expandableListDetail) {
+    public SocialListAdapter(Context context, List<String> expandableListTitle, HashMap<String, ArrayList<Habit>> expandableListDetail, HashMap<String, ArrayList<String>> expandableListPercents) {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
+        this.expandableListPercents = expandableListPercents;
     }
 
     /**
@@ -112,6 +115,11 @@ public class SocialListAdapter extends BaseExpandableListAdapter{
         return false;
     }
 
+
+    public Object getProgress(int listPosition, int expandedListPosition) {
+        return this.expandableListPercents.get(this.expandableListTitle.get(listPosition)).get(expandedListPosition);
+    }
+
     /**
      * A function called when populating SocialView
      * @param listPosition
@@ -163,6 +171,7 @@ public class SocialListAdapter extends BaseExpandableListAdapter{
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         final Habit followHabit = (Habit) getChild(listPosition, expandedListPosition);
+        final String habitPercent = (String) getProgress(listPosition, expandedListPosition);
 
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -174,7 +183,8 @@ public class SocialListAdapter extends BaseExpandableListAdapter{
         expandedListTextView.setText(followHabit.getHabitName());
 
         //Set Progress bar
-
+        ProgressBar indicator = (ProgressBar) convertView.findViewById(R.id.progressBar);
+        indicator.setProgress(Integer.valueOf(habitPercent));
 
 
         return convertView;

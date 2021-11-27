@@ -7,22 +7,30 @@
 package com.example.sisyphus.View;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sisyphus.Model.AllHabitList_Adapter;
 import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.habitFollowCalculator;
 import com.example.sisyphus.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -47,6 +55,10 @@ public class CalendarActivity extends AppCompatActivity {
     ArrayList<Habit> data;
     AllHabitList_Adapter adapter;
 
+    String TAG = "Percents check";
+    private ArrayList<String> percents;
+
+
     /**
      * Create view to display calendar and habits
      * @param savedInstanceState
@@ -61,7 +73,10 @@ public class CalendarActivity extends AppCompatActivity {
         habitsView = findViewById(R.id.calendar_events);
         selectedDay = new GregorianCalendar();
         data = new ArrayList<>();
-        adapter = new AllHabitList_Adapter(this, data, new AllHabitList_Adapter.ItemClickListener() {
+        percents = new ArrayList<>();
+
+
+        adapter = new AllHabitList_Adapter(this, data, percents,  new AllHabitList_Adapter.ItemClickListener() {
             @Override
             public void onItemClick(Habit habit) {
                 // do nothing
@@ -154,13 +169,73 @@ public class CalendarActivity extends AppCompatActivity {
                                 if (add) {
                                     // add habit to list to be displayed
                                     data.add(temp);
+                                    percents.add("0");
                                 }
                             }
                         }
                         adapter.notifyDataSetChanged();
+                        setHabitCompletion();
                     }
                 });
     }
+
+
+    //method that polls each habit in the list and gets the completion result
+    public void setHabitCompletion(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("Users");
+        for(int i = 0; i < data.size(); i++){
+            int finalI = i;
+            collectionReference.document(mAuth.getUid()).collection("Habits").document(data.get(i).getHabitName()).collection("HabitEvent")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            final int currentIndex = finalI;
+                            if (task.isSuccessful()) {
+                                int counter = 0;
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                    counter += 1;
+
+                                }
+
+                                System.out.println("Counted habit events: " + counter);
+                                habitFollowCalculator calc = new habitFollowCalculator();
+                                int totalDays = calc.calculateCloseness(data.get(currentIndex));
+
+                                System.out.println(counter/totalDays);
+                                System.out.println((100* counter/totalDays));
+
+
+                                int percentClose = (int) Math.floor((100*counter/totalDays));
+
+                                //should never happen, but sets completion % to 100 just
+                                //in case value exceeds days of occurrence
+                                if(percentClose > 100){
+                                    percentClose = 100;
+                                }
+
+                                System.out.println("Calculated total = " + totalDays);
+                                percents.set(currentIndex, String.valueOf(percentClose));
+
+                                System.out.println("Actual val to set to: " + percentClose);
+                                System.out.println("ArrayList Val at index: " + percents.get(currentIndex));
+
+                                System.out.println("ran this");
+                                adapter.notifyDataSetChanged();
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+        }
+
+    }
+
+
+
 
     /**
      * Function that converts a Calendar Object to a string representation of the current day

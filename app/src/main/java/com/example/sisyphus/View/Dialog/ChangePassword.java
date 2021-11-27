@@ -6,6 +6,7 @@
 
 package com.example.sisyphus.View.Dialog;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 
 import com.example.sisyphus.R;
 import com.example.sisyphus.View.Settings;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 //
@@ -70,13 +73,29 @@ public class ChangePassword extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //validates password conditions
-                if (passwordNew.getText().toString().equals(passwordConfirmNew.getText().toString()) && passwordNew.getText().toString().length() > 5) {
+                if (passwordNew.getText().toString().equals(passwordConfirmNew.getText().toString())) {
+                    if (passwordNew.getText().toString().length() > 5){
+                        // Implements password change, then switch activities back to the previous
+                        mAuth.getCurrentUser().updatePassword(passwordNew.getText().toString())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Intent confirmInt = new Intent(getApplicationContext(), Settings.class);
+                                startActivity(confirmInt);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                new errorFragment("Password failed to update! Please log out and log in again!").show(getSupportFragmentManager(), "Display_Error");
+                            }
+                        });
 
-                    // Implements password change, then switch activities back to the previous
-                    mAuth.getCurrentUser().updatePassword(passwordNew.getText().toString());
+                    } else {
+                        new errorFragment("Password must be at least 6 characters!").show(getSupportFragmentManager(), "Display_Error");
+                    }
 
-                    Intent confirmInt = new Intent(getApplicationContext(), Settings.class);
-                    startActivity(confirmInt);
+                } else {
+                    new errorFragment("Passwords do not match!").show(getSupportFragmentManager(), "Display_Error");
                 }
             }
         });

@@ -61,9 +61,15 @@ public class ViewHabitEvent extends AppCompatActivity {
         HabitEvent receivedHabitEvent = (HabitEvent) intent.getSerializableExtra("habit_event");
         habitEventTitleText.setText(receivedHabitEvent.getHabitName());
         habitEventDateText.setText(new SimpleDateFormat("dd/MM/yyyy").format(receivedHabitEvent.getDate()));
-        habitEventLocationText.setText(receivedHabitEvent.getLocation());
-        habitEventCommentText.setText(receivedHabitEvent.getComment());
-        habitEventPhoto.setImageBitmap(decodeFromFirebase(receivedHabitEvent.getPhotoID()));
+        habitEventLocationText.setText("Location: " + receivedHabitEvent.getLocation());
+        habitEventCommentText.setText("Comment: " + receivedHabitEvent.getComment());
+
+        if(receivedHabitEvent.getPhotoID().equals("")){
+            //do nothing!
+        } else {
+            habitEventPhoto.setImageBitmap(decodeFromFirebase(receivedHabitEvent.getPhotoID()));
+        }
+
 
         final Button editHabitEventButton = findViewById(R.id.edit_habitEvent_button);
         editHabitEventButton.setOnClickListener(new View.OnClickListener() {

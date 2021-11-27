@@ -1,0 +1,9 @@
+<!--
+  ~ Copyright (c) 2021.
+  ~ Sisyphus, CMPUT 301
+  ~ All Rights Reserved.
+  -->
+
+<resources>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDzj-DFlI23WWPttkdYF8i3hsgpz9wXwNI</string>
+</resources>

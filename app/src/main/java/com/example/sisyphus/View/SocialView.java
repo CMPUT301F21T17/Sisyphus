@@ -11,13 +11,16 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.example.sisyphus.Model.Habit;
 import com.example.sisyphus.Model.SocialListAdapter;
+import com.example.sisyphus.Model.habitFollowCalculator;
 import com.example.sisyphus.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,7 +50,8 @@ public class SocialView extends AppCompatActivity {
     private SocialListAdapter expandableListAdapter;
     private List<String> expandableListTitle;
     private HashMap<String, ArrayList<Habit>> expandableListDetail;
-    private ArrayList<Habit> followedHabitList;
+    private HashMap<String,ArrayList<String>> expandableListPercents;
+
 
     //initializing firebase authentication (session) object and connecting to database
     private static FirebaseFirestore db=FirebaseFirestore.getInstance();;
@@ -67,14 +71,14 @@ public class SocialView extends AppCompatActivity {
 
         //initializing storage/formatting for listview
         expandableListDetail = new HashMap<>();
-        followedHabitList = new ArrayList<>();
         expandableListTitle = new ArrayList<>();
+        expandableListPercents = new HashMap<>();
 
         //Set all the following User'sHabit
         setFollowingUserHabitList();
 
         //Set adapter
-        expandableListAdapter = new SocialListAdapter(this, expandableListTitle, expandableListDetail);
+        expandableListAdapter = new SocialListAdapter(this, expandableListTitle, expandableListDetail, expandableListPercents);
         expandableListView.setAdapter(expandableListAdapter);
 
         //Save for future development
@@ -148,8 +152,11 @@ public class SocialView extends AppCompatActivity {
      */
     private void setHabitList(){
         for(int i = 0;i<expandableListTitle.size();i++) {
+            ArrayList<Habit> followedHabitList = new ArrayList<>();
+            ArrayList<String> percents = new ArrayList<>();
             String ID =expandableListTitle.get(i);
             followedHabitList.clear();
+            percents.clear();
             final CollectionReference habitRef = db.collection("Users").document(ID).collection("Habits");
             habitRef
                     // get the habits in the correct order
@@ -163,8 +170,10 @@ public class SocialView extends AppCompatActivity {
                                 //Check private
                                 if(!result.isPrivate()){
                                     followedHabitList.add(result);
+                                    percents.add("0");
                                 }
                             }
+                            setHabitCompletion(followedHabitList, percents, ID);
                             //Set Habit List into a HashMap
                             expandableListDetail.put(ID,followedHabitList);
                             expandableListAdapter.notifyDataSetChanged();
@@ -197,5 +206,63 @@ public class SocialView extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+
+
+
+    //method that polls each habit in the list and gets the completion result
+    public void setHabitCompletion(ArrayList<Habit> habitDataList, ArrayList<String> percents, String ID){
+        for(int i = 0; i < habitDataList.size(); i++){
+            int finalI = i;
+            final CollectionReference habitRef = db.collection("Users");
+             habitRef.document(ID).collection("Habits").document(habitDataList.get(i).getHabitName()).collection("HabitEvent")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            final int currentIndex = finalI;
+                            if (task.isSuccessful()) {
+                                int counter = 0;
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                    counter += 1;
+
+                                }
+
+                                System.out.println("Counted habit events: " + counter);
+                                habitFollowCalculator calc = new habitFollowCalculator();
+                                int totalDays = calc.calculateCloseness(habitDataList.get(currentIndex));
+
+                                System.out.println(counter/totalDays);
+                                System.out.println((100* counter/totalDays));
+
+
+                                int percentClose = (int) Math.floor((100*counter/totalDays));
+
+                                //should never happen, but sets completion % to 100 just
+                                //in case value exceeds days of occurrence
+                                if(percentClose > 100){
+                                    percentClose = 100;
+                                }
+
+                                System.out.println("Calculated total = " + totalDays);
+                                percents.set(currentIndex, String.valueOf(percentClose));
+
+                                System.out.println("Actual val to set to: " + percentClose);
+                                System.out.println("ArrayList Val at index: " + percents.get(currentIndex));
+
+                                System.out.println("ran this");
+                                expandableListPercents.put(ID,percents);
+                                expandableListAdapter.notifyDataSetChanged();
+                                //habitAdapter.notifyDataSetChanged();
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+        }
+
     }
 }
