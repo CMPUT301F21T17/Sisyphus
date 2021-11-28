@@ -81,6 +81,7 @@ public class AllHabitListView extends AppCompatActivity {
     /**
      * create view to display all habit events
      * @param savedInstanceState
+     *  previous view
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -240,8 +241,12 @@ public class AllHabitListView extends AppCompatActivity {
         // Dropdown Menu Button
         dropDown = (Button) findViewById(R.id.dropDown);
         dropDown.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called to open dropdown
+             * @param v
+             *  current view
+             */
             @Override
-
             public void onClick(View v) {
                 showPopup(v);
             }
@@ -287,7 +292,9 @@ public class AllHabitListView extends AppCompatActivity {
                 });
     }
 
-    //method that polls each habit in the list and gets the completion result
+    /**
+     * method that polls each habit in the list and gets the completion result
+     */
     public void setHabitCompletion(){
         for(int i = 0; i < habitDataList.size(); i++){
             int finalI = i;
@@ -338,7 +345,14 @@ public class AllHabitListView extends AppCompatActivity {
         }
 
     }
-    // Dropdown Menu Methods
+
+    //Dropdown Menu Methods
+
+    /**
+     * Method to open popup menu
+     * @param v
+     *  current view
+     */
     public void showPopup(View v) {
         Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App);
         PopupMenu popup = new PopupMenu(wrapper, v, Gravity.LEFT, R.style.Theme_App, 0);
@@ -349,6 +363,13 @@ public class AllHabitListView extends AppCompatActivity {
         popup.show();
     }
 
+    /**
+     * function to create an options menu
+     * @param menu
+     *  menu to be created
+     * @return
+     *  true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -357,6 +378,13 @@ public class AllHabitListView extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * function to handle options menu clicks
+     * @param item
+     *  Item in menu selected
+     * @return
+     *  true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Get the main activity layout object.

@@ -51,6 +51,7 @@ public class ListHabitEvent extends AppCompatActivity {
     /**
      * Create a view to display all Habit events of a Habit
      * @param savedInstanceState
+     *  state of previous instances
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +79,19 @@ public class ListHabitEvent extends AppCompatActivity {
 
         setUserHabitEvent(mAuth.getUid(), currentHabit);
 
-
-
         listHabitEvent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
             /**
              * A function to view a habit event
+             * @param adapterView
+             *  adapter view where click happened
+             * @param view
+             *  view of clicked item
+             * @param i
+             *  position of clicked item
+             * @param l
+             *  row id of item that was clicked
              */
+            @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent (ListHabitEvent.this, ViewHabitEvent.class);
                 HabitEvent clickedHabitEvent = habitEventDataList.get(i);
@@ -98,10 +105,12 @@ public class ListHabitEvent extends AppCompatActivity {
 
         final Button back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
              * A function to switch to all habit list
+             * @param view
+             *  current view
              */
+            @Override
             public void onClick(View view) {
                 finish();
             }
@@ -110,10 +119,12 @@ public class ListHabitEvent extends AppCompatActivity {
 
         final FloatingActionButton addHabitEventButton = findViewById(R.id.add_habit_event);
         addHabitEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
              * A function to switch to add habit event view
+             * @param view
+             *  current view
              */
+            @Override
             public void onClick(View view) {
                 Intent addHabit = new Intent(view.getContext(), AddHabitEvent.class);
                 addHabit.putExtra("1", currentHabit);

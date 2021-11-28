@@ -74,6 +74,7 @@ public class CalendarActivity extends AppCompatActivity {
     /**
      * Create view to display calendar and habits
      * @param savedInstanceState
+     *  previous view
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,10 +115,12 @@ public class CalendarActivity extends AppCompatActivity {
 
         final Button button_home = findViewById(R.id.home_button);
         button_home.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
-             * function to open Home when clicked
+             * function used to open home
+             * @param v
+             *  current view
              */
+            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, DailyHabitListView.class);
                 startActivity(intent);
@@ -126,10 +129,12 @@ public class CalendarActivity extends AppCompatActivity {
 
         final Button button_calendar = findViewById(R.id.calendar_button);
         button_calendar.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
              * function to open Calendar when clicked
+             * @param v
+             *  current view
              */
+            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, CalendarActivity.class);
                 startActivity(intent);
@@ -138,17 +143,25 @@ public class CalendarActivity extends AppCompatActivity {
 
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
-             * function to open AllHabits list when clicked
+             * function to open all habit list when clicked
+             * @param view
+             *  current view
              */
+            @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CalendarActivity.this,AllHabitListView.class);
                 startActivity(intent);
             }
         });
+
         final Button button_social = findViewById(R.id.social_button);
         button_social.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function to open social page
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CalendarActivity.this, SocialView.class);
@@ -159,8 +172,12 @@ public class CalendarActivity extends AppCompatActivity {
         // Drop Down Menu Button Click
         dropDown = (Button) findViewById(R.id.dropDown);
         dropDown.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function to open dropdown menu
+             * @param v
+             *  current view
+             */
             @Override
-
             public void onClick(View v) {
                 showPopup(v);
             }
@@ -307,7 +324,14 @@ public class CalendarActivity extends AppCompatActivity {
             }
         return "ERROR";
     }
+
     // Methods for enabling the dropdown menu
+
+    /**
+     * Method to open popup menu
+     * @param v
+     *  current view
+     */
     public void showPopup(View v) {
         Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App);
         PopupMenu popup = new PopupMenu(wrapper, v, Gravity.LEFT, R.style.Theme_App, 0);
@@ -318,6 +342,13 @@ public class CalendarActivity extends AppCompatActivity {
         popup.show();
     }
 
+    /**
+     * Method to create an options menu
+     * @param menu
+     *  menu to be created
+     * @return
+     *  true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -326,6 +357,13 @@ public class CalendarActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * function to handle options menu clicks
+     * @param item
+     *  Item in menu selected
+     * @return
+     *  true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Get the main activity layout object.

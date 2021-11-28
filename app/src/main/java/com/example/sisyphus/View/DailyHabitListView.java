@@ -55,6 +55,12 @@ public class DailyHabitListView extends AppCompatActivity {
     private AllHabitList_Adapter adapter;
     Button dropDown;
     String TAG = "Adding percent completions";
+
+    /**
+     * function to create a daily habits list view
+     * @param savedInstanceState
+     *  previous view
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +69,12 @@ public class DailyHabitListView extends AppCompatActivity {
 
         dropDown = (Button) findViewById(R.id.dropDown);
         dropDown.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function to open drop down menu when clicked
+             * @param v
+             *  current view
+             */
             @Override
-
             public void onClick(View v) {
                 showPopup(v);
             }
@@ -87,7 +97,6 @@ public class DailyHabitListView extends AppCompatActivity {
                 intent.putExtra("habit", clickedHabit);
                 startActivity(intent);
             }
-
         });
 
 
@@ -134,6 +143,11 @@ public class DailyHabitListView extends AppCompatActivity {
         //Add Button Intent
         final FloatingActionButton addHabitButton = findViewById(R.id.addHabitButton);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function to open a habit creation view when clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent toAddHabit = new Intent(DailyHabitListView.this, AddHabit.class);
@@ -187,6 +201,11 @@ public class DailyHabitListView extends AppCompatActivity {
 
         final Button button_social = findViewById(R.id.social_button);
         button_social.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when social button is clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DailyHabitListView.this, SocialView.class);
@@ -196,7 +215,11 @@ public class DailyHabitListView extends AppCompatActivity {
 
     }
 
-    //Getting Current Day name
+    /**
+     * Function for getting name of current day
+     * @return
+     *  String name of current day
+     */
     public String getDayName(){
         Date date=new Date();
         Calendar c = Calendar.getInstance();
@@ -266,8 +289,13 @@ public class DailyHabitListView extends AppCompatActivity {
                         }
                     });
         }
-
     }
+
+    /**
+     * Method to open popup menu
+     * @param v
+     *  current view
+     */
     public void showPopup(View v) {
         Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App);
         PopupMenu popup = new PopupMenu(wrapper, v, Gravity.LEFT, R.style.Theme_App, 0);
@@ -278,6 +306,13 @@ public class DailyHabitListView extends AppCompatActivity {
         popup.show();
     }
 
+    /**
+     * Method to create an options menu
+     * @param menu
+     *  menu to be created
+     * @return
+     *  true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -286,6 +321,13 @@ public class DailyHabitListView extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * function to handle options menu clicks
+     * @param item
+     *  Item in menu selected
+     * @return
+     *  true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Get the main activity layout object.

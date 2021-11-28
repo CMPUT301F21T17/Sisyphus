@@ -58,6 +58,11 @@ public class DisplaySearch extends AppCompatActivity {
     String first;
     String last;
 
+    /**
+     * create a display search view
+     * @param savedInstanceState
+     *  previous view
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +90,11 @@ public class DisplaySearch extends AppCompatActivity {
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         //onClick listener to transfer user to habit list page
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when all habit list is clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DisplaySearch.this, AllHabitListView.class);
@@ -95,6 +105,11 @@ public class DisplaySearch extends AppCompatActivity {
         final Button button_calendar = findViewById(R.id.calendar_button);
         //onClick listener to transfer user to calendar page
         button_calendar.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when calendar button is clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DisplaySearch.this, CalendarActivity.class);
@@ -105,6 +120,11 @@ public class DisplaySearch extends AppCompatActivity {
 
         final Button button_Home = findViewById(R.id.home_button);
         button_Home.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when home button is clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DisplaySearch.this, EmptyMainMenu.class);
@@ -115,17 +135,17 @@ public class DisplaySearch extends AppCompatActivity {
         //currently sends to user search class.  May be worth changing later
         final Button button_Prof = findViewById(R.id.social_button);
         button_Prof.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when social button clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DisplaySearch.this, UserSearch.class);
                 startActivity(intent);
             }
         });
-
-
-
-
-
     }
 
     /**
@@ -184,7 +204,6 @@ public class DisplaySearch extends AppCompatActivity {
 
                             //checking to see if user has already followed each person in list
                             for(SimpleUser current : searchedUserList){
-
                                 DocumentReference docRef = db.collection("Users").document(mAuth.getUid()).collection("Followed")
                                         .document(current.getId());
                                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -218,8 +237,6 @@ public class DisplaySearch extends AppCompatActivity {
                                     searchedUserList.remove(current);
                                 }
                             }
-
-
 
                             //when done, update
                             userSearchAdapter.notifyDataSetChanged();

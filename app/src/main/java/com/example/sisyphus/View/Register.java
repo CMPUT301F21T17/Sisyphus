@@ -48,6 +48,7 @@ public class Register extends AppCompatActivity {
     /**
      * Create a view to get information to create a new user
      * @param savedInstanceState
+     *  previous instances' state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,29 +88,19 @@ public class Register extends AppCompatActivity {
                     emailStore = registerEmail.getText().toString();
                     passStore = registerPassword.getText().toString();
 
-
                     //getting data entry fields
                     //TO-DO once UI complete!
                     String userFirst = registerFirstName.getText().toString();
                     String userLast = registerLastName.getText().toString();
-
-
 
                     //Validating data entry fields
                     //TO-DO once UI complete
 
                     //NO VALIDATION NEEDED AT THIS STEP AS OF CURRENT
 
-
-
                     //creating user with valid data
-
                     Date currentDate = new Date();
                     User registeredUser = new User(userFirst, userLast, currentDate);
-
-
-
-
 
                     //if username, email and password non-null
                     //can be modified to add security constraints in future

@@ -54,9 +54,6 @@ public class Habit implements Serializable {
         return isPrivate;
     }
 
-
-
-
     /**
      * function to set habit frequency
      * @param aPrivate

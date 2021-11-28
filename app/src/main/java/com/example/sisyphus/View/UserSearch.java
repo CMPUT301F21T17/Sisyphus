@@ -34,23 +34,28 @@ public class UserSearch extends AppCompatActivity {
     Button back_Button, home_Button, calendar_Button, habit_Button, social_Button;
 
 
+    /**
+     * function called to create a user search view
+     * @param savedInstanceState
+     *  saved instances' state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_search);
-
         home_Button = findViewById(R.id.home_button);
-
-
         search_Button = findViewById(R.id.search_user);
         firstInput = findViewById(R.id.editTextTextFirstName);
         lastInput = findViewById(R.id.editTextTextLastName);
-
         mAuth = FirebaseAuth.getInstance();
-
 
         //onClick listener to search for a user
         search_Button.setOnClickListener(new View.OnClickListener() {
+            /**
+             * A function called when search button is clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 //check inputs have information
@@ -84,6 +89,11 @@ public class UserSearch extends AppCompatActivity {
         habit_Button = findViewById(R.id.allhabitlist_button);
         //onClick listener to return to main menu
         habit_Button.setOnClickListener(new View.OnClickListener() {
+            /**
+             * A function called when habit button is clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UserSearch.this, AllHabitListView.class);
@@ -94,6 +104,11 @@ public class UserSearch extends AppCompatActivity {
         //onClick listener to transfer user to calendar page
         calendar_Button = findViewById(R.id.calendar_button);
         calendar_Button.setOnClickListener(new View.OnClickListener() {
+            /**
+             * A function called when calendar button is clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UserSearch.this, CalendarActivity.class);
@@ -103,6 +118,11 @@ public class UserSearch extends AppCompatActivity {
 
         home_Button = findViewById(R.id.home_button);
         home_Button.setOnClickListener(new View.OnClickListener() {
+            /**
+             * A function called when home button is clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UserSearch.this, DailyHabitListView.class);
@@ -112,6 +132,11 @@ public class UserSearch extends AppCompatActivity {
 
         social_Button = findViewById(R.id.social_button);
         social_Button.setOnClickListener(new View.OnClickListener() {
+            /**
+             * A function called when social button is clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UserSearch.this, SocialView.class);
@@ -121,6 +146,11 @@ public class UserSearch extends AppCompatActivity {
 
         back_Button = findViewById(R.id.back);
         back_Button.setOnClickListener(new View.OnClickListener() {
+            /**
+             * A function called when back button is clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UserSearch.this, SocialView.class);

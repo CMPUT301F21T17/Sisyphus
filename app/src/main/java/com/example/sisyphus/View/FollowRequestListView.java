@@ -53,6 +53,7 @@ public class FollowRequestListView extends AppCompatActivity {
     /**
      * Create a view to display all follow request
      * @param savedInstanceState
+     *  state of previous instances
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,11 @@ public class FollowRequestListView extends AppCompatActivity {
 
 
         back.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when back button clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 finish();
@@ -91,6 +97,11 @@ public class FollowRequestListView extends AppCompatActivity {
         final CollectionReference requestListRef = db.collection("Users").document(ID).collection("Incoming");
         requestListRef.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    /**
+                     * function called when query completes
+                     * @param task
+                     *  query to run
+                     */
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {

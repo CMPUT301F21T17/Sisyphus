@@ -41,6 +41,7 @@ public class SignIn extends AppCompatActivity {
     /**
      * Create a view to collect information to log in a user
      * @param savedInstanceState
+     *  saved instances' state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,11 @@ public class SignIn extends AppCompatActivity {
         Button signInConfirm = findViewById(R.id.registerConfirm);
 
         signInConfirm.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Confirm sign in on click listener
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 String emailStore;
@@ -65,7 +71,7 @@ public class SignIn extends AppCompatActivity {
 
                 //if username and password non-null
                 //can be modified to add security constraints in future
-                if((emailStore.equals("") == false) && (passStore.equals("") == false)){
+                if((!emailStore.equals("")) && (!passStore.equals(""))){
                     mAuth.signInWithEmailAndPassword(emailStore, passStore)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override

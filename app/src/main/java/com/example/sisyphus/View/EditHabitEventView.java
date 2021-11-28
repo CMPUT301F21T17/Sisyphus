@@ -80,8 +80,11 @@ public class EditHabitEventView extends AppCompatActivity {
     /**
      * Activity result handler to receive data data from map activity
      * @param requestCode
+     *  code of activity request
      * @param resultCode
+     *  result code of request
      * @param data
+     *  data returned by request
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -107,6 +110,7 @@ public class EditHabitEventView extends AppCompatActivity {
     /**
      * Create editor for Habit Events
      * @param savedInstanceState
+     *  previous view
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,9 +151,6 @@ public class EditHabitEventView extends AppCompatActivity {
         }
 
 
-
-
-
         //creating the calendar for user to input habit event date
         date.setOnClickListener(view -> {
             Calendar cal = Calendar.getInstance();
@@ -168,7 +169,6 @@ public class EditHabitEventView extends AppCompatActivity {
             date.setText(newDate);
         };
 
-
         //create a map intent
         location.setOnClickListener(view -> {
             Intent googleMaps = new Intent(view.getContext(), GoogleMaps.class);
@@ -182,8 +182,6 @@ public class EditHabitEventView extends AppCompatActivity {
             }
 
         });
-
-
 
         //onClick method to get data from text entry fields and format into habit event fields to be edited
         add.setOnClickListener(new View.OnClickListener() {
@@ -330,6 +328,9 @@ public class EditHabitEventView extends AppCompatActivity {
 
     }
 
+    /**
+     * function to start the camera activity
+     */
     private void takePicture() {
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
@@ -341,6 +342,7 @@ public class EditHabitEventView extends AppCompatActivity {
     /**
      * function to encode the image into a string and store in takenPhotoID
      * @param bitmap
+     *  image to be encoded
      */
     public void encodeBitmap(Bitmap bitmap){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -351,7 +353,9 @@ public class EditHabitEventView extends AppCompatActivity {
     /**
      * function to decode the image code
      * @param image
-     * @return Bitmap of image
+     *  string representation of image
+     * @return
+     *  Bitmap of image
      */
     public static Bitmap decodeFromFirebase(String image){
         byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
