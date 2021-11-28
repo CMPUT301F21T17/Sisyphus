@@ -26,6 +26,7 @@ import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
 import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
+import com.example.sisyphus.View.Dialog.errorFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -123,15 +124,21 @@ public class HabitController extends AppCompatActivity {
             String reasonInput = reason.getText().toString().trim();
 
 
-            Habit modifiedHabit = new Habit(dummyhabitname, privateToggle.isChecked() ,dateInput, days, reasonInput, -1);
+            //Habit modifiedHabit = new Habit(dummyhabitname, privateToggle.isChecked() ,dateInput, days, reasonInput, -1);
 
-            //stores habit created above in firebase and returns to previous menu
+            if((reasonInput.equals("") == false) && (dateInput != null)) {
+                Habit modifiedHabit = new Habit(dummyhabitname, privateToggle.isChecked(), dateInput, days, reasonInput, -1);
 
-            FirebaseStore fb = new FirebaseStore();
-            fb.storeHabit(dummyUser,modifiedHabit);
-            Intent intent = new Intent(view.getContext(),ViewHabit.class);
-            intent.putExtra("habit",modifiedHabit);
-            startActivity(intent);
+                //stores habit created above in firebase and returns to previous menu
+
+                FirebaseStore fb = new FirebaseStore();
+                fb.storeHabit(dummyUser, modifiedHabit);
+                Intent intent = new Intent(view.getContext(), ViewHabit.class);
+                intent.putExtra("habit", modifiedHabit);
+                startActivity(intent);
+            } else {
+                new errorFragment("Input fields cannot be empty!").show(getSupportFragmentManager(), "Display_Error");
+            }
         });
 
 

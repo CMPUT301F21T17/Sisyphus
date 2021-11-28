@@ -30,6 +30,7 @@ import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
 import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
+import com.example.sisyphus.View.Dialog.errorFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -106,7 +107,29 @@ public class AddHabit extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
+            if(habit.equals("")){
+                new errorFragment("Please give the habit a name!").show(getSupportFragmentManager(), "Display_Error");
+                return;
+            }
+
+            if(dateInput == null){
+                new errorFragment("Please select a date!").show(getSupportFragmentManager(), "Display_Error");
+                return;
+            }
+
+
             String reasonInput = Objects.requireNonNull(reason.getEditText()).getText().toString().trim();
+
+            if(reasonInput.equals("")){
+                new errorFragment("Please add a reason!").show(getSupportFragmentManager(), "Display_Error");
+                return;
+            }
+
+            if(days.size() == 0){
+                new errorFragment("Please select at least one date for the habit to occur!").show(getSupportFragmentManager(), "Display_Error");
+                return;
+            }
 
             Habit habitInput = new Habit(habit, privateToggle.isChecked(),dateInput, days, reasonInput, -1);
 

@@ -94,16 +94,19 @@ public class ChangePassword extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                //error for timeout or otherwise failed
                                 new errorFragment("Password failed to update! Please log out and log in again!").show(getSupportFragmentManager(), "Display_Error");
                             }
                         });
 
                     } else {
+                        //invalid password
                         new errorFragment("Password must be at least 6 characters!").show(getSupportFragmentManager(), "Display_Error");
                     }
 
 
                 } else {
+                    //password confirm failed
                     new errorFragment("Passwords do not match!").show(getSupportFragmentManager(), "Display_Error");
 
                 }
