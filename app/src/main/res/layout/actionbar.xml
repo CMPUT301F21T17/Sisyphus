@@ -19,7 +19,7 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/backButton"
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/backButton"
+            android:layout_toEndOf="@id/back"
             android:text="Add/Edit Habit"
             android:textColor="?attr/colorOnBackground"
             android:textSize="20sp"
