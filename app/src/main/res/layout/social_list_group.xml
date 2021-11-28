@@ -5,20 +5,22 @@
   -->
 
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="?attr/materialCardViewElevatedStyle"
+    style="?attr/materialCardViewFilledStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:elevation="2dp"
     android:background="?attr/colorSurface">
 
     <TextView
         android:id="@+id/socialListTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:fontFamily="@font/open_sans"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textColor="@android:color/black"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="10dp"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="30sp" />
 
 </com.google.android.material.card.MaterialCardView>
