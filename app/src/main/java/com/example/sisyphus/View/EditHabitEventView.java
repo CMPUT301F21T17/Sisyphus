@@ -8,6 +8,7 @@ package com.example.sisyphus.View;
 
 import static android.util.Base64.DEFAULT;
 import static com.example.sisyphus.View.AddHabitEvent.REQUEST_IMAGE_CAPTURE;
+import static com.example.sisyphus.View.AddHabitEvent.REQUEST_LOCATION;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -69,11 +70,15 @@ public class EditHabitEventView extends AppCompatActivity {
     TextView habitTitle;
     Button add;
     Button cancel;
+
     ImageView photo;
 
     String TAG = "Editing habit event";
 
     private String place;
+
+    Button back;
+
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private Bitmap takenPhoto;
@@ -89,13 +94,20 @@ public class EditHabitEventView extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == 1) {
+        if (requestCode == REQUEST_LOCATION && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             // longitude = extras.getFloat("LONGITUDE");
             // latitude = extras.getFloat("LATITUDE");
             place = extras.getString("LOCATION");
             location.setText(String.format(place));
 
+        }
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            takenPhoto = (Bitmap) extras.get("data");
+            photo.setImageBitmap(takenPhoto);
+            encodeBitmap(takenPhoto);
         }
     }
 
@@ -115,10 +127,14 @@ public class EditHabitEventView extends AppCompatActivity {
         location = findViewById(R.id.editTextLocation);
         date = findViewById(R.id.editTextDate);
         comment = findViewById(R.id.editTextComment);
-        habitTitle = findViewById(R.id.textViewHabitName);
+        habitTitle = findViewById(R.id.topbarText);
         add = findViewById(R.id.buttonAdd);
         cancel = findViewById(R.id.buttonCancel);
+
         photo = findViewById(R.id.editEventPhoto);
+
+        back = findViewById(R.id.back);
+
 
         //getting habit name from intent (habit events require the name to be accessed)
         Intent intent = getIntent();
@@ -128,7 +144,7 @@ public class EditHabitEventView extends AppCompatActivity {
         Bitmap EditEventPhoto = decodeFromFirebase(EditEvent.getPhotoID());
 
         //setting UI to display data from selected habit event for editing
-        habitTitle.setText(EditEvent.getHabitName());
+        habitTitle.setText("Edit " + EditEvent.getHabitName() + " Event");
         location.setText(EditEvent.getLocation());
         date.setText(new SimpleDateFormat("dd/MM/yyyy").format(EditEvent.getDate()));
         comment.setText(EditEvent.getComment());
@@ -164,7 +180,7 @@ public class EditHabitEventView extends AppCompatActivity {
         //create a map intent
         location.setOnClickListener(view -> {
             Intent googleMaps = new Intent(view.getContext(), GoogleMaps.class);
-            startActivityForResult(googleMaps, 1);
+            startActivityForResult(googleMaps, REQUEST_LOCATION);
         });
 
         photo.setOnClickListener(new View.OnClickListener() {
@@ -308,7 +324,12 @@ public class EditHabitEventView extends AppCompatActivity {
                         });
             }
         });
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         //cancels edit and returns to previous menu
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -325,17 +346,6 @@ public class EditHabitEventView extends AppCompatActivity {
         //if(i.resolveActivity(getPackageManager()) != null){
          //   startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
         //}
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            takenPhoto = (Bitmap) extras.get("data");
-            photo.setImageBitmap(takenPhoto);
-            encodeBitmap(takenPhoto);
-        }
     }
 
     /**

@@ -24,6 +24,7 @@ public class Habit implements Serializable {
     public Habit() {
     }
 
+
     /**
      * Constructor to create a habit
      * @param habitName
@@ -36,6 +37,7 @@ public class Habit implements Serializable {
      *  reason for habit
      */
     public Habit(String habitName, boolean isPrivate,Date startDate, ArrayList<String> frequency, String reason, int position) {
+
         setHabitName(habitName);
         setPrivate(isPrivate);
         setStartDate(startDate);
@@ -52,6 +54,9 @@ public class Habit implements Serializable {
         return isPrivate;
     }
 
+
+
+
     /**
      * function to set habit frequency
      * @param aPrivate
@@ -59,6 +64,7 @@ public class Habit implements Serializable {
      */
     public void setPrivate(boolean aPrivate) {
         isPrivate = aPrivate;
+
     }
 
     /**

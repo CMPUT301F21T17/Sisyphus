@@ -147,7 +147,6 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
                 mMap.setMyLocationEnabled(false);
                 mMap.getUiSettings().setMyLocationButtonEnabled(false);
                 lastKnownLocation = null;
-                getLocationPermission();
             }
         } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
@@ -227,7 +226,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         }
 
         intent.putExtras(extras);
-        setResult(1, intent);
+        setResult(RESULT_OK, intent);
         finish();
     }
 

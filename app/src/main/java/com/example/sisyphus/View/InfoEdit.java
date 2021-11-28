@@ -46,6 +46,7 @@ public class InfoEdit extends AppCompatActivity {
     EditText infoEditItem;
     Button editCancel;
     Button editConfirm;
+    Button back;
 
     //initializing firebase authentication (session) object and setting up variables for
     //properly accessing firebase.  User object references user to be edited
@@ -93,14 +94,20 @@ public class InfoEdit extends AppCompatActivity {
         });
 
 
+        back = findViewById(R.id.back);
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         // Abandons the changes and just returns back to settings
         editCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cancelInt = new Intent(getApplicationContext(), Settings.class);
-                startActivity(cancelInt);
+                finish();
             }
         });
 

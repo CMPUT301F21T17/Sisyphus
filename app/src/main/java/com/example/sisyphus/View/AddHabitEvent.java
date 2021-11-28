@@ -81,10 +81,16 @@ public class AddHabitEvent extends AppCompatActivity {
 
     //setting UI elements
     private EditText location,date,comment;
-    private TextView habitTitle;
-    private Button add,cancel;
+
+    
+    
     private ImageView habitPhoto;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_LOCATION = 2;
+
+
+    private TextView topbarText;
+    private Button add,cancel, back;
 
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -104,13 +110,20 @@ public class AddHabitEvent extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == 1) {
+        if (requestCode == REQUEST_LOCATION && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             // longitude = extras.getFloat("LONGITUDE");
             // latitude = extras.getFloat("LATITUDE");
             place = extras.getString("LOCATION");
             location.setText(String.format(place));
 
+        }
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            takenPhoto = (Bitmap) extras.get("data");
+            habitPhoto.setImageBitmap(takenPhoto);
+            encodeBitmap(takenPhoto);
         }
     }
 
@@ -134,15 +147,19 @@ public class AddHabitEvent extends AppCompatActivity {
         location = findViewById(R.id.editTextLocation);
         date = findViewById(R.id.editTextDate);
         comment = findViewById(R.id.editTextComment);
-        habitTitle = findViewById(R.id.textViewHabitName);
+        topbarText = findViewById(R.id.topbarText);
         add = findViewById(R.id.buttonAdd);
         cancel = findViewById(R.id.buttonCancel);
+
         habitPhoto = findViewById(R.id.photoView);
+        back = findViewById(R.id.back);
+
+
         //getting name of habit event and setting UI to display it
         Intent intent = getIntent();
         String habitName = intent.getStringExtra("1");
 
-        habitTitle.setText(habitName);
+        topbarText.setText("Add " + habitName +" Event");
 
 
 
@@ -170,7 +187,7 @@ public class AddHabitEvent extends AppCompatActivity {
         //create a map intent
         location.setOnClickListener(view -> {
             Intent googleMaps = new Intent(view.getContext(), GoogleMaps.class);
-            startActivityForResult(googleMaps, 1);
+            startActivityForResult(googleMaps, REQUEST_LOCATION);
         });
 
         habitPhoto.setOnClickListener(new View.OnClickListener() {
@@ -308,7 +325,12 @@ public class AddHabitEvent extends AppCompatActivity {
         });
 
 
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         //onClick listener to cancel add and return to previous menu
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -329,21 +351,6 @@ public class AddHabitEvent extends AppCompatActivity {
             //System.out.println("ran");
             //startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
         //}
-    }
-
-    /**
-     * function to get the result image back
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("did this");
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            takenPhoto = (Bitmap) extras.get("data");
-            habitPhoto.setImageBitmap(takenPhoto);
-            encodeBitmap(takenPhoto);
-        }
     }
 
     /**
