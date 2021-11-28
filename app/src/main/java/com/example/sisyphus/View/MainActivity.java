@@ -23,6 +23,11 @@ import com.example.sisyphus.R;
 public class MainActivity extends AppCompatActivity {
 
 
+    /**
+     * Called when app is first opened
+     * @param savedInstanceState
+     *  previous instances' states
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

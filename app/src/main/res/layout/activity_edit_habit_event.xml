@@ -31,22 +31,6 @@
             android:contentInsetStart="0dp"
             tools:layout_editor_absoluteY="18dp">
 
-            <Button
-                android:id="@+id/back"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="60dp"
-                android:layout_height="0dp"
-                android:backgroundTint="#0000ffff"
-                app:icon="@drawable/ic_baseline_arrow_back_24"
-                app:iconGravity="start"
-                app:iconSize="24dp"
-                app:iconTint="?attr/colorOnPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                tools:ignore="SpeakableTextPresentCheck" />
-
             <TextView
                 android:id="@+id/topbarText"
                 android:layout_width="wrap_content"
@@ -56,7 +40,7 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/back"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -64,17 +48,7 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <ImageView
-        android:id="@+id/editEventPhoto"
-        android:layout_width="208dp"
-        android:layout_height="92dp"
-        android:layout_marginBottom="16dp"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLocation"
-        app:srcCompat="@android:drawable/ic_menu_crop"/>
+
 
 
     <Button
@@ -119,7 +93,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/editEventPhoto"
         tools:ignore="SpeakableTextPresentCheck,TextFields">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -191,16 +165,16 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/textView5"
+    <ImageView
+        android:id="@+id/editEventPhoto"
         android:layout_width="208dp"
         android:layout_height="92dp"
         android:layout_marginTop="35dp"
-        android:text="PHOTO TO GO HERE!"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/top_bar"
+        app:srcCompat="@android:drawable/ic_menu_crop"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

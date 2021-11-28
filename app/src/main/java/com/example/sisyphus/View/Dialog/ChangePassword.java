@@ -45,6 +45,11 @@ public class ChangePassword extends AppCompatActivity {
     //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
+    /**
+     * function to create change password view
+     * @param savedInstanceState
+     *  previouse instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

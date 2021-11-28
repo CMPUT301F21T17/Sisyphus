@@ -24,15 +24,12 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.PopupMenu;
 
 import android.widget.TextView;
 
 import com.example.sisyphus.Model.HabitEvent;
 import com.example.sisyphus.R;
-import com.example.sisyphus.View.Dialog.deleteHabit;
 import com.example.sisyphus.View.Dialog.deleteHabitEvent;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -53,11 +50,12 @@ public class ViewHabitEvent extends AppCompatActivity {
     //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
-    @Override
     /**
-     * onCreate
-     * a class to create and set the view for habit event
+     * A function called to display a habit event
+     * @param savedInstanceState
+     *  saved instances' state
      */
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_habit_event);
@@ -90,10 +88,14 @@ public class ViewHabitEvent extends AppCompatActivity {
 
 
 
-        Button overflow = (Button) findViewById(R.id.overflow);
+        Button overflow = (Button) findViewById(R.id.search);
         overflow.setOnClickListener(new View.OnClickListener() {
+            /**
+             * A function called to display the drop down menu
+             * @param v
+             *  current view
+             */
             @Override
-
             public void onClick(View v) {
                 showPopup(v);
             }
@@ -101,10 +103,12 @@ public class ViewHabitEvent extends AppCompatActivity {
 
         final Button back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
-             * function called to return to previous view
+             * A function called to return to previous view
+             * @param view
+             *  current view
              */
+            @Override
             public void onClick(View view) {
                 finish();
             }
@@ -114,12 +118,20 @@ public class ViewHabitEvent extends AppCompatActivity {
     /**
      * function to decode the image code
      * @param image
+     *  string of image to be converted to bitmap
      * @return Bitmap of image
+     *  bitmap of image that was converted
      */
     public static Bitmap decodeFromFirebase(String image){
         byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);
     }
+
+    /**
+     * Method to open popup menu
+     * @param v
+     *  current view
+     */
     public void showPopup(View v) {
         Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App_Overflow_Event);
         PopupMenu popup = new PopupMenu(wrapper, v, Gravity.LEFT, R.style.Theme_App_Overflow_Event, 0);
@@ -130,14 +142,27 @@ public class ViewHabitEvent extends AppCompatActivity {
         popup.show();
     }
 
+    /**
+     * Method to create an options menu
+     * @param menu
+     *  menu to be created
+     * @return
+     *  true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.event_dropdown, menu);
-
         return true;
     }
 
+    /**
+     * function to handle options menu clicks
+     * @param item
+     *  Item in menu selected
+     * @return
+     *  true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Get the main activity layout object.

@@ -125,14 +125,12 @@ public class followProtocol {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-
                                         Log.d(TAG, "Data has been added successfully!");
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-
                                         Log.d(TAG, "Data could not be added!" + e.toString());
                                     }
 
