@@ -130,6 +130,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorPrimary"
             android:fontFamily="@font/open_sans"
+            android:focusable="false"
             android:hint="Enter Location"
             android:inputType="textPersonName"
             android:textColor="?attr/colorOnBackground"
