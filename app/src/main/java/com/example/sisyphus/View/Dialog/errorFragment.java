@@ -26,7 +26,13 @@ public class errorFragment extends DialogFragment {
     }
 
 
-
+    /**
+     * function to create a view to display an error message
+     * @param savedInstanceState
+     *  previous view
+     * @return
+     *  AlertDialog to display error message
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

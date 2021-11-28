@@ -45,6 +45,7 @@ public class ViewHabit extends AppCompatActivity {
     /**
      * Create a view to display all details of a habit
      * @param savedInstanceState
+     *  saved instances' state
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -83,10 +84,12 @@ public class ViewHabit extends AppCompatActivity {
 
         final Button viewHabitEventButton = findViewById(R.id.viewHabitEventButton);
         viewHabitEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
-             * A function to switch to view Habit Event
+             * A function called when view habit event button is clicked
+             * @param view
+             *  current view
              */
+            @Override
             public void onClick(View view) {
                 Intent viewHabitEventInt = new Intent(view.getContext(), ListHabitEvent.class);
                 viewHabitEventInt.putExtra("1", receivedTitle);
@@ -96,10 +99,12 @@ public class ViewHabit extends AppCompatActivity {
 
         final Button addHabitEventButton = findViewById(R.id.addHabitEventButton);
         addHabitEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
-             * A function to switch to view Add habit event
+             * A function to switch to view add habit event
+             * @param view
+             *  current view
              */
+            @Override
             public void onClick(View view) {
                 Intent addHabit = new Intent(view.getContext(), AddHabitEvent.class);
                 addHabit.putExtra("1", receivedTitle);
@@ -108,20 +113,30 @@ public class ViewHabit extends AppCompatActivity {
         });
 
 
-        overflow = (Button) findViewById(R.id.overflow);
+        overflow = (Button) findViewById(R.id.search);
         overflow.setOnClickListener(new View.OnClickListener() {
+            /**
+             * A function to open drop down menu when clicked
+             * @param v
+             *  current view
+             */
             @Override
-
             public void onClick(View v) {
                 showPopup(v);
             }
         });
+
+
         back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
+            /**
+             * A function to return to previous view
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), AllHabitListView.class);
-                startActivity(intent);
+                finish();
             }
         });
 

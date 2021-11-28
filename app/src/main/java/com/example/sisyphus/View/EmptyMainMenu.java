@@ -20,12 +20,8 @@ import android.view.View;
 import android.widget.Button;
 
 import android.widget.PopupMenu;
-import android.widget.Toolbar;
-
-import java.lang.Object;
 
 import com.example.sisyphus.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -40,12 +36,12 @@ public class EmptyMainMenu extends AppCompatActivity {
     /**
      * Creates the homepage of the app with settings and menu bar
      * @param savedInstanceState
+     *  previous view
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empty_main_menu);
-
 
         //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
@@ -60,13 +56,15 @@ public class EmptyMainMenu extends AppCompatActivity {
             }
         });
 
-
-
         //INTENTS FOR THE BOTTOM BAR!
-
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         //onClick listener to transfer user to habit list page
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when all habit list button clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EmptyMainMenu.this, AllHabitListView.class);
@@ -77,6 +75,11 @@ public class EmptyMainMenu extends AppCompatActivity {
         final Button button_calendar = findViewById(R.id.calendar_button);
         //onClick listener to transfer user to calendar page
         button_calendar.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when calendar button clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EmptyMainMenu.this, CalendarActivity.class);
@@ -84,19 +87,14 @@ public class EmptyMainMenu extends AppCompatActivity {
             }
         });
 
-        final Button home_button = findViewById(R.id.home_button);
-        home_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(EmptyMainMenu.this, DailyHabitListView.class);
-                intent.putExtra("1",userID);
-                startActivity(intent);
-            }
-        });
-
 
         final Button button_Home = findViewById(R.id.home_button);
         button_Home.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when home button clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EmptyMainMenu.this, EmptyMainMenu.class);
@@ -104,9 +102,13 @@ public class EmptyMainMenu extends AppCompatActivity {
             }
         });
 
-        //currently sends to user search class.  May be worth changing later
-        final Button button_Prof = findViewById(R.id.profile_button);
+        final Button button_Prof = findViewById(R.id.social_button);
         button_Prof.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when social button clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EmptyMainMenu.this, SocialView.class);
@@ -115,39 +117,13 @@ public class EmptyMainMenu extends AppCompatActivity {
         });
 
         //END OF INTENTS FOR THE BOTTOM BAR!
-
-
-        final Button button_Search = findViewById(R.id.search_button);
-        //onClick listener to transfer user to search page.  Currently a dummy access method, will be moved
-        button_Search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(EmptyMainMenu.this, UserSearch.class);
-                startActivity(intent);
-            }
-        });
-
-        final Button button_Request = findViewById(R.id.request_button);
-        //onClick listener to transfer user to search page.  Currently a dummy access method, will be moved
-        button_Request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(EmptyMainMenu.this, FollowRequestListView.class);
-                startActivity(intent);
-            }
-        });
-
-        //Add Button Intent
-        final Button seeDaily = findViewById(R.id.dailyButton);
-        seeDaily.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent toAddHabit = new Intent(EmptyMainMenu.this, DailyHabitListView.class);
-                startActivity(toAddHabit);
-            }
-        });
     }
 
+    /**
+     * Method to open popup menu
+     * @param v
+     *  current view
+     */
     public void showPopup(View v) {
         Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App);
         PopupMenu popup = new PopupMenu(wrapper, v, Gravity.LEFT, R.style.Theme_App, 0);
@@ -158,6 +134,13 @@ public class EmptyMainMenu extends AppCompatActivity {
         popup.show();
     }
 
+    /**
+     * Method to create an options menu
+     * @param menu
+     *  menu to be created
+     * @return
+     *  true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -166,6 +149,13 @@ public class EmptyMainMenu extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * function to handle options menu clicks
+     * @param item
+     *  Item in menu selected
+     * @return
+     *  true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Get the main activity layout object.

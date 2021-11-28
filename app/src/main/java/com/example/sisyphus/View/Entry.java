@@ -29,6 +29,7 @@ public class Entry extends AppCompatActivity {
     /**
      * Creates view to provide option to sign in or sign up
      * @param savedInstanceState
+     *  previous view
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

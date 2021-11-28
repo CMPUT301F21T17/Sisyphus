@@ -8,8 +8,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/editEvent"
-        android:title="Edit Habit" />
+        android:title="Edit Event" />
     <item
         android:id="@+id/deleteEvent"
-        android:title="Delete Habit" />
+        android:title="Delete Event" />
 </menu>

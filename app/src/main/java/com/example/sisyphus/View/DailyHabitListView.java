@@ -7,15 +7,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.sisyphus.Model.AllHabitList_Adapter;
@@ -46,14 +53,32 @@ public class DailyHabitListView extends AppCompatActivity {
     ArrayList<Habit> data;
     private ArrayList<String> percents;
     private AllHabitList_Adapter adapter;
+    Button dropDown;
     String TAG = "Adding percent completions";
+
+    /**
+     * function to create a daily habits list view
+     * @param savedInstanceState
+     *  previous view
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_habit_list_view);
         dailyHabitsView = findViewById(R.id.dailyHabits);
 
-
+        dropDown = (Button) findViewById(R.id.dropDown);
+        dropDown.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function to open drop down menu when clicked
+             * @param v
+             *  current view
+             */
+            @Override
+            public void onClick(View v) {
+                showPopup(v);
+            }
+        });
 
         data = new ArrayList<>();
         percents = new ArrayList<>();
@@ -72,7 +97,6 @@ public class DailyHabitListView extends AppCompatActivity {
                 intent.putExtra("habit", clickedHabit);
                 startActivity(intent);
             }
-
         });
 
 
@@ -119,6 +143,11 @@ public class DailyHabitListView extends AppCompatActivity {
         //Add Button Intent
         final FloatingActionButton addHabitButton = findViewById(R.id.addHabitButton);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function to open a habit creation view when clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent toAddHabit = new Intent(DailyHabitListView.this, AddHabit.class);
@@ -137,7 +166,7 @@ public class DailyHabitListView extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DailyHabitListView.this, EmptyMainMenu.class);
+                Intent intent = new Intent(DailyHabitListView.this, DailyHabitListView.class);
                 startActivity(intent);
             }
         });
@@ -170,10 +199,27 @@ public class DailyHabitListView extends AppCompatActivity {
             }
         });
 
+        final Button button_social = findViewById(R.id.social_button);
+        button_social.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when social button is clicked
+             * @param view
+             *  current view
+             */
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DailyHabitListView.this, SocialView.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
-    //Getting Current Day name
+    /**
+     * Function for getting name of current day
+     * @return
+     *  String name of current day
+     */
     public String getDayName(){
         Date date=new Date();
         Calendar c = Calendar.getInstance();
@@ -213,9 +259,7 @@ public class DailyHabitListView extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 int counter = 0;
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-
                                     counter += 1;
-
                                 }
 
                                 //creating object to determine the number of days events should have occurred on
@@ -245,6 +289,64 @@ public class DailyHabitListView extends AppCompatActivity {
                         }
                     });
         }
+    }
 
+    /**
+     * Method to open popup menu
+     * @param v
+     *  current view
+     */
+    public void showPopup(View v) {
+        Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App);
+        PopupMenu popup = new PopupMenu(wrapper, v, Gravity.LEFT, R.style.Theme_App, 0);
+        popup.setOnMenuItemClickListener(this::onOptionsItemSelected);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.dropdown, popup.getMenu());
+
+        popup.show();
+    }
+
+    /**
+     * Method to create an options menu
+     * @param menu
+     *  menu to be created
+     * @return
+     *  true
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.dropdown, menu);
+
+        return true;
+    }
+
+    /**
+     * function to handle options menu clicks
+     * @param item
+     *  Item in menu selected
+     * @return
+     *  true
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Get the main activity layout object.
+        // Get clicked menu item id.
+        int itemId = item.getItemId();
+        if(itemId == R.id.followRequests)
+        {
+            Intent intent = new Intent(this, FollowRequestListView.class);
+            startActivity(intent);
+
+        }else if(itemId == R.id.settings)
+        {
+            Intent intent = new Intent(this, Settings.class);
+            startActivity(intent);
+
+        }else if(itemId == R.id.logout)
+        {
+            // implement logout
+        }
+        return true;
     }
 }
