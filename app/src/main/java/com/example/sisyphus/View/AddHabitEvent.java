@@ -219,6 +219,11 @@ public class AddHabitEvent extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                if(newDate == null){
+                    new errorFragment("Please select a date!").show(getSupportFragmentManager(), "Display_Error");
+                    return;
+                }
+
 
                 //initializing firebase authentication (session) object and establishing database connection
                 FirebaseFirestore db = FirebaseFirestore.getInstance();

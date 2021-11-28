@@ -20,8 +20,7 @@ import com.example.sisyphus.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
- * A class to search the Firebase for a user, along with any other necessary firebase documents
- *  Incomplete, and may not be fully completed depending on the layout of the project going forwards
+ * A class to search the Firebase for users with matching name to input.
  */
 public class UserSearch extends AppCompatActivity {
     //initializing firebase authentication (session) object

@@ -215,7 +215,11 @@ public class EditHabitEventView extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                //HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,takenPhotoID);
+
+                if(newDate == null){
+                    new errorFragment("Please select a date!").show(getSupportFragmentManager(), "Display_Error");
+                    return;
+                }
 
                 //initializing firebase authentication (session) object and establishing database connection
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
