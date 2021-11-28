@@ -108,7 +108,7 @@ public class ViewHabit extends AppCompatActivity {
         });
 
 
-        overflow = (Button) findViewById(R.id.overflow);
+        overflow = (Button) findViewById(R.id.search);
         overflow.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -120,8 +120,7 @@ public class ViewHabit extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), AllHabitListView.class);
-                startActivity(intent);
+                finish();
             }
         });
 

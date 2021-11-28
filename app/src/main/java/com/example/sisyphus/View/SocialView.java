@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,10 +34,16 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -51,6 +58,7 @@ public class SocialView extends AppCompatActivity {
     private List<String> expandableListTitle;
     private HashMap<String, ArrayList<Habit>> expandableListDetail;
     private HashMap<String,ArrayList<String>> expandableListPercents;
+    private Button search, dropDown;
 
 
     //initializing firebase authentication (session) object and connecting to database
@@ -68,6 +76,8 @@ public class SocialView extends AppCompatActivity {
 
         //attaching UI elements to variables
         expandableListView = (ExpandableListView) findViewById(R.id.socialExpandableListView);
+        search = findViewById(R.id.search);
+        dropDown = findViewById(R.id.dropDown);
 
         //initializing storage/formatting for listview
         expandableListDetail = new HashMap<>();
@@ -101,6 +111,13 @@ public class SocialView extends AppCompatActivity {
             }
         });
 
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SocialView.this, DisplaySearch.class);
+                startActivity(intent);
+            }
+        });
 
         //INTENTS FOR THE BOTTOM BAR!
 
@@ -129,22 +146,30 @@ public class SocialView extends AppCompatActivity {
         button_Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SocialView.this, EmptyMainMenu.class);
+                Intent intent = new Intent(SocialView.this, DailyHabitListView.class);
                 startActivity(intent);
             }
         });
 
-        //currently sends to user search class.  May be worth changing later
-        final Button button_Prof = findViewById(R.id.profile_button);
-        button_Prof.setOnClickListener(new View.OnClickListener() {
+        final Button button_social = findViewById(R.id.social_button);
+        button_social.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SocialView.this, UserSearch.class);
+                Intent intent = new Intent(SocialView.this, SocialView.class);
                 startActivity(intent);
             }
         });
 
         //END OF INTENTS FOR THE BOTTOM BAR!
+        // Drop Down Menu Button Click
+        dropDown = (Button) findViewById(R.id.dropDown);
+        dropDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                showPopup(v);
+            }
+        });
     }
 
     /**
@@ -264,5 +289,45 @@ public class SocialView extends AppCompatActivity {
                     });
         }
 
+    }
+    // Methods for enabling the dropdown menu
+    public void showPopup(View v) {
+        Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App);
+        PopupMenu popup = new PopupMenu(wrapper, v, Gravity.LEFT, R.style.Theme_App, 0);
+        popup.setOnMenuItemClickListener(this::onOptionsItemSelected);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.dropdown, popup.getMenu());
+
+        popup.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.dropdown, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Get the main activity layout object.
+        // Get clicked menu item id.
+        int itemId = item.getItemId();
+        if(itemId == R.id.followRequests)
+        {
+            Intent intent = new Intent(this, FollowRequestListView.class);
+            startActivity(intent);
+
+        }else if(itemId == R.id.settings)
+        {
+            Intent intent = new Intent(this, Settings.class);
+            startActivity(intent);
+
+        }else if(itemId == R.id.logout)
+        {
+            // implement logout
+        }
+        return true;
     }
 }

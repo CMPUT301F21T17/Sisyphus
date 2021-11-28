@@ -24,15 +24,12 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.PopupMenu;
 
 import android.widget.TextView;
 
 import com.example.sisyphus.Model.HabitEvent;
 import com.example.sisyphus.R;
-import com.example.sisyphus.View.Dialog.deleteHabit;
 import com.example.sisyphus.View.Dialog.deleteHabitEvent;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -90,7 +87,7 @@ public class ViewHabitEvent extends AppCompatActivity {
 
 
 
-        Button overflow = (Button) findViewById(R.id.overflow);
+        Button overflow = (Button) findViewById(R.id.search);
         overflow.setOnClickListener(new View.OnClickListener() {
             @Override
 

@@ -123,7 +123,7 @@ public class HabitController extends AppCompatActivity {
             String reasonInput = reason.getText().toString().trim();
 
 
-            Habit modifiedHabit = new Habit(dummyhabitname,privateToggle.isChecked() ,dateInput, days, reasonInput, -1);
+            Habit modifiedHabit = new Habit(dummyhabitname, privateToggle.isChecked() ,dateInput, days, reasonInput, -1);
 
             //stores habit created above in firebase and returns to previous menu
 

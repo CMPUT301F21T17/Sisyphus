@@ -77,7 +77,7 @@ public class SignIn extends AppCompatActivity {
 
                                         //Pass intent to next class here!
 
-                                        Intent startEmptyMain = new Intent(view.getContext(), EmptyMainMenu.class);
+                                        Intent startEmptyMain = new Intent(view.getContext(), DailyHabitListView.class);
                                         startActivity(startEmptyMain);
 
 

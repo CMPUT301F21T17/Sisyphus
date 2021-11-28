@@ -180,7 +180,7 @@ public class AllHabitListView extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AllHabitListView.this, EmptyMainMenu.class);
+                Intent intent = new Intent(AllHabitListView.this, DailyHabitListView.class);
                 startActivity(intent);
             }
         });
@@ -209,6 +209,15 @@ public class AllHabitListView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AllHabitListView.this, AllHabitListView.class);
+                startActivity(intent);
+            }
+        });
+
+        final Button button_social = findViewById(R.id.social_button);
+        button_social.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AllHabitListView.this, SocialView.class);
                 startActivity(intent);
             }
         });
@@ -355,7 +364,9 @@ public class AllHabitListView extends AppCompatActivity {
         int itemId = item.getItemId();
         if(itemId == R.id.followRequests)
         {
-            // Change to Follow Requests Screen
+            Intent intent = new Intent(this, FollowRequestListView.class);
+            startActivity(intent);
+
         }else if(itemId == R.id.settings)
         {
             Intent intent = new Intent(this, Settings.class);

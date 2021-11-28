@@ -20,12 +20,8 @@ import android.view.View;
 import android.widget.Button;
 
 import android.widget.PopupMenu;
-import android.widget.Toolbar;
-
-import java.lang.Object;
 
 import com.example.sisyphus.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -105,7 +101,7 @@ public class EmptyMainMenu extends AppCompatActivity {
         });
 
         //currently sends to user search class.  May be worth changing later
-        final Button button_Prof = findViewById(R.id.profile_button);
+        final Button button_Prof = findViewById(R.id.social_button);
         button_Prof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

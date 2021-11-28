@@ -7,15 +7,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.sisyphus.Model.AllHabitList_Adapter;
@@ -46,6 +53,7 @@ public class DailyHabitListView extends AppCompatActivity {
     ArrayList<Habit> data;
     private ArrayList<String> percents;
     private AllHabitList_Adapter adapter;
+    Button dropDown;
     String TAG = "Adding percent completions";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +61,14 @@ public class DailyHabitListView extends AppCompatActivity {
         setContentView(R.layout.activity_daily_habit_list_view);
         dailyHabitsView = findViewById(R.id.dailyHabits);
 
+        dropDown = (Button) findViewById(R.id.dropDown);
+        dropDown.setOnClickListener(new View.OnClickListener() {
+            @Override
 
+            public void onClick(View v) {
+                showPopup(v);
+            }
+        });
 
         data = new ArrayList<>();
         percents = new ArrayList<>();
@@ -137,7 +152,7 @@ public class DailyHabitListView extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DailyHabitListView.this, EmptyMainMenu.class);
+                Intent intent = new Intent(DailyHabitListView.this, DailyHabitListView.class);
                 startActivity(intent);
             }
         });
@@ -170,6 +185,14 @@ public class DailyHabitListView extends AppCompatActivity {
             }
         });
 
+        final Button button_social = findViewById(R.id.social_button);
+        button_social.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DailyHabitListView.this, SocialView.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -197,11 +220,8 @@ public class DailyHabitListView extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 int counter = 0;
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-
                                     counter += 1;
-
                                 }
-
                                 System.out.println("Counted habit events: " + counter);
                                 habitFollowCalculator calc = new habitFollowCalculator();
                                 int totalDays = calc.calculateCloseness(data.get(currentIndex));
@@ -233,5 +253,44 @@ public class DailyHabitListView extends AppCompatActivity {
                     });
         }
 
+    }
+    public void showPopup(View v) {
+        Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App);
+        PopupMenu popup = new PopupMenu(wrapper, v, Gravity.LEFT, R.style.Theme_App, 0);
+        popup.setOnMenuItemClickListener(this::onOptionsItemSelected);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.dropdown, popup.getMenu());
+
+        popup.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.dropdown, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Get the main activity layout object.
+        // Get clicked menu item id.
+        int itemId = item.getItemId();
+        if(itemId == R.id.followRequests)
+        {
+            Intent intent = new Intent(this, FollowRequestListView.class);
+            startActivity(intent);
+
+        }else if(itemId == R.id.settings)
+        {
+            Intent intent = new Intent(this, Settings.class);
+            startActivity(intent);
+
+        }else if(itemId == R.id.logout)
+        {
+            // implement logout
+        }
+        return true;
     }
 }

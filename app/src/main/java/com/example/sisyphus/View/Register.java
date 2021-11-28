@@ -129,7 +129,7 @@ public class Register extends AppCompatActivity {
                                             store.storeUser(user.getUid(), registeredUser);
 
                                             // PASS INTENT TO MAIN MENU HERE!
-                                            Intent startEmptyMain = new Intent(view.getContext(), EmptyMainMenu.class);
+                                            Intent startEmptyMain = new Intent(view.getContext(), DailyHabitListView.class);
                                             startActivity(startEmptyMain);
 
                                         } else {

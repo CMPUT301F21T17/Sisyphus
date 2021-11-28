@@ -120,7 +120,6 @@
             android:hint="Start Date"
             android:importantForAutofill="no"
             android:inputType="none"
-            android:focusable="false"
             tools:ignore="HardcodedText,SpeakableTextPresentCheck,TextFields" />
 
 
@@ -177,17 +176,19 @@
             android:inputType="text"
             android:fontFamily="@font/open_sans"
             android:hint="Reason"
-            android:inputType="text"
             tools:ignore="HardcodedText" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
         android:id="@+id/privatise"
-        android:padding="16dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:layout_marginTop="18dp"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/reasonContainer"
+        tools:layout_editor_absoluteX="29dp">
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/privateSwitch"
@@ -200,8 +201,6 @@
 
             tools:ignore="HardcodedText" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
     <Button
         android:id="@+id/cancelButton"

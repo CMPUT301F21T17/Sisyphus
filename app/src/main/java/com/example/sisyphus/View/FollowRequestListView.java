@@ -42,6 +42,7 @@ public class FollowRequestListView extends AppCompatActivity {
     ListView listFollowRequest;
     ArrayAdapter<String> followRequestAdapter;
     ArrayList<String> followRequestList;
+    Button back;
 
     //initializing firebase authentication (session) object and connecting to database
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -60,7 +61,7 @@ public class FollowRequestListView extends AppCompatActivity {
 
         //attaching UI elements to variables
         listFollowRequest= findViewById(R.id.list_follow_request);
-
+        back = findViewById(R.id.back);
         //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
@@ -70,41 +71,14 @@ public class FollowRequestListView extends AppCompatActivity {
         listFollowRequest.setAdapter(followRequestAdapter);
         setFollowRequest(mAuth.getUid());
 
-        final Button button_home = findViewById(R.id.home_button);
-        button_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            /**
-             * function to open Home when clicked
-             */
-            public void onClick(View v) {
-                Intent intent = new Intent(FollowRequestListView.this, EmptyMainMenu.class);
-                startActivity(intent);
-            }
-        });
 
-        final Button button_calendar = findViewById(R.id.calendar_button);
-        button_calendar.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            /**
-             * function to open Calendar when clicked
-             */
-            public void onClick(View v) {
-                Intent intent = new Intent(FollowRequestListView.this, CalendarActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
-        button_allHabitList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            /**
-             * function to open AllHabits list when clicked
-             */
             public void onClick(View view) {
-                Intent intent = new Intent(FollowRequestListView.this,AllHabitListView.class);
-                startActivity(intent);
+                finish();
             }
         });
+
     }
 
     /**
