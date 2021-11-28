@@ -42,6 +42,7 @@ public class EditHabitEventView extends AppCompatActivity {
     TextView habitTitle;
     Button add;
     Button cancel;
+    Button back;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -61,9 +62,10 @@ public class EditHabitEventView extends AppCompatActivity {
         location = findViewById(R.id.editTextLocation);
         date = findViewById(R.id.editTextDate);
         comment = findViewById(R.id.editTextComment);
-        habitTitle = findViewById(R.id.textViewHabitName);
+        habitTitle = findViewById(R.id.topbarText);
         add = findViewById(R.id.buttonAdd);
         cancel = findViewById(R.id.buttonCancel);
+        back = findViewById(R.id.back);
 
         //getting habit name from intent (habit events require the name to be accessed)
         Intent intent = getIntent();
@@ -72,7 +74,7 @@ public class EditHabitEventView extends AppCompatActivity {
         String habitName = EditEvent.getHabitName();
 
         //setting UI to display data from selected habit event for editing
-        habitTitle.setText(EditEvent.getHabitName());
+        habitTitle.setText("Edit " + EditEvent.getHabitName() + " Event");
         location.setText(EditEvent.getLocation());
         date.setText(new SimpleDateFormat("dd/MM/yyyy").format(EditEvent.getDate()));
         comment.setText(EditEvent.getComment());
@@ -122,7 +124,12 @@ public class EditHabitEventView extends AppCompatActivity {
                 startActivity(toEventDetail);
             }
         });
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         //cancels edit and returns to previous menu
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -8,14 +8,12 @@ package com.example.sisyphus.View.Dialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.sisyphus.R;
-import com.example.sisyphus.View.Settings;
 import com.google.firebase.auth.FirebaseAuth;
 
 //
@@ -35,6 +33,7 @@ public class ChangePassword extends AppCompatActivity {
 
     Button back;
     Button passConfirm;
+    Button passCancel;
 
     //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
@@ -50,13 +49,20 @@ public class ChangePassword extends AppCompatActivity {
         // Initializing Buttons
         back = findViewById(R.id.back);
         passConfirm = findViewById(R.id.passConfirm);
-
+        passCancel = findViewById(R.id.passCancel);
 
         //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
 
         // Cancel just switches to previous activity on click
         back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        passCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

@@ -34,7 +34,7 @@
             <Button
                 android:id="@+id/back"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:backgroundTint="#0000ffff"
                 app:icon="@drawable/ic_baseline_arrow_back_24"
@@ -49,16 +49,32 @@
 
             <TextView
                 android:id="@+id/topbarText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans"
-                android:text="Add Habit"
+                android:textAlignment="center"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/back"
+                app:layout_constraintEnd_toStartOf="@+id/overflow"
+                app:layout_constraintStart_toEndOf="@+id/back"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
+
+            <Button
+                android:id="@+id/overflow"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:backgroundTint="#0000ffff"
+                app:icon="@drawable/ic_baseline_more_vert_24"
+                app:iconGravity="end"
+                app:iconSize="30dp"
+                app:iconTint="?attr/colorOnPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -68,9 +84,11 @@
         android:id="@+id/startDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:fontFamily="@font/open_sans"
         android:text="Start Date"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
         android:textColor="?android:attr/textColorPrimary"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +98,7 @@
         android:id="@+id/habitTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/open_sans"
         android:text="Habit's Title"
@@ -91,9 +109,10 @@
 
     <TextView
         android:id="@+id/habitTitleText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="32dp"
         android:ems="10"
         android:fontFamily="@font/open_sans"
         android:inputType="textPersonName"
@@ -101,14 +120,16 @@
         android:text="Name"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habitTitle" />
 
     <TextView
         android:id="@+id/startDateText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:fontFamily="@font/open_sans"
         android:inputType="textPersonName"
@@ -116,6 +137,7 @@
         android:text="Date"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startDate" />
 
@@ -123,7 +145,7 @@
         android:id="@+id/frequency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:fontFamily="@font/open_sans"
         android:text="Days"
         android:textColor="?android:attr/textColorPrimary"
@@ -133,9 +155,10 @@
 
     <TextView
         android:id="@+id/frequencyText"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:fontFamily="@font/open_sans"
         android:inputType="textPersonName"
@@ -143,6 +166,7 @@
         android:text="Frequency"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frequency" />
 
@@ -150,7 +174,7 @@
         android:id="@+id/habitReason"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:fontFamily="@font/open_sans"
         android:text="Habit's Reason"
         android:textColor="?android:attr/textColorPrimary"
@@ -160,9 +184,10 @@
 
     <TextView
         android:id="@+id/habitReasonText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:fontFamily="@font/open_sans"
         android:inputType="textPersonName"
@@ -170,47 +195,22 @@
         android:text="Reason"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habitReason" />
-
-    <Button
-        android:id="@+id/editHabitButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginBottom="100dp"
-        android:fontFamily="@font/open_sans"
-        android:text="Edit Habit"
-        android:textStyle="bold"
-        app:backgroundTint="#1740A6"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/deleteHabitButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="100dp"
-        android:fontFamily="@font/open_sans"
-        android:text="Delete Habit"
-        android:textStyle="bold"
-        app:backgroundTint="?attr/colorError"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/viewHabitEventButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="136dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/open_sans"
-        android:text="View Habit Event"
+        android:text="View Habit Events"
         android:textStyle="bold"
         app:backgroundTint="?attr/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/editHabitButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/addHabitEventButton"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -218,13 +218,13 @@
         android:id="@+id/addHabitEventButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="136dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/open_sans"
-        android:text="Add Habit Event"
+        android:text="Add Event"
         android:textStyle="bold"
         app:backgroundTint="?attr/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/deleteHabitButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/viewHabitEventButton" />
 

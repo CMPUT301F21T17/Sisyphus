@@ -37,8 +37,8 @@ public class AddHabitEvent extends AppCompatActivity {
 
     //setting UI elements
     private EditText location,date,comment;
-    private TextView habitTitle;
-    private Button add,cancel;
+    private TextView topbarText;
+    private Button add,cancel, back;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -58,15 +58,16 @@ public class AddHabitEvent extends AppCompatActivity {
         location = findViewById(R.id.editTextLocation);
         date = findViewById(R.id.editTextDate);
         comment = findViewById(R.id.editTextComment);
-        habitTitle = findViewById(R.id.textViewHabitName);
+        topbarText = findViewById(R.id.topbarText);
         add = findViewById(R.id.buttonAdd);
         cancel = findViewById(R.id.buttonCancel);
+        back = findViewById(R.id.back);
 
         //getting name of habit event and setting UI to display it
         Intent intent = getIntent();
         String habitName = intent.getStringExtra("1");
 
-        habitTitle.setText(habitName);
+        topbarText.setText("Add " + habitName +" Event");
 
 
 
@@ -114,6 +115,12 @@ public class AddHabitEvent extends AppCompatActivity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         //onClick listener to cancel add and return to previous menu
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override

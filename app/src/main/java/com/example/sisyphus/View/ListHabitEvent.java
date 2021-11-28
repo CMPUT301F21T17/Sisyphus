@@ -74,7 +74,7 @@ public class ListHabitEvent extends AppCompatActivity {
         habitEventAdapter = new HabitEventListAdapter(this, habitEventDataList);
         listHabitEvent.setAdapter(habitEventAdapter);
 
-        topBarTitle.setText("HabitEvents of [" + currentHabit+"]");
+        topBarTitle.setText(currentHabit+" Events");
 
         setUserHabitEvent(mAuth.getUid(), currentHabit);
 
@@ -96,15 +96,14 @@ public class ListHabitEvent extends AppCompatActivity {
             }
         });
 
-        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
-        button_allHabitList.setOnClickListener(new View.OnClickListener() {
+        final Button back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             /**
              * A function to switch to all habit list
              */
             public void onClick(View view) {
-                Intent intent = new Intent(ListHabitEvent.this, AllHabitListView.class);
-                startActivity(intent);
+                finish();
             }
         });
 

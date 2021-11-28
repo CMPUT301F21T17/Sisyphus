@@ -31,7 +31,19 @@
     </style>
 
     <style name="Theme.App" parent="Theme.Sisyphus">
-        <item name="android:popupBackground">@drawable/popup_background</item>
+        <item name="android:popupBackground">@drawable/dropdown_background</item>
+        <item name="android:textColor">@color/primaryTextW</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+    </style>
+
+    <style name="Theme.App.Overflow" parent="Theme.Sisyphus">
+        <item name="android:popupBackground">@drawable/overflow_background</item>
+        <item name="android:textColor">@color/primaryTextW</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+    </style>
+
+    <style name="Theme.App.Overflow.Event" parent="Theme.Sisyphus">
+        <item name="android:popupBackground">@drawable/event_overflow_background</item>
         <item name="android:textColor">@color/primaryTextW</item>
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
