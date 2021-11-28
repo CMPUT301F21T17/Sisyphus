@@ -70,16 +70,9 @@ public class EditHabitEventView extends AppCompatActivity {
     TextView habitTitle;
     Button add;
     Button cancel;
-
     ImageView photo;
-
     String TAG = "Editing habit event";
-
     private String place;
-
-    Button back;
-
-
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private Bitmap takenPhoto;
     private String takenPhotoID = "";
@@ -133,7 +126,6 @@ public class EditHabitEventView extends AppCompatActivity {
 
         photo = findViewById(R.id.editEventPhoto);
 
-        back = findViewById(R.id.back);
 
 
         //getting habit name from intent (habit events require the name to be accessed)
@@ -326,12 +318,6 @@ public class EditHabitEventView extends AppCompatActivity {
                                 }
                             }
                         });
-            }
-        });
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
             }
         });
         //cancels edit and returns to previous menu

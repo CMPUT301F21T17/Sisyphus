@@ -28,9 +28,11 @@ public class UserSearch extends AppCompatActivity {
 
     //setting UI elements
     Button search_Button;
-    Button home_Button;
     EditText firstInput;
     EditText lastInput;
+
+    Button back_Button, home_Button, calendar_Button, habit_Button, social_Button;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class UserSearch extends AppCompatActivity {
         setContentView(R.layout.activity_user_search);
 
         home_Button = findViewById(R.id.home_button);
+
+
         search_Button = findViewById(R.id.search_user);
         firstInput = findViewById(R.id.editTextTextFirstName);
         lastInput = findViewById(R.id.editTextTextLastName);
@@ -77,15 +81,54 @@ public class UserSearch extends AppCompatActivity {
             }
         });
 
-
+        habit_Button = findViewById(R.id.allhabitlist_button);
         //onClick listener to return to main menu
-        home_Button.setOnClickListener(new View.OnClickListener() {
+        habit_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserSearch.this, EmptyMainMenu.class);
+                Intent intent = new Intent(UserSearch.this, AllHabitListView.class);
                 startActivity(intent);
             }
         });
+
+        //onClick listener to transfer user to calendar page
+        calendar_Button = findViewById(R.id.calendar_button);
+        calendar_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserSearch.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        home_Button = findViewById(R.id.home_button);
+        home_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserSearch.this, DailyHabitListView.class);
+                startActivity(intent);
+            }
+        });
+
+        social_Button = findViewById(R.id.social_button);
+        social_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserSearch.this, SocialView.class);
+                startActivity(intent);
+            }
+        });
+
+        back_Button = findViewById(R.id.back);
+        back_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserSearch.this, SocialView.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 
     }

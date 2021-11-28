@@ -114,7 +114,7 @@ public class SocialView extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SocialView.this, DisplaySearch.class);
+                Intent intent = new Intent(SocialView.this, UserSearch.class);
                 startActivity(intent);
             }
         });

@@ -90,7 +90,7 @@ public class AddHabitEvent extends AppCompatActivity {
 
 
     private TextView topbarText;
-    private Button add,cancel, back;
+    private Button add,cancel;
 
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -152,7 +152,6 @@ public class AddHabitEvent extends AppCompatActivity {
         cancel = findViewById(R.id.buttonCancel);
 
         habitPhoto = findViewById(R.id.photoView);
-        back = findViewById(R.id.back);
 
 
         //getting name of habit event and setting UI to display it
@@ -342,13 +341,6 @@ public class AddHabitEvent extends AppCompatActivity {
         });
 
 
-        //returning to previous menu
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
         //onClick listener to cancel add and return to previous menu
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override

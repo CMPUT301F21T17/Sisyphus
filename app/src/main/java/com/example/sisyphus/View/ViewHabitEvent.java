@@ -131,7 +131,6 @@ public class ViewHabitEvent extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.event_dropdown, menu);
-
         return true;
     }
 
