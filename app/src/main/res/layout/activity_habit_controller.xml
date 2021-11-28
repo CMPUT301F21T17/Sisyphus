@@ -159,10 +159,31 @@
             android:backgroundTint="?attr/colorOnPrimary"
             android:fontFamily="@font/open_sans"
             android:hint="Reason"
+            app:counterMaxLength="30"
             android:inputType="text"
             android:textColor="?attr/colorOnBackground"
             tools:ignore="HardcodedText,TextContrastCheck" />
 
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/privatise"
+        android:layout_width="0dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/commentLayout">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/privateSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@android:color/white"
+            android:checked="false"
+            android:gravity="top"
+            android:text="Private Habit"
+            tools:ignore="HardcodedText" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

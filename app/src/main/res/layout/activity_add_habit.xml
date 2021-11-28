@@ -65,8 +65,13 @@
     </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.textfield.TextInputLayout
+
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+
         android:id="@+id/habitNameContainer"
         android:layout_width="0dp"
+
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:paddingStart="16dp"
@@ -81,10 +86,15 @@
             android:id="@+id/habitNameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
+            android:maxLength="20"
+            app:counterMaxLength="20"
+            tools:ignore="HardcodedText" 
             android:backgroundTint="?attr/colorOnPrimary"
             android:fontFamily="@font/open_sans"
             android:hint="Habit Name"
             android:inputType="text" />
+
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,7 +120,9 @@
             android:hint="Start Date"
             android:importantForAutofill="no"
             android:inputType="none"
-            tools:ignore="SpeakableTextPresentCheck,TextFields" />
+            android:focusable="false"
+            tools:ignore="HardcodedText,SpeakableTextPresentCheck,TextFields" />
+
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,7 +149,7 @@
             android:hint="Days"
             android:importantForAutofill="no"
             android:inputType="none"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="HardcodedText,SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -160,11 +172,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorOnPrimary"
+            android:maxLength="30"
+            app:counterMaxLength="30"
+            android:inputType="text"
             android:fontFamily="@font/open_sans"
             android:hint="Reason"
-            android:inputType="text" />
+            android:inputType="text"
+            tools:ignore="HardcodedText" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/privatise"
+        android:padding="16dp"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/privateSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:backgroundTint="@android:color/white"
+            android:text="Private Habit"
+
+            tools:ignore="HardcodedText" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <Button
         android:id="@+id/cancelButton"
@@ -206,3 +243,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

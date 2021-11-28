@@ -120,15 +120,18 @@
         app:layout_constraintTop_toBottomOf="@+id/habit_event_date"
         tools:ignore="MissingConstraints" />
 
-    <TextView
+
+    <ImageView
         android:id="@+id/habit_event_image"
-        android:layout_width="0dp"
-        android:layout_height="261dp"
-        android:text="Replaced by Picture Later"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="268dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="232dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        app:srcCompat="@android:drawable/ic_menu_crop"/>
+
 
     <TextView
         android:id="@+id/habit_event_comment"
@@ -151,6 +154,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="430dp" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

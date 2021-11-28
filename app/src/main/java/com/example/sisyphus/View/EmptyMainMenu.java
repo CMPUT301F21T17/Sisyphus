@@ -25,6 +25,7 @@ import android.widget.Toolbar;
 import java.lang.Object;
 
 import com.example.sisyphus.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -60,6 +61,9 @@ public class EmptyMainMenu extends AppCompatActivity {
         });
 
 
+
+        //INTENTS FOR THE BOTTOM BAR!
+
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         //onClick listener to transfer user to habit list page
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +84,68 @@ public class EmptyMainMenu extends AppCompatActivity {
             }
         });
 
+        final Button home_button = findViewById(R.id.home_button);
+        home_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmptyMainMenu.this, DailyHabitListView.class);
+                intent.putExtra("1",userID);
+                startActivity(intent);
+            }
+        });
 
+
+        final Button button_Home = findViewById(R.id.home_button);
+        button_Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmptyMainMenu.this, EmptyMainMenu.class);
+                startActivity(intent);
+            }
+        });
+
+        //currently sends to user search class.  May be worth changing later
+        final Button button_Prof = findViewById(R.id.profile_button);
+        button_Prof.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmptyMainMenu.this, SocialView.class);
+                startActivity(intent);
+            }
+        });
+
+        //END OF INTENTS FOR THE BOTTOM BAR!
+
+
+        final Button button_Search = findViewById(R.id.search_button);
+        //onClick listener to transfer user to search page.  Currently a dummy access method, will be moved
+        button_Search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmptyMainMenu.this, UserSearch.class);
+                startActivity(intent);
+            }
+        });
+
+        final Button button_Request = findViewById(R.id.request_button);
+        //onClick listener to transfer user to search page.  Currently a dummy access method, will be moved
+        button_Request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EmptyMainMenu.this, FollowRequestListView.class);
+                startActivity(intent);
+            }
+        });
+
+        //Add Button Intent
+        final Button seeDaily = findViewById(R.id.dailyButton);
+        seeDaily.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toAddHabit = new Intent(EmptyMainMenu.this, DailyHabitListView.class);
+                startActivity(toAddHabit);
+            }
+        });
     }
 
     public void showPopup(View v) {

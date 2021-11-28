@@ -10,7 +10,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+
+import android.util.Base64;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.Menu;
@@ -19,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
+
 import android.widget.TextView;
 
 import com.example.sisyphus.Model.HabitEvent;
@@ -35,8 +44,12 @@ import java.text.SimpleDateFormat;
 public class ViewHabitEvent extends AppCompatActivity {
     //setting UI elements
     TextView habitEventTitleText, habitEventDateText, habitEventLocationText, habitEventCommentText;
+
+    ImageView habitEventPhoto;
+
     private HabitEvent receivedHabitEvent;
     private String receivedUser, receivedHabitEventID;
+
     //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
@@ -57,6 +70,7 @@ public class ViewHabitEvent extends AppCompatActivity {
         habitEventDateText = findViewById(R.id.habit_event_date);
         habitEventLocationText = findViewById(R.id.habit_event_location);
         habitEventCommentText = findViewById(R.id.habit_event_comment);
+        habitEventPhoto = findViewById(R.id.habit_event_image);
 
         //getting habit event info and displaying in UI elements
         Intent intent = getIntent();
@@ -65,8 +79,15 @@ public class ViewHabitEvent extends AppCompatActivity {
         receivedHabitEvent = (HabitEvent) intent.getSerializableExtra("habit_event");
         habitEventTitleText.setText(receivedHabitEvent.getHabitName());
         habitEventDateText.setText(new SimpleDateFormat("dd/MM/yyyy").format(receivedHabitEvent.getDate()));
-        habitEventLocationText.setText(receivedHabitEvent.getLocation());
-        habitEventCommentText.setText(receivedHabitEvent.getComment());
+        habitEventLocationText.setText("Location: " + receivedHabitEvent.getLocation());
+        habitEventCommentText.setText("Comment: " + receivedHabitEvent.getComment());
+
+        if(receivedHabitEvent.getPhotoID().equals("")){
+            //do nothing!
+        } else {
+            habitEventPhoto.setImageBitmap(decodeFromFirebase(receivedHabitEvent.getPhotoID()));
+        }
+
 
 
         Button overflow = (Button) findViewById(R.id.overflow);
@@ -88,7 +109,16 @@ public class ViewHabitEvent extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
+    /**
+     * function to decode the image code
+     * @param image
+     * @return Bitmap of image
+     */
+    public static Bitmap decodeFromFirebase(String image){
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);
     }
     public void showPopup(View v) {
         Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App_Overflow_Event);

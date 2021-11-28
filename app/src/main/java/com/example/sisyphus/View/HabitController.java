@@ -7,6 +7,7 @@
 package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,28 +47,36 @@ public class HabitController extends AppCompatActivity {
     private EditText startDate, frequency,reason;
     private TextView habitName;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+
     private Button confirm,cancel,deleteButton, back;
+
 
     //initializing firebase authentication (session) object and starting firebase connection
     private FirebaseStore testbase = new FirebaseStore();
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private SwitchCompat privateToggle;
 
     /**
      * create view to get information for creating a habit
      * @param savedInstanceState
      */
+
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_controller);
 
+
         //setting authentication object to current session (signed in user) and connecting to database
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         //attaching UI elements to variables
+   
+        privateToggle = findViewById(R.id.privateSwitch);
+ 
         back = findViewById(R.id.back);
         confirm = findViewById(R.id.confirm);
         cancel = findViewById(R.id.cancel);
@@ -92,6 +102,7 @@ public class HabitController extends AppCompatActivity {
                 Habit habit1 = documentSnapshot.toObject(Habit.class);
                 days.addAll(habit1.getFrequency());
                 habitName.setText(dummyhabitname);
+                privateToggle.setChecked(habit1.isPrivate());
                 String pattern = "dd/MM/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                 startDate.setText(simpleDateFormat.format(habit1.getStartDate()));
@@ -110,15 +121,19 @@ public class HabitController extends AppCompatActivity {
                 e.printStackTrace();
             }
             String reasonInput = reason.getText().toString().trim();
-            Habit modifiedHabit = new Habit(dummyhabitname,dateInput,days,reasonInput);
+
+
+            Habit modifiedHabit = new Habit(dummyhabitname,privateToggle.isChecked() ,dateInput, days, reasonInput, -1);
 
             //stores habit created above in firebase and returns to previous menu
+
             FirebaseStore fb = new FirebaseStore();
             fb.storeHabit(dummyUser,modifiedHabit);
             Intent intent = new Intent(view.getContext(),ViewHabit.class);
             intent.putExtra("habit",modifiedHabit);
             startActivity(intent);
         });
+
 
         //cancels edit
         cancel.setOnClickListener(view -> {
@@ -128,6 +143,7 @@ public class HabitController extends AppCompatActivity {
         back.setOnClickListener(view -> {
             finish();
         });
+
 
         //creating the calendar for user to input startdate
         startDate.setOnClickListener(view -> {

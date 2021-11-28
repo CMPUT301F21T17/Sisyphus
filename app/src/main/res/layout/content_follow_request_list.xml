@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2021.
+  ~ Sisyphus, CMPUT 301
+  ~ All Rights Reserved.
+  -->
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#DEE8E8"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="4"
+        >
+<TextView
+    android:id="@+id/follower_name_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="FollowerName"
+    android:textColor="#002440"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="20dp"
+    android:textSize="30sp"
+    android:layout_weight="5"></TextView>
+
+<TextView
+    android:id="@+id/follower_id_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="FollowerID"
+    android:textColor="#002440"
+    android:textSize="10sp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginBottom="10dp"
+    android:layout_weight="5"></TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_weight="6"
+        >
+        <Button
+            android:id="@+id/confirm_Follow_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            app:backgroundTint="#17A6A6"
+            android:layout_marginRight="2dp"
+            android:textSize="9sp"
+            android:text="Confirm" >
+        </Button>
+
+        <Button
+            android:id="@+id/reject_Follow_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="Reject"
+            android:textSize="9sp"
+            app:backgroundTint="#D2E91E47"></Button>
+
+    </LinearLayout>
+
+
+</LinearLayout>

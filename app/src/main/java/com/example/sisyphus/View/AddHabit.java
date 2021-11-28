@@ -16,13 +16,26 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.ImageView;
+import android.widget.Switch;
+
+
+import androidx.annotation.NonNull;
+
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,22 +46,25 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * A class that provides with a UI to add habits to firebase
+ * A class that provides a UI to add habits to firebase
  */
 public class AddHabit extends AppCompatActivity {
     //setting UI elements
     private TextInputLayout habitName, reason;
     private EditText startDate, frequency;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private SwitchCompat privateToggle;
+
 
     //initializing firebase authentication (session) object
     private FirebaseAuth mAuth;
+
 
     public AddHabit() {
     }
 
     /**
-     * function to create habit creation view
+     * function to create a habit creation view
      * @param savedInstanceState
      */
     @SuppressLint("SimpleDateFormat")
@@ -57,15 +73,22 @@ public class AddHabit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
 
+
+       
+
         //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
+
         String currentUser = mAuth.getUid();
 
         //attaching UI elements to variables
+        privateToggle = findViewById(R.id.privateSwitch);
+
         Button checkButton = findViewById(R.id.checkButton);
         Button cancelButton = findViewById(R.id.cancelButton);
         Button back = findViewById(R.id.back);
         habitName = findViewById(R.id.habitNameContainer);
+
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
         reason = findViewById(R.id.reasonContainer);
@@ -84,9 +107,11 @@ public class AddHabit extends AppCompatActivity {
                 e.printStackTrace();
             }
             String reasonInput = Objects.requireNonNull(reason.getEditText()).getText().toString().trim();
-            Habit habitInput = new Habit(habit, dateInput, days, reasonInput);
+
+            Habit habitInput = new Habit(habit, privateToggle.isChecked(),dateInput, days, reasonInput, -1);
 
             //establishing connection to firebase, storing data, and then returning to previous menu
+
             FirebaseStore fb = new FirebaseStore();
             fb.storeHabit(currentUser,habitInput);
             Intent toHabitList = new Intent(AddHabit.this, AllHabitListView.class);

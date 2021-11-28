@@ -184,6 +184,17 @@ public class FirebaseStore {
 
     }
 
+    public void deleteHabitEvent(String ID, String habitName, String eventID){
+        collectionReference.document(ID).collection("Habits").document(habitName)
+                .collection("HabitEvent").document(eventID).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        System.out.println("Deleted successfully!");
+                    }
+                });
+    }
+
 
 
 
