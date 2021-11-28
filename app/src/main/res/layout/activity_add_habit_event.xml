@@ -31,22 +31,6 @@
             android:contentInsetStart="0dp"
             tools:layout_editor_absoluteY="18dp">
 
-            <Button
-                android:id="@+id/back"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:layout_width="60dp"
-                android:layout_height="0dp"
-                android:backgroundTint="#0000ffff"
-                app:icon="@drawable/ic_baseline_arrow_back_24"
-                app:iconGravity="start"
-                app:iconSize="24dp"
-                app:iconTint="?attr/colorOnPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                tools:ignore="SpeakableTextPresentCheck" />
-
             <TextView
                 android:id="@+id/topbarText"
                 android:layout_width="wrap_content"
@@ -56,7 +40,7 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/back"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -66,35 +50,31 @@
 
     <ImageView
         android:id="@+id/photoView"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="16dp"
-        android:text="PHOTO TO GO HERE!"
+        android:layout_width="208dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="35dp"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@+id/editTextLocation" 
-
-        app:srcCompat="@android:drawable/ic_menu_crop" />
-
+        app:layout_constraintTop_toBottomOf="@+id/top_bar"
+        app:srcCompat="@android:drawable/ic_menu_crop"/>
 
     <Button
         android:id="@+id/buttonAdd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="75dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/open_sans"
         android:text="Add"
         android:textColor="?attr/colorOnPrimary"
         android:textStyle="bold"
         app:backgroundTint="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonCancel"
-        app:layout_constraintTop_toBottomOf="@+id/commentLayout" />
+        app:layout_constraintStart_toEndOf="@+id/buttonCancel" />
 
     <Button
         android:id="@+id/buttonCancel"
@@ -102,17 +82,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
 
-        android:layout_marginTop="75dp"
         android:layout_marginEnd="24dp"
-        android:fontFamily="@font/open_sans"
+        android:layout_marginBottom="24dp"
 
+        android:fontFamily="@font/open_sans"
         android:text="Cancel"
         android:textColor="?attr/colorOnPrimary"
         android:textStyle="bold"
         app:backgroundTint="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonAdd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commentLayout" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dateLayout"
@@ -125,7 +105,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/photoView"
         tools:ignore="SpeakableTextPresentCheck,TextFields">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -156,7 +136,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="SpeakableTextPresentCheck,TextFields" />
+        tools:ignore="SpeakableTextPresentCheck,TextFields"
         app:layout_constraintTop_toBottomOf="@+id/dateLayout">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -199,18 +179,6 @@
             tools:ignore="HardcodedText,TextContrastCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="208dp"
-        android:layout_height="92dp"
-        android:layout_marginTop="35dp"
-        android:text="PHOTO TO GO HERE!"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.453"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

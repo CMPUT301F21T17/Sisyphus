@@ -46,14 +46,12 @@ public class FirebaseStore {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-
                         Log.d(TAG, "Data has been added successfully!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
                         Log.d(TAG, "Data could not be added!" + e.toString());
                     }
 
@@ -98,7 +96,6 @@ public class FirebaseStore {
      * @param habitEvent
      * The habit event to be stored
      */
-
     public void storeHabitEvent(String userID, String habitName, HabitEvent habitEvent){
         // creating a unique name for the habit event based on current date and time
         Date today = new Date();
@@ -134,7 +131,6 @@ public class FirebaseStore {
      * @param newHabitEvent
      * The modified habit event to be stored
      */
-
     public void editHabitEvent(String userID, String habitName, String habitEventID,HabitEvent newHabitEvent){
         //updating the given habit event with new information stored in parameters
         String eventName = habitEventID;
@@ -184,7 +180,18 @@ public class FirebaseStore {
 
     }
 
+    /**
+     * Function that will delete a habit event from the database.  Required to prevent duplication
+     * of habit events upon editing due to habit events getting names based on realtime.
+     * @param ID
+     *  ID of user to delete habit event from
+     * @param habitName
+     *  name of habit to delete habit event from
+     * @param eventID
+     *  ID of habit event to be deleted
+     */
     public void deleteHabitEvent(String ID, String habitName, String eventID){
+        //getting the given habit and deleting
         collectionReference.document(ID).collection("Habits").document(habitName)
                 .collection("HabitEvent").document(eventID).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -90,7 +90,7 @@ public class AddHabitEvent extends AppCompatActivity {
 
 
     private TextView topbarText;
-    private Button add,cancel, back;
+    private Button add,cancel;
 
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -103,8 +103,11 @@ public class AddHabitEvent extends AppCompatActivity {
     /**
      * Activity result handler to receive data data from map activity
      * @param requestCode
+     *  code of activity request
      * @param resultCode
+     *  result code of request
      * @param data
+     *  data returned by request
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -134,6 +137,7 @@ public class AddHabitEvent extends AppCompatActivity {
     /**
      * function to create HabitEvent creation view
      * @param savedInstanceState
+     *  previous view
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +156,6 @@ public class AddHabitEvent extends AppCompatActivity {
         cancel = findViewById(R.id.buttonCancel);
 
         habitPhoto = findViewById(R.id.photoView);
-        back = findViewById(R.id.back);
 
 
         //getting name of habit event and setting UI to display it
@@ -201,37 +204,40 @@ public class AddHabitEvent extends AppCompatActivity {
 
 
 
-        //onClick method to get data from text entry fields and format into habit event to be added
+        //onClick method to get data from text entry fields and format into habit event to be added.
+        //this function is quite smelly, but due to the asynchronous nature of firebase data retrieval,
+        //it was necessary to nest multiple queries and document retrievals
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
-                //error checking:
-                //-not a duplicate date
-                //-on a date the habit occurs
-                //-after or on start date
-                //-before or on current date
-                //-comment is character limited (get Sihan's code)
-
-
-                //getting input and creating event
+                //getting input and creating date
                 Date newDate = null;
                 try {
                     newDate = new SimpleDateFormat("dd/MM/yyyy").parse(date.getText().toString().trim());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                //HabitEvent newEvent = new HabitEvent(newDate, location.getText().toString(), comment.getText().toString(), habitName,takenPhotoID);
+
+                if(newDate == null){
+                    new errorFragment("Please select a date!").show(getSupportFragmentManager(), "Display_Error");
+                    return;
+                }
+
 
                 //initializing firebase authentication (session) object and establishing database connection
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
+
                 final CollectionReference collectionReference = db.collection("Users");
+
+                //creating query to pull in all existing habit events to enforce constraints on habit events
+                //(one per day, only on valid days, etc)
                 Query namedUsers = collectionReference.document(mAuth.getUid()).collection("Habits")
                 .document(habitName).collection("HabitEvent").whereEqualTo("date", newDate);
 
+                //getting date inside listener
                 Date finalNewDate = newDate;
+
+                //handling query data
                 namedUsers
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -239,14 +245,15 @@ public class AddHabitEvent extends AppCompatActivity {
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 Boolean eventExists = false;
                                 if (task.isSuccessful()) {
+                                    //checks if event exists for the selected date already, sets flag if so
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         eventExists = true;
                                     }
 
+                                    //if event not exist, check other constraints
                                     if(eventExists == false) {
-                                        //remaining error checking in here!
-                                        System.out.println("got here!");
 
+                                        //getting habit info associated with this event for further checks
                                         DocumentReference habitRef = db.collection("Users").document(mAuth.getUid())
                                                 .collection("Habits").document(habitName);
                                         habitRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -260,22 +267,31 @@ public class AddHabitEvent extends AppCompatActivity {
                                                     if (document.exists()) {
                                                         Habit currentHabit = document.toObject(Habit.class);
 
+                                                        //compares input date to the start date.  If greater or equal, is valid
                                                         if(finalNewDate.compareTo(currentHabit.getStartDate()) >= 0){
+
+                                                            //getting formatted version for later comparison
                                                             Date today = new Date();
                                                             String dateConvert = new SimpleDateFormat("yyyy-MM-dd").format(finalNewDate);
+
+                                                            //compares input date to current.  If less, date is valid (not in the future)
                                                             if(finalNewDate.compareTo(today) <= 0){
                                                                 //converting date to char version for comparison to freq array
                                                                 LocalDate selected = LocalDate.parse(dateConvert);
 
-
+                                                                //flag for keeping track of if date is in the list of valid dates
                                                                 Boolean dateValid = false;
+
+                                                                //check all days of the week the habit occurs on.  If any match the input, then valid
                                                                 for(String s: currentHabit.getFrequency()){
 
                                                                     if(s.equals(selected.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("CANADA")).toUpperCase(Locale.ROOT))){
+                                                                        //tripping flag
                                                                         dateValid = true;
                                                                     }
                                                                 }
 
+                                                                //if date matched, then all conditions passed!  Add the habit event
                                                                 if(dateValid == true){
                                                                     //date good!
                                                                     HabitEvent newEvent = new HabitEvent(finalNewDate, location.getText().toString(), comment.getText().toString(), habitName, takenPhotoID);
@@ -292,12 +308,12 @@ public class AddHabitEvent extends AppCompatActivity {
 
 
                                                             } else {
-                                                                //date after today!
+                                                                //date in the future!
                                                                 new errorFragment("Cannot add event in the future! Today's date is: " + today).show(getSupportFragmentManager(), "Display_Error");
 
                                                             }
                                                         } else {
-                                                            //date before start date!
+                                                            //date before start date of habit!
                                                             new errorFragment("Cannot add event before habit start date! Start date is: " + currentHabit.getStartDate()).show(getSupportFragmentManager(), "Display_Error");
 
                                                         }
@@ -312,7 +328,7 @@ public class AddHabitEvent extends AppCompatActivity {
                                             }
                                         });
                                     } else {
-
+                                        //habit event cannot appear twice on same date for same habit
                                         new errorFragment("Event already exists for this date!").show(getSupportFragmentManager(), "Display_Error");
 
                                     }
@@ -325,12 +341,6 @@ public class AddHabitEvent extends AppCompatActivity {
         });
 
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
         //onClick listener to cancel add and return to previous menu
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -344,7 +354,6 @@ public class AddHabitEvent extends AppCompatActivity {
      * function to start the camera activity
      */
     private void takePicture() {
-        System.out.println("Got here");
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
         //if(i.resolveActivity(getPackageManager()) != null){
@@ -356,6 +365,7 @@ public class AddHabitEvent extends AppCompatActivity {
     /**
      * function to encode the image into a string and store in takenPhotoID
      * @param bitmap
+     *  bitmap of image taken
      */
     public void encodeBitmap(Bitmap bitmap){
         System.out.println("Running");

@@ -52,28 +52,26 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
-
     private static final String TAG = GoogleMaps.class.getSimpleName();
     private GoogleMap mMap;
-
     private FusedLocationProviderClient fusedLocationProviderClient;
-
     private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted;
-
     private Location lastKnownLocation;
     private Marker marker;
     private LatLng markerPos = new LatLng(0, 0);
-
     private String pickedPlace = null;
-
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
-
     private Geocoder geocoder;
 
+    /**
+     * A function called to create a map a retrieve data from it
+     * @param savedInstanceState
+     *  saved instances' state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,12 +98,12 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
 
     }
 
+    /**
+     * Request location permission, so that we can get the location of the
+     *  device. The result of the permission request is handled by a callback,
+     *  onRequestPermissionsResult.
+     */
     private void getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -117,24 +115,34 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
+    /**
+     * function to handle the request and verification of permissions for location
+     * @param requestCode
+     *  Code of permissions requested
+     * @param permissions
+     *  list of strings of permissions requested
+     * @param grantResults
+     *  results of permission request
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         locationPermissionGranted = false;
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    locationPermissionGranted = true;
-                }
+        // If request is cancelled, the result arrays are empty.
+        if (requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                locationPermissionGranted = true;
             }
         }
         updateLocationUI();
     }
 
+    /**
+     * Update the location UI to reflect location permissions
+     */
     private void updateLocationUI() {
         if (mMap == null) {
             return;
@@ -153,11 +161,11 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
+    /**
+     * Get the best and most recent location of the device, which may be null in rare
+     *  cases when a location is not available.
+     */
     private void getDeviceLocation() {
-        /**
-         * Get the best and most recent location of the device, which may be null in rare
-         * cases when a location is not available.
-         */
         try {
             if (locationPermissionGranted) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
@@ -193,6 +201,11 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
+    /**
+     * Function to retrieve location data of marker
+     * @param marker
+     *  marker to retrieve location data from
+     */
     private void getAddress(Marker marker){
         if (marker != null) {
             LatLng userLocation = marker.getPosition();
@@ -211,16 +224,12 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
+    /**
+     * function called when confirm button is clicked to return result of map
+     */
     private void onConfirm() {
         Intent intent = new Intent();
         Bundle extras = new Bundle();
-
-        // Log.d("OOPS", String.format("Latitude: %f", userLocation.latitude));
-        // Log.d("OOPS", String.format("Longitude: %f", userLocation.longitude));
-
-        // extras.putFloat("LATITUDE", (float) userLocation.latitude);
-        // extras.putFloat("LONGITUDE", (float) userLocation.longitude);
-
         if (pickedPlace != null) {
             extras.putString("LOCATION", pickedPlace);
         }
@@ -230,6 +239,11 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         finish();
     }
 
+    /**
+     * function called when returning to a previous map view
+     * @param outState
+     *  current state of map
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (mMap != null) {
@@ -239,6 +253,11 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * function called to setup a GoogleMap
+     * @param googleMap
+     *  GoogleMap to setup
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -253,11 +272,21 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
         getDeviceLocation();
 
         GoogleMap.OnMarkerDragListener dragListener = new GoogleMap.OnMarkerDragListener() {
+            /**
+             * A listener called when marker is moved
+             * @param marker
+             *  marker being moved
+             */
             @Override
             public void onMarkerDrag(@NonNull Marker marker) {
                 Log.d("OOPS", "Dragging");
             }
 
+            /**
+             * A listener called when a drag has finished to return the address
+             * @param marker
+             *  marker to get address from
+             */
             @Override
             public void onMarkerDragEnd(@NonNull Marker marker) {
                 Log.d("OOPS", "Drag end");
@@ -266,12 +295,16 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
                 marker.showInfoWindow();
             }
 
+            /**
+             * A listener to hide location disply while being moved
+             * @param marker
+             *  marker being dragged
+             */
             @Override
             public void onMarkerDragStart(@NonNull Marker marker) {
                 Log.d("OOPS", "Dragging start");
                 marker.hideInfoWindow();
             }
-
         };
 
         mMap.setOnMarkerDragListener(dragListener);

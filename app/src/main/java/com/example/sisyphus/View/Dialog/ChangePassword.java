@@ -9,6 +9,7 @@ package com.example.sisyphus.View.Dialog;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,11 @@ public class ChangePassword extends AppCompatActivity {
     //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
+    /**
+     * function to create change password view
+     * @param savedInstanceState
+     *  previouse instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,16 +99,19 @@ public class ChangePassword extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                //error for timeout or otherwise failed
                                 new errorFragment("Password failed to update! Please log out and log in again!").show(getSupportFragmentManager(), "Display_Error");
                             }
                         });
 
                     } else {
+                        //invalid password
                         new errorFragment("Password must be at least 6 characters!").show(getSupportFragmentManager(), "Display_Error");
                     }
 
 
                 } else {
+                    //password confirm failed
                     new errorFragment("Passwords do not match!").show(getSupportFragmentManager(), "Display_Error");
 
                 }

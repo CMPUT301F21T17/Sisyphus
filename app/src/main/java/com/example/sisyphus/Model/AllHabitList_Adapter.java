@@ -44,6 +44,8 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
      *  current context
      * @param habits
      *  list of Habits
+     * @param percents
+     * the list of how well a user has been following a habit (in % out of 100 format) for each habit
      */
     public AllHabitList_Adapter( Context context, ArrayList<Habit> habits, ArrayList<String> percents, ItemClickListener itemListener) {
         inflater = LayoutInflater.from(context);
@@ -113,14 +115,9 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
                 .collection("Habits").document(from.getHabitName());
         DocumentReference toRef = db.collection("Users").document(currentUserID)
                 .collection("Habits").document(to.getHabitName());
-
         batch.update(fromRef, "position", from.getPosition());
         batch.update(toRef, "position", to.getPosition());
-
-
-
         batch.commit();
-
         notifyItemMoved(from.getPosition(), to.getPosition());
     }
 
