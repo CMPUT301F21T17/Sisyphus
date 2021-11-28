@@ -14,15 +14,25 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.util.Log;
+
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 
 import com.example.sisyphus.Model.AllHabitList_Adapter;
 import com.example.sisyphus.Model.Habit;
@@ -53,10 +63,14 @@ public class AllHabitListView extends AppCompatActivity {
     private RecyclerView allhabitListView;
     private AllHabitList_Adapter habitAdapter;
     private ArrayList<Habit> habitDataList;
+
     private int fromPosition;
     private int toPosition;
 
     private ArrayList<String> percents;
+
+    Button dropDown;
+
 
     //initializing firebase authentication (session) object and establishing database connection
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -213,6 +227,16 @@ public class AllHabitListView extends AppCompatActivity {
                 startActivity(toAddHabit);
             }
         });
+
+        // Dropdown Menu Button
+        dropDown = (Button) findViewById(R.id.dropDown);
+        dropDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                showPopup(v);
+            }
+        });
     }
 
     /**
@@ -305,5 +329,42 @@ public class AllHabitListView extends AppCompatActivity {
         }
 
     }
+    // Dropdown Menu Methods
+    public void showPopup(View v) {
+        Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App);
+        PopupMenu popup = new PopupMenu(wrapper, v, Gravity.LEFT, R.style.Theme_App, 0);
+        popup.setOnMenuItemClickListener(this::onOptionsItemSelected);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.dropdown, popup.getMenu());
 
+        popup.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.dropdown, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Get the main activity layout object.
+        // Get clicked menu item id.
+        int itemId = item.getItemId();
+        if(itemId == R.id.followRequests)
+        {
+            // Change to Follow Requests Screen
+        }else if(itemId == R.id.settings)
+        {
+            Intent intent = new Intent(this, Settings.class);
+            startActivity(intent);
+
+        }else if(itemId == R.id.logout)
+        {
+            // implement logout
+        }
+        return true;
+    }
 }

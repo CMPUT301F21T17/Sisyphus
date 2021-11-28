@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021.
+  ~ Sisyphus, CMPUT 301
+  ~ All Rights Reserved.
+  -->
+
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/editHabit"
+        android:title="Edit Habit" />
+    <item
+        android:id="@+id/deleteHabit"
+        android:title="Delete Habit" />
+</menu>

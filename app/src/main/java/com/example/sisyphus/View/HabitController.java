@@ -48,7 +48,8 @@ public class HabitController extends AppCompatActivity {
     private TextView habitName;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
-    private Button confirm,cancel,deleteButton;
+    private Button confirm,cancel,deleteButton, back;
+
 
     //initializing firebase authentication (session) object and starting firebase connection
     private FirebaseStore testbase = new FirebaseStore();
@@ -73,17 +74,16 @@ public class HabitController extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //attaching UI elements to variables
-
-        ImageView backButton = findViewById(R.id.backButton);
+   
         privateToggle = findViewById(R.id.privateSwitch);
-        Button confirm = findViewById(R.id.confirm);
-        Button cancel = findViewById(R.id.cancel);
-        Button deleteButton = findViewById(R.id.deleteButton);
-        habitName = findViewById(R.id.habitName);
+ 
+        back = findViewById(R.id.back);
+        confirm = findViewById(R.id.confirm);
+        cancel = findViewById(R.id.cancel);
+        habitName = findViewById(R.id.habitNameContainer);
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
-        reason = findViewById(R.id.reason);
-        privateToggle = findViewById(R.id.privateSwitch);
+        reason = findViewById(R.id.reasonContainer);
 
         //setting up storage for days habit occurs, and getting info for firebase search from
         //intent and auth object
@@ -140,36 +140,11 @@ public class HabitController extends AppCompatActivity {
           finish();
         });
         //another option to cancel edit
-        backButton.setOnClickListener(view -> {
+        back.setOnClickListener(view -> {
             finish();
         });
 
 
-        //Deleting a Habit from database
-        deleteButton.setOnClickListener(view -> {
-                    //setting up fragment
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HabitController.this);
-                    builder.setCancelable(true);
-                    builder.setTitle("Message");
-                    builder.setMessage("Are you sure you want to delete this habit");
-                    builder.setPositiveButton("Confirm",
-
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //on user confirmation, delete habit from database and return
-                                    testbase.deleteHabit(dummyUser,dummyhabitname);
-                                    Intent intent = new Intent(view.getContext(),AllHabitListView.class);
-                                    startActivity(intent);
-                                }
-
-                            });
-                    builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> {
-                    });
-        AlertDialog deleteDialog = builder.create();
-        deleteDialog.show();
-
-        });
         //creating the calendar for user to input startdate
         startDate.setOnClickListener(view -> {
             Calendar cal = Calendar.getInstance();

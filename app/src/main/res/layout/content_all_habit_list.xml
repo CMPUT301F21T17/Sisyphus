@@ -6,18 +6,14 @@
   -->
 
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:background="?attr/colorSurface">
-    android:background="#DEE8E8"
-    android:orientation="horizontal">
+    app:cardBackgroundColor="?attr/colorSurface"
+    app:cardElevation="1dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
     <TextView
         android:id="@+id/habit_title_text"
@@ -26,26 +22,28 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="10dp"
+        android:fontFamily="@font/open_sans"
         android:text="habitTitle"
-        android:textColor="#002440"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="30sp"></TextView>
 
-        <TextView
-            android:id="@+id/habit_date_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="10dp"
-            android:text="habitDate"
-            android:textColor="#002440"
-            android:textSize="10sp"></TextView>
+    <TextView
+        android:id="@+id/habit_date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/open_sans"
+        android:text="habitDate"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="10sp"></TextView>
 
-        <ProgressBar
-            android:id="@+id/progressIndicator"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressIndicator"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
 
 </com.google.android.material.card.MaterialCardView>
