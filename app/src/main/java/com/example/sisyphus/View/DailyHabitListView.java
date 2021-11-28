@@ -182,18 +182,34 @@ public class DailyHabitListView extends AppCompatActivity {
         return dayName;
     }
 
-    //method that polls each habit in the list and gets the completion result
+
+
+    /**
+     * Method that takes the list of habits that are to be displayed, and updates the array showing how
+     * well they have been completed for each habit so that the progress bar can be filled accordingly.
+     * Ideally would have been part of an object, but the asynchronous nature of firebase means returning values
+     * to the main thread would have been too challenging
+     */
     public void setHabitCompletion(){
+        //initializing firebase connection object
         CollectionReference collectionReference = db.collection("Users");
+
+        //for habit that is to be displayed, get all it's habit events and compare to how many it should have
         for(int i = 0; i < data.size(); i++){
             int finalI = i;
+
+            //getting all the habitEvents of the current habit in the list
             collectionReference.document(mAuth.getUid()).collection("Habits").document(data.get(i).getHabitName()).collection("HabitEvent")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            //setting the value so it can be used asynchronously
                             final int currentIndex = finalI;
+
+                            //for each habit event, iterate the counter.  Content unimportant, only
+                            //number of events is relevant to completion %
                             if (task.isSuccessful()) {
                                 int counter = 0;
                                 for (QueryDocumentSnapshot document : task.getResult()) {
@@ -202,14 +218,14 @@ public class DailyHabitListView extends AppCompatActivity {
 
                                 }
 
-                                System.out.println("Counted habit events: " + counter);
+                                //creating object to determine the number of days events should have occurred on
                                 habitFollowCalculator calc = new habitFollowCalculator();
+
+                                //getting valid event days (guaranteed non-0)
                                 int totalDays = calc.calculateCloseness(data.get(currentIndex));
 
-                                System.out.println(counter/totalDays);
-                                System.out.println((100* counter/totalDays));
 
-
+                                //comparing # of events to # expected and formatting to %
                                 int percentClose = (int) Math.floor((100*counter/totalDays));
 
                                 //should never happen, but sets completion % to 100 just
@@ -218,13 +234,10 @@ public class DailyHabitListView extends AppCompatActivity {
                                     percentClose = 100;
                                 }
 
-                                System.out.println("Calculated total = " + totalDays);
+                                //storing value in correct location in array
                                 percents.set(currentIndex, String.valueOf(percentClose));
 
-                                System.out.println("Actual val to set to: " + percentClose);
-                                System.out.println("ArrayList Val at index: " + percents.get(currentIndex));
-
-                                System.out.println("ran this");
+                                //updating UI
                                 adapter.notifyDataSetChanged();
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());

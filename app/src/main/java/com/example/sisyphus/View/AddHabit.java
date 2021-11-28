@@ -13,12 +13,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.ImageView;
 import android.widget.Switch;
 
 
 import androidx.annotation.NonNull;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -79,14 +82,16 @@ public class AddHabit extends AppCompatActivity {
         String currentUser = mAuth.getUid();
 
         //attaching UI elements to variables
-        ImageView checkButton = findViewById(R.id.checkButton);
-        ImageView cancelButton = findViewById(R.id.cancelButton);
-        ImageView backButton = findViewById(R.id.backButton);
         privateToggle = findViewById(R.id.privateSwitch);
-        habitName = findViewById(R.id.habitName);
+
+        Button checkButton = findViewById(R.id.checkButton);
+        Button cancelButton = findViewById(R.id.cancelButton);
+        Button back = findViewById(R.id.back);
+        habitName = findViewById(R.id.habitNameContainer);
+
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
-        reason = findViewById(R.id.reason);
+        reason = findViewById(R.id.reasonContainer);
 
         //setting up storage for dates
         ArrayList<String> days = new ArrayList<>();
@@ -207,7 +212,7 @@ public class AddHabit extends AppCompatActivity {
         });
 
         //On Click for the Back button
-        backButton.setOnClickListener(view -> {
+        back.setOnClickListener(view -> {
             //Intent back
             finish();
         });

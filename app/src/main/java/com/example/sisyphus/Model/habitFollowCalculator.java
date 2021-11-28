@@ -32,13 +32,23 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Class that performs a calculation based on give habit info to determine the correct
+ * number of days that the habit occurred on.  This permits the number of habit events to be referenced
+ * against this number to allow display of habit event completion for each habit
+ */
 public class habitFollowCalculator {
     //setting up default variables to connect to Firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final CollectionReference collectionReference = db.collection("Users");
     private final String TAG = "Sample";
+
+    //date format for parsing and comparison
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
+    /**
+     * Default constructor
+     */
     public habitFollowCalculator(){
 
     }
@@ -47,7 +57,8 @@ public class habitFollowCalculator {
      * Function that takes a habit and references the database to determine how
      * closely the user is following the habit.  Does this by computing the start date
      * and then taking in the number of habit events.  ASSUMES THAT NO DUPLICATE HABIT
-     * EVENTS EXIST, ONlY 1 EVENT PER DAY, NO EVENTS IN THE FUTURE OR BEFORE THE START DATE
+     * EVENTS EXIST, ONlY 1 EVENT PER DAY, NO EVENTS IN THE FUTURE OR BEFORE THE START DATE.
+     * These conditions are enforced in addHabitEvent and editHabitEvent
      * @param habit
      * the habit to perform the calculation on
      * @return
@@ -61,12 +72,15 @@ public class habitFollowCalculator {
         //Get number of days from habit
         String startDate = format.format( habit.getStartDate());
 
+        //getting the start and end of the habit period
         LocalDate start = LocalDate.parse(startDate);
         LocalDate end = LocalDate.now();
 
+        //creating period to get total number of days between start and end
         Period sinceStart = Period.between(start, end);
 
-        //when start = end, period = 0, so return 1 (the current day)
+        //when start = end, period = 0, so return 1 (the current day) as the only possible
+        //date
         if(sinceStart.getDays() == 0){
             return 1;
         }
@@ -75,7 +89,6 @@ public class habitFollowCalculator {
 
         //getting day of week to start
         int startEncode = habit.getStartDate().getDay();
-        //System.out.println(startEncode);
 
 
         ArrayList<String> dates = habit.getFrequency();
@@ -91,7 +104,8 @@ public class habitFollowCalculator {
         for(int i = 0; i < dates.size(); i++){
 
             //encoding date based on string value (since array indices in firebase are not
-            //consistent)
+            //consistent.  If wednesday is the only date the habit occurs on, it will be in the 0'th index
+            // when it should be encoded 3)
             if(dates.get(i).equals("SUNDAY")){
                 currentEncode = 0;
             } else if (dates.get(i).equals("MONDAY")){
@@ -141,9 +155,9 @@ public class habitFollowCalculator {
 
         }
 
-        //note: at this point activeDaysCounter should always be at least 1, so no divide by 0
-        //issues should arise
 
+        //prevents possibility of divide by 0 error if habit has no valid days that
+        //it could have occurred on yet (ie. Added on a Saturday but occurs on Wednesdays)
         if(activeDaysCounter == 0){
             return 1;
         }

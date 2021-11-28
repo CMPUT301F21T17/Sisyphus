@@ -1,13 +1,14 @@
 <resources>
-    <style name="Theme.Sisyphus" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.Sisyphus" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/md_theme_light_primary</item>
-        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
-        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
-        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
-        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnPrimary">@color/primaryTextW</item>
+        <item name="android:statusBarColor">#007677</item>
+        <item name="colorPrimaryContainer">@color/primaryLightColor</item>
+        <item name="colorOnPrimaryContainer">@color/primaryTextW</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
-        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
-        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorSecondaryContainer">@color/secondaryLightColor</item>
+        <item name="colorOnSecondaryContainer">@color/secondaryDarkColor</item>
         <item name="colorTertiary">@color/md_theme_light_tertiary</item>
         <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
         <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
@@ -26,5 +27,24 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_primaryInverse</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <style name="Theme.App" parent="Theme.Sisyphus">
+        <item name="android:popupBackground">@drawable/dropdown_background</item>
+        <item name="android:textColor">@color/primaryTextW</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+    </style>
+
+    <style name="Theme.App.Overflow" parent="Theme.Sisyphus">
+        <item name="android:popupBackground">@drawable/overflow_background</item>
+        <item name="android:textColor">@color/primaryTextW</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+    </style>
+
+    <style name="Theme.App.Overflow.Event" parent="Theme.Sisyphus">
+        <item name="android:popupBackground">@drawable/event_overflow_background</item>
+        <item name="android:textColor">@color/primaryTextW</item>
+        <item name="android:fontFamily">@font/open_sans</item>
     </style>
 </resources>

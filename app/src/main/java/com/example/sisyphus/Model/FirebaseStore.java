@@ -184,7 +184,15 @@ public class FirebaseStore {
 
     }
 
+    /**
+     * Function that will delete a habit event from the database.  Required to prevent duplication
+     * of habit events upon editing due to habit events getting names based on realtime.
+     * @param ID
+     * @param habitName
+     * @param eventID
+     */
     public void deleteHabitEvent(String ID, String habitName, String eventID){
+        //getting the given habit and deleting
         collectionReference.document(ID).collection("Habits").document(habitName)
                 .collection("HabitEvent").document(eventID).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
