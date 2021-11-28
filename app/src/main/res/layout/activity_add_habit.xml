@@ -120,7 +120,6 @@
             android:hint="Start Date"
             android:importantForAutofill="no"
             android:inputType="none"
-            android:focusable="false"
             tools:ignore="HardcodedText,SpeakableTextPresentCheck,TextFields" />
 
 
@@ -177,7 +176,6 @@
             android:inputType="text"
             android:fontFamily="@font/open_sans"
             android:hint="Reason"
-            android:inputType="text"
             tools:ignore="HardcodedText" />
 
     </com.google.android.material.textfield.TextInputLayout>

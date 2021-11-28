@@ -75,7 +75,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@+id/editTextLocation" 
+        app:layout_constraintTop_toBottomOf="@+id/editTextLocation"
 
         app:srcCompat="@android:drawable/ic_menu_crop" />
 
@@ -156,7 +156,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="SpeakableTextPresentCheck,TextFields" />
+        tools:ignore="SpeakableTextPresentCheck,TextFields"
         app:layout_constraintTop_toBottomOf="@+id/dateLayout">
 
         <com.google.android.material.textfield.TextInputEditText
