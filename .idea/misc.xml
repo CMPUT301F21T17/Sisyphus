@@ -8,11 +8,13 @@
         <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_add_habit_event.xml" value="0.1" />
         <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_all_habit_list.xml" value="0.1" />
         <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_calendar.xml" value="0.15520833333333334" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_daily_habit_list_view.xml" value="0.1" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_display_search.xml" value="0.1" />
         <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_edit_habit_event.xml" value="0.176" />
         <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_empty_main_menu.xml" value="0.1" />
         <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_follow_request_list_view.xml" value="0.11550151975683891" />
         <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_google_maps.xml" value="0.22282608695652173" />
-        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_habit_controller.xml" value="0.2" />
+        <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_habit_controller.xml" value="0.25" />
         <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_list_habit_event.xml" value="0.1" />
         <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Sisyphus/app/src/main/res/layout/activity_search_results.xml" value="0.1" />

@@ -128,7 +128,6 @@ public class AddHabitEvent extends AppCompatActivity {
         }
     }
 
-
     String TAG = "Query duplicate habit events";
 
 
@@ -361,29 +360,8 @@ public class AddHabitEvent extends AppCompatActivity {
         System.out.println("Got here");
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
-        //if(i.resolveActivity(getPackageManager()) != null){
-            //System.out.println("ran");
-            //startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
-        //}
-        if(i.resolveActivity(getPackageManager()) != null){
-            Log.d(TAG,"getPackage"+getPackageManager());
-            startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
-        }
     }
 
-    /**
-     * function to get the result image back
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            takenPhoto = (Bitmap) extras.get("data");
-            habitPhoto.setImageBitmap(takenPhoto);
-            encodeBitmap(takenPhoto);
-        }
-    }
 
     /**
      * function to encode the image into a string and store in takenPhotoID

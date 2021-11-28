@@ -139,7 +139,7 @@ public class SocialView extends AppCompatActivity {
         button_Prof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SocialView.this, UserSearch.class);
+                Intent intent = new Intent(SocialView.this, SocialView.class);
                 startActivity(intent);
             }
         });
