@@ -11,10 +11,14 @@
     style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
     app:cardBackgroundColor="?attr/colorSurface"
     app:cardCornerRadius="4dp"
-    app:cardElevation="1dp">
+    app:cardElevation="1dp"
+    app:strokeColor="?attr/scrimBackground"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -52,6 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:progressTint="@color/md_theme_dark_onPrimaryContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

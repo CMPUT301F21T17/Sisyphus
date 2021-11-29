@@ -30,6 +30,7 @@
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/activity_habit_controller.xml" value="0.33" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/activity_list_habit_event.xml" value="0.3" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/activity_search_results.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/activity_sign_in.xml" value="0.36" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/activity_social_view.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/activity_user_search.xml" value="0.268" />
@@ -37,6 +38,7 @@
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/activity_view_habit_event.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/changepassword.xml" value="0.3171875" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/content_all_habit_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/content_follow_request_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/custom_info_contents.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/entry.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/layout/error_fragment.xml" value="0.36666666666666664" />
@@ -54,6 +56,11 @@
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/menu/habit_dropdown.xml" value="0.3151041666666667" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/menu/overflowMenu.xml" value="0.5" />
         <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/menu/popup_menu.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/mipmap-anydpi-v26/SisyphusLogo.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/mipmap-anydpi-v26/sisyphusLogo.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/mipmap-anydpi-v26/sisyphusLogo_round.xml" value="0.23333333333333334" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/mipmap-anydpi-v26/sisyphuslogo.xml" value="0.3828125" />
+        <entry key="..\:/Users/LeahT/OneDrive/Documents/School/Fall 2021/CMPUT 301/Sisyphus/app/src/main/res/mipmap-anydpi-v26/sisyphuslogo_round.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/kaele/Desktop/Sisyphus/app/src/main/res/layout/actionbar.xml" value="0.2866847826086957" />
         <entry key="..\:/Users/kaele/Desktop/Sisyphus/app/src/main/res/layout/activity_add_habit.xml" value="0.2866847826086957" />
         <entry key="..\:/Users/kaele/Desktop/Sisyphus/app/src/main/res/layout/calendar_page.xml" value="0.3078125" />

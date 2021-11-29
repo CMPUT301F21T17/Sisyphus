@@ -382,7 +382,9 @@ public class SocialView extends AppCompatActivity {
 
         }else if(itemId == R.id.logout)
         {
-            // implement logout
+            mAuth.signOut();
+            Intent intent = new Intent(this, Entry.class);
+            startActivity(intent);
         }
         return true;
     }

@@ -81,20 +81,20 @@
     </androidx.appcompat.widget.Toolbar>
 
     <ExpandableListView
-        style="@android:style/Widget.Material.ListView"
         android:id="@+id/socialExpandableListView"
-        android:layout_height="0dp"
+        style="@android:style/Widget.DeviceDefault.ExpandableListView"
         android:layout_width="match_parent"
-        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
-        android:dividerHeight="2dp"
+        android:layout_height="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
-        android:divider="@android:color/transparent"
+        android:childDivider="#0000ffff"
+        android:elevation="2dp"
+        android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
         app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"/>
+        app:layout_constraintTop_toBottomOf="@id/top_bar" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/bottom_bar"
