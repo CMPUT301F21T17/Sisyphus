@@ -86,63 +86,6 @@ public class UserSearch extends AppCompatActivity {
             }
         });
 
-        habit_Button = findViewById(R.id.allhabitlist_button);
-        //onClick listener to return to main menu
-        habit_Button.setOnClickListener(new View.OnClickListener() {
-            /**
-             * A function called when habit button is clicked
-             * @param view
-             *  current view
-             */
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserSearch.this, AllHabitListView.class);
-                startActivity(intent);
-            }
-        });
-
-        //onClick listener to transfer user to calendar page
-        calendar_Button = findViewById(R.id.calendar_button);
-        calendar_Button.setOnClickListener(new View.OnClickListener() {
-            /**
-             * A function called when calendar button is clicked
-             * @param view
-             *  current view
-             */
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserSearch.this, CalendarActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        home_Button = findViewById(R.id.home_button);
-        home_Button.setOnClickListener(new View.OnClickListener() {
-            /**
-             * A function called when home button is clicked
-             * @param view
-             *  current view
-             */
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserSearch.this, DailyHabitListView.class);
-                startActivity(intent);
-            }
-        });
-
-        social_Button = findViewById(R.id.social_button);
-        social_Button.setOnClickListener(new View.OnClickListener() {
-            /**
-             * A function called when social button is clicked
-             * @param view
-             *  current view
-             */
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserSearch.this, SocialView.class);
-                startActivity(intent);
-            }
-        });
 
         back_Button = findViewById(R.id.back);
         back_Button.setOnClickListener(new View.OnClickListener() {

@@ -30,6 +30,8 @@ public class HabitClassTest {
         frequency.add("WEDNESDAY");
         habit.setFrequency(frequency);
         habit.setReason("Tired.");
+        habit.setPrivate(true);
+        habit.setPosition(1);
         return habit;
     }
 
@@ -119,6 +121,44 @@ public class HabitClassTest {
         String newReason = "Sleepy.";
         habit.setReason(newReason);
         assertEquals(habit.getReason(), newReason);
+    }
+
+    /**
+     * Tests whether the function correctly gets the current position
+     */
+    @Test
+    public void testGetPosition(){
+        Habit habit = mockHabit();
+        assertEquals(habit.getPosition(), 1);
+    }
+
+    /**
+     * Tests whether the function correctly updates the current position
+     */
+    @Test
+    public void testSetPosition(){
+        Habit habit = mockHabit();
+        habit.setPosition(500);
+        assertEquals(habit.getPosition(), 500);
+    }
+
+    /**
+     * Tests whether the function correctly gets the current privacy status
+     */
+    @Test
+    public void testGetPrivacy(){
+        Habit habit = mockHabit();
+        assertEquals(habit.isPrivate(), true);
+    }
+
+    /**
+     * Tests whether the function correctly updates the current privacy status
+     */
+    @Test
+    public void testSetPrivacy(){
+        Habit habit = mockHabit();
+        habit.setPrivate(false);
+        assertEquals(habit.isPrivate(), false);
     }
 
 }

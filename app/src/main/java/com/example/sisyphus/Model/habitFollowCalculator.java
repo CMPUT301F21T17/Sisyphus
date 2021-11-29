@@ -38,10 +38,7 @@ import java.util.Date;
  * against this number to allow display of habit event completion for each habit
  */
 public class habitFollowCalculator {
-    //setting up default variables to connect to Firebase
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final CollectionReference collectionReference = db.collection("Users");
-    private final String TAG = "Sample";
+
 
     //date format for parsing and comparison
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -78,6 +75,8 @@ public class habitFollowCalculator {
 
         //creating period to get total number of days between start and end
         Period sinceStart = Period.between(start, end);
+
+
 
         //when start = end, period = 0, so return 1 (the current day) as the only possible
         //date
@@ -142,6 +141,7 @@ public class habitFollowCalculator {
 
             //setting the number of days we need to check for
             int iterateCounter = sinceStart.getDays()+1;
+
 
             //loop that iterates the counter by 1 so long as the day can be reached.  If
             //not, then we know the day does not come up again

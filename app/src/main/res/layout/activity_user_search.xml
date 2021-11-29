@@ -65,187 +65,90 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/bottom_bar"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:contentInsetStart="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="8dp">
-
-            <Button
-                android:id="@+id/home_button"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:fontFamily="@font/open_sans"
-                android:text="Home"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/calendar_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/calendar_button"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:elevation="0dp"
-                android:fontFamily="@font/open_sans"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:text="CALENDAR"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/allhabitlist_button"
-                app:layout_constraintStart_toEndOf="@+id/home_button"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/allhabitlist_button"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:fontFamily="@font/open_sans"
-                android:text="Habit"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/social_button"
-                app:layout_constraintStart_toEndOf="@+id/calendar_button"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/social_button"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:fontFamily="@font/open_sans"
-                android:text="Social"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/allhabitlist_button"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.appcompat.widget.Toolbar>
-
-    <EditText
-        android:id="@+id/editTextTextFirstName"
-        android:layout_width="189dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="300dp"
-        android:ems="10"
-        android:hint="Enter First Name"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextTextLastName"
-        android:layout_width="189dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="410dp"
-        android:ems="10"
-        android:hint="Enter Last Name"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="186dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="190dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="90dp"
-        android:text="You are currently following:"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/search_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="Search"
-        app:layout_constraintBottom_toTopOf="@id/bottom_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="193dp"
-        android:layout_height="86dp"
-        android:layout_marginTop="120dp"
-        android:text="Connect with your friends and follow others' habits by seraching and following users!"
-        android:textSize="14sp"
+        style="@style/Widget.MaterialComponents.TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="32dp"
+        android:elevation="1dp"
+        android:fontFamily="@font/open_sans"
+        android:text="Connect with your friends and follow their habits by searching and following!"
+        android:textAlignment="center"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/top_bar" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="113dp"
-        android:layout_marginBottom="35dp"
-        android:text="users!"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/firstNameContainer"
+        android:layout_width="0dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="75dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="25dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="17dp"
-        android:text="0"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTextFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:fontFamily="@font/open_sans"
+            android:hint="User's First Name"
+            android:inputType="textPersonName"
+            android:textColor="?attr/colorOnBackground">
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lastNameContainer"
+        android:layout_width="0dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="75dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstNameContainer">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTextLastName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:fontFamily="@font/open_sans"
+            android:hint="User's Last Name"
+            android:inputType="textPersonName"
+            android:textColor="?attr/colorOnBackground">
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/search_user"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="75dp"
+        android:text="Search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

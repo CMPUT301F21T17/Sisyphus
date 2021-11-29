@@ -73,9 +73,9 @@ public class HabitEventListAdapter extends ArrayAdapter<HabitEvent> {
         ImageView habitEventPhoto = view.findViewById(R.id.habit_event_picture);
 
         habitEventTitle.setText(habitEvent.getHabitName());
-        habitEventComment.setText("Comment: " + habitEvent.getComment());
+        habitEventComment.setText(habitEvent.getComment());
         habitEventDate.setText(habitEvent.getDate().toString().substring(0,10));
-        habitEventLocation.setText("Location: " + habitEvent.getLocation());
+        habitEventLocation.setText(habitEvent.getLocation());
         habitEventPhoto.setImageBitmap(decodeFromFirebase(habitEvent.getPhotoID()));
         return view;
     }
