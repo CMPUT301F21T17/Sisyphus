@@ -1,6 +1,10 @@
 # Sisyphus
 Class project for Cmput 301 Fall Semester of 2021
 
+## Part 4:
+[Updated UML Class Diagram](https://github.com/CMPUT301F21T17/Sisyphus/blob/main/doc/Final_UML_Class_Diagram.png)
+
+
 ## Part 3:
 
 [UML Class Diagram](https://github.com/CMPUT301F21T17/Sisyphus/wiki/UML-Class-Diagram)
