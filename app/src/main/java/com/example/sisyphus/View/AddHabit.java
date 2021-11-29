@@ -13,16 +13,30 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.ImageView;
+import android.widget.Switch;
+
+
+import androidx.annotation.NonNull;
+
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
+import com.example.sisyphus.View.Dialog.errorFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,23 +47,29 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * A class that provides with a UI to add habits to firebase
+ * A class that provides a UI to add habits to firebase
  */
 public class AddHabit extends AppCompatActivity {
     //setting UI elements
     private TextInputLayout habitName, reason;
     private EditText startDate, frequency;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private SwitchCompat privateToggle;
+
 
     //initializing firebase authentication (session) object
     private FirebaseAuth mAuth;
 
+    /**
+     * default constructor
+     */
     public AddHabit() {
     }
 
     /**
-     * function to create habit creation view
+     * function to create a habit creation view
      * @param savedInstanceState
+     *  previous view
      */
     @SuppressLint("SimpleDateFormat")
     @Override
@@ -59,16 +79,20 @@ public class AddHabit extends AppCompatActivity {
 
         //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
+
         String currentUser = mAuth.getUid();
 
         //attaching UI elements to variables
-        ImageView checkButton = findViewById(R.id.checkButton);
-        ImageView cancelButton = findViewById(R.id.cancelButton);
-        ImageView backButton = findViewById(R.id.backButton);
-        habitName = findViewById(R.id.habitName);
+        privateToggle = findViewById(R.id.privateSwitch);
+
+        Button checkButton = findViewById(R.id.checkButton);
+        Button cancelButton = findViewById(R.id.cancelButton);
+        Button back = findViewById(R.id.back);
+        habitName = findViewById(R.id.habitNameContainer);
+
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
-        reason = findViewById(R.id.reason);
+        reason = findViewById(R.id.reasonContainer);
 
         //setting up storage for dates
         ArrayList<String> days = new ArrayList<>();
@@ -83,10 +107,38 @@ public class AddHabit extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
+            //error checking for empty habit
+            if(habit.equals("")){
+                new errorFragment("Please give the habit a name!").show(getSupportFragmentManager(), "Display_Error");
+                return;
+            }
+
+            //error checking for empty date
+            if(dateInput == null){
+                new errorFragment("Please select a date!").show(getSupportFragmentManager(), "Display_Error");
+                return;
+            }
+
+
             String reasonInput = Objects.requireNonNull(reason.getEditText()).getText().toString().trim();
-            Habit habitInput = new Habit(habit, dateInput, days, reasonInput);
+
+            //error checking for empty reason
+            if(reasonInput.equals("")){
+                new errorFragment("Please add a reason!").show(getSupportFragmentManager(), "Display_Error");
+                return;
+            }
+
+            //error checking for no days selected
+            if(days.size() == 0){
+                new errorFragment("Please select at least one date for the habit to occur!").show(getSupportFragmentManager(), "Display_Error");
+                return;
+            }
+
+            Habit habitInput = new Habit(habit, privateToggle.isChecked(),dateInput, days, reasonInput, -1);
 
             //establishing connection to firebase, storing data, and then returning to previous menu
+
             FirebaseStore fb = new FirebaseStore();
             fb.storeHabit(currentUser,habitInput);
             Intent toHabitList = new Intent(AddHabit.this, AllHabitListView.class);
@@ -187,7 +239,7 @@ public class AddHabit extends AppCompatActivity {
         });
 
         //On Click for the Back button
-        backButton.setOnClickListener(view -> {
+        back.setOnClickListener(view -> {
             //Intent back
             finish();
         });

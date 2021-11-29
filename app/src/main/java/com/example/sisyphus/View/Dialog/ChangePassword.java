@@ -6,6 +6,7 @@
 
 package com.example.sisyphus.View.Dialog;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,7 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.sisyphus.R;
+
 import com.example.sisyphus.View.Settings;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 //
@@ -35,23 +40,28 @@ public class ChangePassword extends AppCompatActivity {
 
     Button back;
     Button passConfirm;
+    Button passCancel;
 
     //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
+    /**
+     * function to create change password view
+     * @param savedInstanceState
+     *  previouse instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.changepassword);
 
         // Initializing Edit Texts
-        passwordCurrent = findViewById(R.id.passwordCurrent);
         passwordNew = findViewById(R.id.passwordNew);
         passwordConfirmNew = findViewById(R.id.passwordConfirmNew);
         // Initializing Buttons
         back = findViewById(R.id.back);
         passConfirm = findViewById(R.id.passConfirm);
-
+        passCancel = findViewById(R.id.passCancel);
 
         //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();
@@ -60,8 +70,14 @@ public class ChangePassword extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cancelInt = new Intent(getApplicationContext(), Settings.class);
-                startActivity(cancelInt);
+                finish();
+            }
+        });
+
+        passCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
@@ -70,13 +86,34 @@ public class ChangePassword extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //validates password conditions
-                if (passwordNew.getText().toString().equals(passwordConfirmNew.getText().toString()) && passwordNew.getText().toString().length() > 5) {
+                if (passwordNew.getText().toString().equals(passwordConfirmNew.getText().toString())) {
+                    if (passwordNew.getText().toString().length() > 5){
+                        // Implements password change, then switch activities back to the previous
+                        mAuth.getCurrentUser().updatePassword(passwordNew.getText().toString())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Intent confirmInt = new Intent(getApplicationContext(), Settings.class);
+                                startActivity(confirmInt);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                //error for timeout or otherwise failed
+                                new errorFragment("Password failed to update! Please log out and log in again!").show(getSupportFragmentManager(), "Display_Error");
+                            }
+                        });
 
-                    // Implements password change, then switch activities back to the previous
-                    mAuth.getCurrentUser().updatePassword(passwordNew.getText().toString());
+                    } else {
+                        //invalid password
+                        new errorFragment("Password must be at least 6 characters!").show(getSupportFragmentManager(), "Display_Error");
+                    }
 
-                    Intent confirmInt = new Intent(getApplicationContext(), Settings.class);
-                    startActivity(confirmInt);
+
+                } else {
+                    //password confirm failed
+                    new errorFragment("Passwords do not match!").show(getSupportFragmentManager(), "Display_Error");
+
                 }
             }
         });

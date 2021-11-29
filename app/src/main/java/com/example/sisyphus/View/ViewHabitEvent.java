@@ -8,10 +8,24 @@ package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.PopupMenu;
+
 import android.widget.TextView;
 
 import com.example.sisyphus.Model.HabitEvent;
@@ -28,14 +42,20 @@ public class ViewHabitEvent extends AppCompatActivity {
     //setting UI elements
     TextView habitEventTitleText, habitEventDateText, habitEventLocationText, habitEventCommentText;
 
+    ImageView habitEventPhoto;
+
+    private HabitEvent receivedHabitEvent;
+    private String receivedUser, receivedHabitEventID;
+
     //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
-    @Override
     /**
-     * onCreate
-     * a class to create and set the view for habit event
+     * A function called to display a habit event
+     * @param savedInstanceState
+     *  saved instances' state
      */
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_habit_event);
@@ -48,74 +68,125 @@ public class ViewHabitEvent extends AppCompatActivity {
         habitEventDateText = findViewById(R.id.habit_event_date);
         habitEventLocationText = findViewById(R.id.habit_event_location);
         habitEventCommentText = findViewById(R.id.habit_event_comment);
+        habitEventPhoto = findViewById(R.id.habit_event_image);
 
         //getting habit event info and displaying in UI elements
         Intent intent = getIntent();
-        String receivedUser = intent.getStringExtra("user");
-        String receivedHabitEventID = intent.getStringExtra("habit_eventID");
-        HabitEvent receivedHabitEvent = (HabitEvent) intent.getSerializableExtra("habit_event");
+        receivedUser = intent.getStringExtra("user");
+        receivedHabitEventID = intent.getStringExtra("habit_eventID");
+        receivedHabitEvent = (HabitEvent) intent.getSerializableExtra("habit_event");
         habitEventTitleText.setText(receivedHabitEvent.getHabitName());
         habitEventDateText.setText(new SimpleDateFormat("dd/MM/yyyy").format(receivedHabitEvent.getDate()));
-        habitEventLocationText.setText(receivedHabitEvent.getLocation());
-        habitEventCommentText.setText(receivedHabitEvent.getComment());
+        habitEventLocationText.setText("Location: " + receivedHabitEvent.getLocation());
+        habitEventCommentText.setText("Comment: " + receivedHabitEvent.getComment());
 
-        final Button editHabitEventButton = findViewById(R.id.edit_habitEvent_button);
-        editHabitEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+        if(receivedHabitEvent.getPhotoID().equals("")){
+            //do nothing!
+        } else {
+            habitEventPhoto.setImageBitmap(decodeFromFirebase(receivedHabitEvent.getPhotoID()));
+        }
+
+
+
+        Button overflow = (Button) findViewById(R.id.search);
+        overflow.setOnClickListener(new View.OnClickListener() {
             /**
-             * function called when a HabitEvent is to be edited
+             * A function called to display the drop down menu
+             * @param v
+             *  current view
              */
-            public void onClick(View view) {
-                //transfers to edit menu for selected habit event
-                Intent editHabit = new Intent(view.getContext(), EditHabitEventView.class);
-                editHabit.putExtra("editEvent",receivedHabitEvent);
-                editHabit.putExtra("editEventID",receivedHabitEventID);
-                startActivity(editHabit);
+            @Override
+            public void onClick(View v) {
+                showPopup(v);
             }
         });
 
-        final Button deleteHabitEventButton = findViewById(R.id.delete_habitEvent_button);
-        deleteHabitEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+        final Button back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
             /**
-             * function called when a HabitEvent is to be deleted
+             * A function called to return to previous view
+             * @param view
+             *  current view
              */
+            @Override
             public void onClick(View view) {
-                //start fragment for deletion
-                deleteHabitEvent dialog = new deleteHabitEvent();
-                Bundle bundle = new Bundle();
-                bundle.putString("selectedHabit",receivedHabitEvent.getHabitName());
-                bundle.putString("selectedEventID",receivedHabitEventID);
-                bundle.putString("selectedUser",receivedUser);
-                dialog.setArguments(bundle);
-                dialog.show(getSupportFragmentManager(), "DELETE");
+                finish();
             }
         });
+    }
 
-        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
-        button_allHabitList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            /**
-             * function called when habitList button is clicked
-             */
-            public void onClick(View view) {
-                Intent intent = new Intent(ViewHabitEvent.this, AllHabitListView.class);
-                startActivity(intent);
-            }
-        });
+    /**
+     * function to decode the image code
+     * @param image
+     *  string of image to be converted to bitmap
+     * @return Bitmap of image
+     *  bitmap of image that was converted
+     */
+    public static Bitmap decodeFromFirebase(String image){
+        byte[] decodedByteArray = android.util.Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedByteArray,0,decodedByteArray.length);
+    }
 
-        final Button button_backToList = findViewById(R.id.BackButton);
-        button_backToList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            /**
-             * function called to return to previous view
-             */
-            public void onClick(View view) {
-                Intent toEventList = new Intent(ViewHabitEvent.this, ListHabitEvent.class);
-                toEventList.putExtra("1",receivedHabitEvent.getHabitName());
-                startActivity(toEventList);
-            }
-        });
+    /**
+     * Method to open popup menu
+     * @param v
+     *  current view
+     */
+    public void showPopup(View v) {
+        Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App_Overflow_Event);
+        PopupMenu popup = new PopupMenu(wrapper, v, Gravity.LEFT, R.style.Theme_App_Overflow_Event, 0);
+        popup.setOnMenuItemClickListener(this::onOptionsItemSelected);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.event_dropdown, popup.getMenu());
 
+        popup.show();
+    }
+
+    /**
+     * Method to create an options menu
+     * @param menu
+     *  menu to be created
+     * @return
+     *  true
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.event_dropdown, menu);
+        return true;
+    }
+
+    /**
+     * function to handle options menu clicks
+     * @param item
+     *  Item in menu selected
+     * @return
+     *  true
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Get the main activity layout object.
+        // Get clicked menu item id.
+        int itemId = item.getItemId();
+        if(itemId == R.id.editEvent)
+        {
+            Intent editHabit = new Intent(this, EditHabitEventView.class);
+            editHabit.putExtra("editEvent",receivedHabitEvent);
+            editHabit.putExtra("editEventID",receivedHabitEventID);
+            startActivity(editHabit);
+
+        }else if(itemId == R.id.deleteEvent)
+        {
+            //start fragment for deletion
+            deleteHabitEvent dialog = new deleteHabitEvent();
+            Bundle bundle = new Bundle();
+            bundle.putString("selectedHabit",receivedHabitEvent.getHabitName());
+            bundle.putString("selectedEventID",receivedHabitEventID);
+            bundle.putString("selectedUser",receivedUser);
+            dialog.setArguments(bundle);
+            dialog.show(getSupportFragmentManager(), "DELETE");
+
+        }
+        return true;
     }
 }

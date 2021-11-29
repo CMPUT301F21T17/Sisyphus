@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sisyphus.R;
+import com.example.sisyphus.View.Dialog.errorFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -40,6 +41,7 @@ public class SignIn extends AppCompatActivity {
     /**
      * Create a view to collect information to log in a user
      * @param savedInstanceState
+     *  saved instances' state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,11 @@ public class SignIn extends AppCompatActivity {
         Button signInConfirm = findViewById(R.id.registerConfirm);
 
         signInConfirm.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Confirm sign in on click listener
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 String emailStore;
@@ -64,7 +71,7 @@ public class SignIn extends AppCompatActivity {
 
                 //if username and password non-null
                 //can be modified to add security constraints in future
-                if(emailStore != "" && passStore != ""){
+                if((!emailStore.equals("")) && (!passStore.equals(""))){
                     mAuth.signInWithEmailAndPassword(emailStore, passStore)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -76,18 +83,19 @@ public class SignIn extends AppCompatActivity {
 
                                         //Pass intent to next class here!
 
-                                        Intent startEmptyMain = new Intent(view.getContext(), EmptyMainMenu.class);
+                                        Intent startEmptyMain = new Intent(view.getContext(), DailyHabitListView.class);
                                         startActivity(startEmptyMain);
 
 
                                         } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                        Toast.makeText(SignIn.this, "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
+                                        new errorFragment("Authentication failed.  Either email or password is invalid.").show(getSupportFragmentManager(), "Display_Error");
                                     }
                                 }
                             });
+                } else {
+                    new errorFragment("Authentication failed.  Email and password cannot be empty.").show(getSupportFragmentManager(), "Display_Error");
                 }
             }
         });

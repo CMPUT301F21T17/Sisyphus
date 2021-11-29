@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.R;
 import com.example.sisyphus.Model.User;
+import com.example.sisyphus.View.Dialog.errorFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -47,6 +48,7 @@ public class Register extends AppCompatActivity {
     /**
      * Create a view to get information to create a new user
      * @param savedInstanceState
+     *  previous instances' state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,36 +88,25 @@ public class Register extends AppCompatActivity {
                     emailStore = registerEmail.getText().toString();
                     passStore = registerPassword.getText().toString();
 
-                    System.out.println(emailStore);
-                    System.out.println(passStore);
-
                     //getting data entry fields
                     //TO-DO once UI complete!
                     String userFirst = registerFirstName.getText().toString();
                     String userLast = registerLastName.getText().toString();
-
-
 
                     //Validating data entry fields
                     //TO-DO once UI complete
 
                     //NO VALIDATION NEEDED AT THIS STEP AS OF CURRENT
 
-
-
                     //creating user with valid data
-
                     Date currentDate = new Date();
                     User registeredUser = new User(userFirst, userLast, currentDate);
 
-
-
-
-
-                    //if username and password non-null
+                    //if username, email and password non-null
                     //can be modified to add security constraints in future
-                    if(emailStore != "" && passStore != ""){
-
+                    if(emailStore.equals("") || passStore.equals("") || userFirst.equals("") || userLast.equals("")) {
+                        new errorFragment("Please ensure all fields are filled out!").show(getSupportFragmentManager(), "Display_Error");
+                    } else {
                         //attempting user authentication with given data
                         mAuth.createUserWithEmailAndPassword(emailStore, passStore)
                                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -129,18 +120,19 @@ public class Register extends AppCompatActivity {
                                             store.storeUser(user.getUid(), registeredUser);
 
                                             // PASS INTENT TO MAIN MENU HERE!
-                                            Intent startEmptyMain = new Intent(view.getContext(), EmptyMainMenu.class);
+                                            Intent startEmptyMain = new Intent(view.getContext(), DailyHabitListView.class);
                                             startActivity(startEmptyMain);
 
                                         } else {
                                             // Failed sign in, display message informing user
                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                            Toast.makeText(Register.this, "Authentication failed.",
-                                                    Toast.LENGTH_SHORT).show();
+                                            new errorFragment("Please ensure email is a valid format, and password is 6 or more characters! (eg. JohnDoe@email.com, 123456)").show(getSupportFragmentManager(), "Display_Error");
                                         }
                                     }
                                 });
                     }
+                } else {
+                    new errorFragment("Passwords do not match!").show(getSupportFragmentManager(), "Display_Error");
                 }
             }
         });

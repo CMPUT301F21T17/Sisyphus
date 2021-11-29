@@ -15,12 +15,15 @@ import java.util.Date;
  */
 public class Habit implements Serializable {
     private String habitName;
+    private boolean isPrivate;
     private Date startDate;
     private ArrayList<String> frequency;
     private String reason;
+    private int position;
 
     public Habit() {
     }
+
 
     /**
      * Constructor to create a habit
@@ -33,13 +36,34 @@ public class Habit implements Serializable {
      * @param reason
      *  reason for habit
      */
-    public Habit(String habitName, Date startDate, ArrayList<String> frequency, String reason) {
+    public Habit(String habitName, boolean isPrivate,Date startDate, ArrayList<String> frequency, String reason, int position) {
+
         setHabitName(habitName);
+        setPrivate(isPrivate);
         setStartDate(startDate);
         setFrequency(frequency);
         setReason(reason);
+        setPosition(position);
     }
-    
+
+    /**
+     * function to get private state
+     * @return habit private state
+     */
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    /**
+     * function to set habit frequency
+     * @param aPrivate
+     *  frequency to set habit to
+     */
+    public void setPrivate(boolean aPrivate) {
+        isPrivate = aPrivate;
+
+    }
+
     /**
      * function to get Habit name
      * @return
@@ -110,6 +134,25 @@ public class Habit implements Serializable {
      */
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+
+    /**
+     * function to get the position of the Habit
+     * @return
+     *  position of habit
+     */
+    public int getPosition() {
+        return position;
+    }
+
+    /**
+     * function to set the position of the Habit
+     * @param position
+     *  the position of the habit to set
+     */
+    public void setPosition(int position) {
+        this.position = position;
     }
 }
 

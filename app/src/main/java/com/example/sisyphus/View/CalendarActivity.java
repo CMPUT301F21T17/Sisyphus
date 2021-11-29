@@ -6,21 +6,41 @@
 
 package com.example.sisyphus.View;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+
+import android.util.Log;
+
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sisyphus.Model.AllHabitList_Adapter;
 import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.habitFollowCalculator;
 import com.example.sisyphus.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -41,13 +61,20 @@ public class CalendarActivity extends AppCompatActivity {
 
     //setting UI elements
     CalendarView calendar;
-    ListView habitsView;
+    RecyclerView habitsView;
     ArrayList<Habit> data;
-    ArrayAdapter<Habit> adapter;
+
+    AllHabitList_Adapter adapter;
+
+    String TAG = "Percents check";
+    private ArrayList<String> percents;
+
+    Button dropDown;
 
     /**
      * Create view to display calendar and habits
      * @param savedInstanceState
+     *  previous view
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +86,16 @@ public class CalendarActivity extends AppCompatActivity {
         habitsView = findViewById(R.id.calendar_events);
         selectedDay = new GregorianCalendar();
         data = new ArrayList<>();
-        adapter = new AllHabitList_Adapter(this, data);
+        percents = new ArrayList<>();
+
+
+        adapter = new AllHabitList_Adapter(this, data, percents,  new AllHabitList_Adapter.ItemClickListener() {
+            @Override
+            public void onItemClick(Habit habit) {
+                // do nothing
+            }
+        });
+        habitsView.setLayoutManager(new LinearLayoutManager(this));
         habitsView.setAdapter(adapter);
         // event listener to get up to date data for Habit list
 
@@ -79,22 +115,26 @@ public class CalendarActivity extends AppCompatActivity {
 
         final Button button_home = findViewById(R.id.home_button);
         button_home.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
-             * function to open Home when clicked
+             * function used to open home
+             * @param v
+             *  current view
              */
+            @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CalendarActivity.this, EmptyMainMenu.class);
+                Intent intent = new Intent(CalendarActivity.this, DailyHabitListView.class);
                 startActivity(intent);
             }
         });
 
         final Button button_calendar = findViewById(R.id.calendar_button);
         button_calendar.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
              * function to open Calendar when clicked
+             * @param v
+             *  current view
              */
+            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, CalendarActivity.class);
                 startActivity(intent);
@@ -103,13 +143,43 @@ public class CalendarActivity extends AppCompatActivity {
 
         final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
         button_allHabitList.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
-             * function to open AllHabits list when clicked
+             * function to open all habit list when clicked
+             * @param view
+             *  current view
              */
+            @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CalendarActivity.this,AllHabitListView.class);
                 startActivity(intent);
+            }
+        });
+
+        final Button button_social = findViewById(R.id.social_button);
+        button_social.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function to open social page
+             * @param view
+             *  current view
+             */
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CalendarActivity.this, SocialView.class);
+                startActivity(intent);
+            }
+        });
+
+        // Drop Down Menu Button Click
+        dropDown = (Button) findViewById(R.id.dropDown);
+        dropDown.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function to open dropdown menu
+             * @param v
+             *  current view
+             */
+            @Override
+            public void onClick(View v) {
+                showPopup(v);
             }
         });
     }
@@ -146,13 +216,86 @@ public class CalendarActivity extends AppCompatActivity {
                                 if (add) {
                                     // add habit to list to be displayed
                                     data.add(temp);
+
+                                    //add dummy element to array to populate with same # of elements
+                                    percents.add("0");
                                 }
                             }
                         }
                         adapter.notifyDataSetChanged();
+                        setHabitCompletion();
                     }
                 });
     }
+
+
+    /**
+     * Method that takes the list of habits that are to be displayed, and updates the array showing how
+     * well they have been completed for each habit so that the progress bar can be filled accordingly.
+     * Ideally would have been part of an object, but the asynchronous nature of firebase means returning values
+     * to the main thread would have been too challenging
+     */
+    public void setHabitCompletion(){
+        //initializing firebase connection
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("Users");
+
+        //for habit that is to be displayed, get all it's habit events and compare to how many it should have
+        for(int i = 0; i < data.size(); i++){
+            int finalI = i;
+
+            //getting all the habitEvents of the current habit in the list
+            collectionReference.document(mAuth.getUid()).collection("Habits").document(data.get(i).getHabitName()).collection("HabitEvent")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            //setting the value so it can be used asynchronously
+                            final int currentIndex = finalI;
+
+                            //for each habit event, iterate the counter.  Content unimportant, only
+                            //number of events is relevant to completion %
+                            if (task.isSuccessful()) {
+                                int counter = 0;
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                    counter += 1;
+
+                                }
+
+                                //creating object to determine the number of days events should have occurred on
+                                habitFollowCalculator calc = new habitFollowCalculator();
+
+                                //getting valid event days (guaranteed non-0)
+                                int totalDays = calc.calculateCloseness(data.get(currentIndex));
+
+
+                                //comparing # of events to # expected and formatting to %
+                                int percentClose = (int) Math.floor((100*counter/totalDays));
+
+                                //should never happen, but sets completion % to 100 just
+                                //in case value exceeds days of occurrence
+                                if(percentClose > 100){
+                                    percentClose = 100;
+                                }
+
+                                //storing value in correct location in array
+                                percents.set(currentIndex, String.valueOf(percentClose));
+
+                                //updating UI
+                                adapter.notifyDataSetChanged();
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+        }
+
+    }
+
+
+
 
     /**
      * Function that converts a Calendar Object to a string representation of the current day
@@ -180,5 +323,68 @@ public class CalendarActivity extends AppCompatActivity {
                     return "SUNDAY";
             }
         return "ERROR";
+    }
+
+    // Methods for enabling the dropdown menu
+
+    /**
+     * Method to open popup menu
+     * @param v
+     *  current view
+     */
+    public void showPopup(View v) {
+        Context wrapper = new ContextThemeWrapper(this, R.style.Theme_App);
+        PopupMenu popup = new PopupMenu(wrapper, v, Gravity.LEFT, R.style.Theme_App, 0);
+        popup.setOnMenuItemClickListener(this::onOptionsItemSelected);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.dropdown, popup.getMenu());
+
+        popup.show();
+    }
+
+    /**
+     * Method to create an options menu
+     * @param menu
+     *  menu to be created
+     * @return
+     *  true
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.dropdown, menu);
+
+        return true;
+    }
+
+    /**
+     * function to handle options menu clicks
+     * @param item
+     *  Item in menu selected
+     * @return
+     *  true
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Get the main activity layout object.
+        // Get clicked menu item id.
+        int itemId = item.getItemId();
+        if(itemId == R.id.followRequests)
+        {
+            Intent intent = new Intent(this, FollowRequestListView.class);
+            startActivity(intent);
+
+        }else if(itemId == R.id.settings)
+        {
+            Intent intent = new Intent(this, Settings.class);
+            startActivity(intent);
+
+        }else if(itemId == R.id.logout)
+        {
+            mAuth.signOut();
+            Intent intent = new Intent(this, Entry.class);
+            startActivity(intent);
+        }
+        return true;
     }
 }

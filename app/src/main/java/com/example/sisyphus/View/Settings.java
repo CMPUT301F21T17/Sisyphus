@@ -14,10 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+
 import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
 import com.example.sisyphus.View.Dialog.ChangePassword;
-import com.example.sisyphus.View.InfoEdit;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,6 +40,7 @@ public class Settings extends AppCompatActivity {
     TextView fName;
     TextView lName;
     TextView email;
+    TextView idDisplay;
 
     Button fNameEdit;
     Button lNameEdit;
@@ -53,6 +54,11 @@ public class Settings extends AppCompatActivity {
     //current user to display settings for
     User activeUser;
 
+    /**
+     * function called to create a settings view
+     * @param savedInstanceState
+     *  previous instances' state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +71,9 @@ public class Settings extends AppCompatActivity {
         fName = findViewById(R.id.settingsFNameView);
         lName = findViewById(R.id.settingsLNameView);
         email = findViewById(R.id.settingsEmailView);
+        idDisplay = findViewById(R.id.textViewIDDisplay);
+
+
         // Initializing Buttons
         fNameEdit = findViewById(R.id.fNameEdit);
         lNameEdit = findViewById(R.id.lNameEdit);
@@ -76,9 +85,16 @@ public class Settings extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        idDisplay.setText("Your ID: " + mAuth.getUid());
+
         //gets passed user and displays their data in text-fields
         DocumentReference userRef = db.collection("Users").document(mAuth.getCurrentUser().getUid());
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            /**
+             * Called on completion of query for current users information
+             * @param documentSnapshot
+             *  result of query
+             */
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 activeUser = documentSnapshot.toObject(User.class);
@@ -88,13 +104,13 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
         // Passes the users first name to the info edit activity and switches activities
         fNameEdit.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Request to change first name of user
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent fNameInt = new Intent(getApplicationContext(), InfoEdit.class);
@@ -105,6 +121,11 @@ public class Settings extends AppCompatActivity {
         });
         // Passes users last name to the info edit activity and switches activities
         lNameEdit.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Request to change last name of user
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent lNameInt = new Intent(getApplicationContext(), InfoEdit.class);
@@ -116,6 +137,11 @@ public class Settings extends AppCompatActivity {
 
         // Passes users email to info edit activity then switches activities
         emailEdit.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Request to change email of user
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent emailInt = new Intent(getApplicationContext(), InfoEdit.class);
@@ -126,6 +152,11 @@ public class Settings extends AppCompatActivity {
         });
         // Moves to the change password activity, in a separate activity to maintain security
         passwordEdit.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Request to change password of user
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 Intent passInt = new Intent(getApplicationContext(), ChangePassword.class);
@@ -136,10 +167,14 @@ public class Settings extends AppCompatActivity {
 
         // Moves to the change password activity, in a separate activity to maintain security
         back.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Called when back button is clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
-                Intent passInt = new Intent(getApplicationContext(), EmptyMainMenu.class);
-                startActivity(passInt);
+                finish();
             }
         });
     }

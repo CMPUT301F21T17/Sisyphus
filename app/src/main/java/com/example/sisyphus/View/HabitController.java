@@ -7,6 +7,7 @@
 package com.example.sisyphus.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -18,14 +19,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sisyphus.Model.FirebaseStore;
 import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.User;
 import com.example.sisyphus.R;
+import com.example.sisyphus.View.Dialog.errorFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,16 +48,20 @@ public class HabitController extends AppCompatActivity {
     private EditText startDate, frequency,reason;
     private TextView habitName;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
-    private Button confirm,cancel,deleteButton;
+
+    private Button confirm,cancel,deleteButton, back;
+
 
     //initializing firebase authentication (session) object and starting firebase connection
     private FirebaseStore testbase = new FirebaseStore();
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private SwitchCompat privateToggle;
 
     /**
      * create view to get information for creating a habit
      * @param savedInstanceState
+     *  state of previous instances
      */
     @SuppressLint("SimpleDateFormat")
     @Override
@@ -64,19 +69,22 @@ public class HabitController extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_controller);
 
+
         //setting authentication object to current session (signed in user) and connecting to database
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         //attaching UI elements to variables
-        ImageView backButton = findViewById(R.id.backButton);
+   
+        privateToggle = findViewById(R.id.privateSwitch);
+ 
+        back = findViewById(R.id.back);
         confirm = findViewById(R.id.confirm);
         cancel = findViewById(R.id.cancel);
-        deleteButton = findViewById(R.id.deleteButton);
-        habitName = findViewById(R.id.habitName);
+        habitName = findViewById(R.id.habitNameContainer);
         startDate = findViewById(R.id.startDate);
         frequency = findViewById(R.id.frequency);
-        reason = findViewById(R.id.reason);
+        reason = findViewById(R.id.reasonContainer);
 
         //setting up storage for days habit occurs, and getting info for firebase search from
         //intent and auth object
@@ -89,12 +97,18 @@ public class HabitController extends AppCompatActivity {
         //getting habit info from database
         DocumentReference docRef = db.collection("Users").document(dummyUser).collection("Habits").document(dummyhabitname);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            /**
+             * function called when query complete
+             * @param documentSnapshot
+             *  values retrieved
+             */
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 //setting UI fields to display habit info
                 Habit habit1 = documentSnapshot.toObject(Habit.class);
                 days.addAll(habit1.getFrequency());
                 habitName.setText(dummyhabitname);
+                privateToggle.setChecked(habit1.isPrivate());
                 String pattern = "dd/MM/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                 startDate.setText(simpleDateFormat.format(habit1.getStartDate()));
@@ -103,7 +117,7 @@ public class HabitController extends AppCompatActivity {
             }
         });
 
-            //Onclick for the the addHabit event button and storing data
+        //Onclick for the the addHabit event button and storing data
         confirm.setOnClickListener(view -> {
             //reads data from text-entry fields and stores this newly update data in firebase
             Date dateInput = null;
@@ -113,52 +127,33 @@ public class HabitController extends AppCompatActivity {
                 e.printStackTrace();
             }
             String reasonInput = reason.getText().toString().trim();
-            Habit modifiedHabit = new Habit(dummyhabitname,dateInput,days,reasonInput);
 
-            //stores habit created above in firebase and returns to previous menu
-            FirebaseStore fb = new FirebaseStore();
-            fb.storeHabit(dummyUser,modifiedHabit);
-            Intent intent = new Intent(view.getContext(),ViewHabit.class);
-            intent.putExtra("habit",modifiedHabit);
-            startActivity(intent);
+            //Habit modifiedHabit = new Habit(dummyhabitname, privateToggle.isChecked() ,dateInput, days, reasonInput, -1);
+            if((reasonInput.equals("") == false) && (dateInput != null)) {
+                Habit modifiedHabit = new Habit(dummyhabitname, privateToggle.isChecked(), dateInput, days, reasonInput, -1);
+
+                //stores habit created above in firebase and returns to previous menu
+                FirebaseStore fb = new FirebaseStore();
+                fb.storeHabit(dummyUser, modifiedHabit);
+                Intent intent = new Intent(view.getContext(), ViewHabit.class);
+                intent.putExtra("habit", modifiedHabit);
+                startActivity(intent);
+            } else {
+                new errorFragment("Input fields cannot be empty!").show(getSupportFragmentManager(), "Display_Error");
+            }
         });
+
 
         //cancels edit
         cancel.setOnClickListener(view -> {
           finish();
         });
         //another option to cancel edit
-        backButton.setOnClickListener(view -> {
+        back.setOnClickListener(view -> {
             finish();
         });
 
-        //Deleting a Habit from database
-        deleteButton.setOnClickListener(view -> {
-                    //setting up fragment
-                    AlertDialog.Builder builder = new AlertDialog.Builder(HabitController.this);
-                    builder.setCancelable(true);
-                    builder.setTitle("Message");
-                    builder.setMessage("Are you sure you want to delete this habit");
-                    builder.setPositiveButton("Confirm",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //on user confirmation, delete habit from database and return
-                                    testbase.deleteHabit(dummyUser,dummyhabitname);
-                                    Intent intent = new Intent(view.getContext(),AllHabitListView.class);
-                                    startActivity(intent);
-                                }
-                            });
-                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
 
-                    });
-        AlertDialog deleteDialog = builder.create();
-        deleteDialog.show();
-
-        });
         //creating the calendar for user to input startdate
         startDate.setOnClickListener(view -> {
             Calendar cal = Calendar.getInstance();
@@ -181,10 +176,9 @@ public class HabitController extends AppCompatActivity {
         boolean[] selectedDay;
         ArrayList<Integer> dayList = new ArrayList<>();
         String[] dayArray = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
+
         //creating a multiselect day picker for frequency
-
         selectedDay = new boolean[dayArray.length];
-
         frequency.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(HabitController.this);
             //Set title

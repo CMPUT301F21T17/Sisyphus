@@ -18,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.sisyphus.Model.Habit;
+import com.example.sisyphus.Model.User;
 import com.example.sisyphus.View.AllHabitListView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,6 +27,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 //Fragment that provides the user with option to delete a chose habit after confirming their choice
 public class deleteHabit extends DialogFragment {
+    /**
+     * function called to create view to delete a habit
+     * @param savedInstanceState
+     *  previous instance
+     * @return
+     *  alertDialog to be shown to delete a habit
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){
@@ -35,8 +44,7 @@ public class deleteHabit extends DialogFragment {
         String delectUser = bundle.getString("selectedUser","");
         String delectTAG = bundle.getString("selectedTag","");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-
+        
         return builder
                 .setView(getView())
                 .setTitle("Delete this habit and all related habit events?")
