@@ -90,6 +90,7 @@ public class EditHabitEventView extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        //handles location call for map
         if (requestCode == REQUEST_LOCATION && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             // longitude = extras.getFloat("LONGITUDE");
@@ -99,6 +100,7 @@ public class EditHabitEventView extends AppCompatActivity {
 
         }
 
+        //handles image call for camera
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             takenPhoto = (Bitmap) extras.get("data");
@@ -144,6 +146,8 @@ public class EditHabitEventView extends AppCompatActivity {
         location.setText(EditEvent.getLocation());
         date.setText(new SimpleDateFormat("dd/MM/yyyy").format(EditEvent.getDate()));
         comment.setText(EditEvent.getComment());
+
+        //checking if null
         if(EditEvent.getPhotoID().equals("")){
             //do nothing!
         } else {
@@ -183,19 +187,16 @@ public class EditHabitEventView extends AppCompatActivity {
 
         });
 
-        //onClick method to get data from text entry fields and format into habit event fields to be edited
+        //onClick method to get data from text entry fields and format into habit event to be edited.
+        //this function is quite smelly, but due to the asynchronous nature of firebase data retrieval,
+        //it was necessary to nest multiple queries and document retrievals.  As a result, this function
+        //is very similar in nature to some other version of itself in other places throughout the code,
+        //as I could not find a way to convert this into an object callable from multiple locations.
+        //Please see addHabitEvent's onClickListener for the add button for a fully documented version of this
+        //function.
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
-                //error checking:
-                //-not a duplicate date
-                //-on a date the habit occurs
-                //-after or on start date
-                //-before or on current date
-                //-comment is character limited (get Sihan's code)
 
 
                 //getting input and creating event

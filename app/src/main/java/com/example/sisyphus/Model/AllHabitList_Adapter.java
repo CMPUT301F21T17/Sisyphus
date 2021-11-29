@@ -82,7 +82,7 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
         Habit habit = habits.get(position);
         holder.habitTitle.setText(habit.getHabitName());
         holder.habitDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(habit.getStartDate()));
-        System.out.println("Set indicator progress to be: " + completionPercents.get(position));
+
         holder.indicator.setProgress(Integer.valueOf(completionPercents.get(position)));
         holder.itemView.setOnClickListener(view -> itemListener.onItemClick(habits.get(position)));
     }

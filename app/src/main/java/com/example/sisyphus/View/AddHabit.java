@@ -108,11 +108,13 @@ public class AddHabit extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            //error checking for empty habit
             if(habit.equals("")){
                 new errorFragment("Please give the habit a name!").show(getSupportFragmentManager(), "Display_Error");
                 return;
             }
 
+            //error checking for empty date
             if(dateInput == null){
                 new errorFragment("Please select a date!").show(getSupportFragmentManager(), "Display_Error");
                 return;
@@ -121,11 +123,13 @@ public class AddHabit extends AppCompatActivity {
 
             String reasonInput = Objects.requireNonNull(reason.getEditText()).getText().toString().trim();
 
+            //error checking for empty reason
             if(reasonInput.equals("")){
                 new errorFragment("Please add a reason!").show(getSupportFragmentManager(), "Display_Error");
                 return;
             }
 
+            //error checking for no days selected
             if(days.size() == 0){
                 new errorFragment("Please select at least one date for the habit to occur!").show(getSupportFragmentManager(), "Display_Error");
                 return;

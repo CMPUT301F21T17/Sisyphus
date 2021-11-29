@@ -18,6 +18,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.sisyphus.R;
 
+/**
+ * Fragment that serves as a general-use popup to tell users when they have made a mistake
+ */
 public class errorFragment extends DialogFragment {
 
     private String message;

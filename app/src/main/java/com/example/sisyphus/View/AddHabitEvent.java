@@ -369,11 +369,11 @@ public class AddHabitEvent extends AppCompatActivity {
      *  bitmap of image taken
      */
     public void encodeBitmap(Bitmap bitmap){
-        System.out.println("Running");
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
         takenPhotoID = Base64.encodeToString(baos.toByteArray(), DEFAULT);
-        System.out.println(takenPhotoID);
+
     }
 
 

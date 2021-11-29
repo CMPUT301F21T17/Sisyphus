@@ -84,9 +84,6 @@
             android:name=".View.UserSearch"
             android:exported="true" />
         <activity
-            android:name=".View.EmptyMainMenu"
-            android:exported="true" />
-        <activity
             android:name=".View.ListHabitEvent"
             android:exported="false" />
         <activity

@@ -293,9 +293,12 @@ public class AllHabitListView extends AppCompatActivity {
     }
 
     /**
-     * method that polls each habit in the list and gets the completion result
+     * method that polls each habit in the list and gets the completion result.  Calculates
+     * completion based on # of events vs. # of total days events could have occurred on
+     * up to the current date
      */
     public void setHabitCompletion(){
+        //repeat for all habits in list
         for(int i = 0; i < habitDataList.size(); i++){
             int finalI = i;
             collectionReference.document(mAuth.getUid()).collection("Habits").document(habitDataList.get(i).getHabitName()).collection("HabitEvent")
@@ -306,21 +309,22 @@ public class AllHabitListView extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             final int currentIndex = finalI;
                             if (task.isSuccessful()) {
+                                //tracks the number of habit events
                                 int counter = 0;
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-
+                                    //we don't care about contents, only number, since
+                                    //no duplicates can exist
                                     counter += 1;
 
                                 }
 
-                                System.out.println("Counted habit events: " + counter);
+                                //calculating the total days that valid habit events can occur on
                                 habitFollowCalculator calc = new habitFollowCalculator();
                                 int totalDays = calc.calculateCloseness(habitDataList.get(currentIndex));
 
-                                System.out.println(counter/totalDays);
-                                System.out.println((100* counter/totalDays));
 
 
+                                //getting the percentage and formatting
                                 int percentClose = (int) Math.floor((100*counter/totalDays));
 
                                 //should never happen, but sets completion % to 100 just
@@ -329,13 +333,12 @@ public class AllHabitListView extends AppCompatActivity {
                                     percentClose = 100;
                                 }
 
-                                System.out.println("Calculated total = " + totalDays);
+                                //setting respective array value to track the updated percent
                                 percents.set(currentIndex, String.valueOf(percentClose));
 
-                                System.out.println("Actual val to set to: " + percentClose);
-                                System.out.println("ArrayList Val at index: " + percents.get(currentIndex));
 
-                                System.out.println("ran this");
+
+
                                 habitAdapter.notifyDataSetChanged();
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
