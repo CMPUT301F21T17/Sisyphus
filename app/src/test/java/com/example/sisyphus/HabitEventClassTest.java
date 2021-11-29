@@ -28,6 +28,7 @@ public class HabitEventClassTest {
         habitEvent.setDate(new Date());
         habitEvent.setComment("Slept for 8 hours.");
         habitEvent.setLocation("Edmonton");
+        habitEvent.setPhotoID("abcdefghi");
         return habitEvent;
     }
 
@@ -111,5 +112,25 @@ public class HabitEventClassTest {
         habitEvent.setHabitName(newHabitName);
         assertEquals(habitEvent.getHabitName(), newHabitName);
     }
+
+    /**
+     * Tests whether the function properly fetches the photo ID
+     */
+    @Test
+    public void testGetPhotoID(){
+        HabitEvent event = mockHabitEvent();
+        assertEquals(event.getPhotoID(), "abcdefghi");
+    }
+
+    /**
+     * Test whether the function properly updates the photo ID
+     */
+    @Test
+    public void testSetPhotoID(){
+        HabitEvent event = mockHabitEvent();
+        event.setPhotoID("New ID");
+        assertEquals(event.getPhotoID(), "New ID");
+    }
+
 
 }

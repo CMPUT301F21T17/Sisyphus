@@ -12,7 +12,6 @@ import java.util.Date;
  * A test class to test the "User" class.
  */
 public class UserClassTest {
-
     /**
      * A method that returns a mock user object for use in testing.-
      * @return
