@@ -5,72 +5,94 @@
   ~ All Rights Reserved.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="?attr/materialCardViewElevatedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#DEE8E8"
-    android:orientation="horizontal">
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="?attr/colorSurface"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="1dp">
 
-    <ImageView
-        android:id="@+id/habit_event_picture"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
-        app:srcCompat="@drawable/logo" />
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <LinearLayout
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/habit_event_picture"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/habit_event_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.491"
+            app:srcCompat="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/habit_event_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/open_sans"
+            android:text="EventDate"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/habit_event_picture"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
 
-            <TextView
-                android:id="@+id/habit_event_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:text="EventDate"
-                android:textColor="#002440"
-                android:textSize="30sp">
-            </TextView>
+        <TextView
+            android:id="@+id/habit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/open_sans"
+            android:text="title"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@+id/habit_event_picture"
+            app:layout_constraintTop_toBottomOf="@+id/habit_event_date"></TextView>
 
-            <TextView
-                android:id="@+id/habit_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="10dp"
-                android:text="title"
-                android:textColor="#002440"
-                android:textSize="10sp">
-            </TextView>
+        <TextView
+            android:id="@+id/habit_event_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/open_sans"
+            android:maxEms="20"
+            android:text="eventLocation"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/habit_event_picture"
+            app:layout_constraintTop_toBottomOf="@+id/habit_title">
 
-            <TextView
-                android:id="@+id/habit_event_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="10dp"
-                android:text="eventLocation"
-                android:textColor="#002440"
-                android:textSize="10sp">
+        </TextView>
 
-            </TextView>
-        </LinearLayout>
         <TextView
             android:id="@+id/habit_event_comment"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Comment"
+            android:layout_width="131dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="50"/>
-    </LinearLayout>
-</LinearLayout>
+            android:layout_marginEnd="8dp"
+            android:layout_weight="50"
+            android:elevation="1dp"
+            android:fontFamily="@font/open_sans"
+            android:text="Comment"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toEndOf="@+id/habit_event_date"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

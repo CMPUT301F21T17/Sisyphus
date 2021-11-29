@@ -41,7 +41,7 @@ import java.util.ArrayList;
  */
 public class DisplaySearch extends AppCompatActivity {
     String TAG = "Query Display";
-
+    Button back;
     //initializing firebase authentication (session) object
     FirebaseAuth mAuth;
 
@@ -67,7 +67,7 @@ public class DisplaySearch extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_search);
-
+        back = findViewById(R.id.back);
         //getting search parameters from intent
         Intent intent = getIntent();
         first = intent.getStringExtra("fName");
@@ -86,64 +86,10 @@ public class DisplaySearch extends AppCompatActivity {
         userSearchAdapter = new UserSearchAdapter(this, searchedUserList);
         listUsers.setAdapter(userSearchAdapter);
 
-
-        final Button button_allHabitList = findViewById(R.id.allhabitlist_button);
-        //onClick listener to transfer user to habit list page
-        button_allHabitList.setOnClickListener(new View.OnClickListener() {
-            /**
-             * function called when all habit list is clicked
-             * @param view
-             *  current view
-             */
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DisplaySearch.this, AllHabitListView.class);
-                startActivity(intent);
-            }
-        });
-
-        final Button button_calendar = findViewById(R.id.calendar_button);
-        //onClick listener to transfer user to calendar page
-        button_calendar.setOnClickListener(new View.OnClickListener() {
-            /**
-             * function called when calendar button is clicked
-             * @param view
-             *  current view
-             */
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DisplaySearch.this, CalendarActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-        final Button button_Home = findViewById(R.id.home_button);
-        button_Home.setOnClickListener(new View.OnClickListener() {
-            /**
-             * function called when home button is clicked
-             * @param view
-             *  current view
-             */
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DisplaySearch.this, EmptyMainMenu.class);
-                startActivity(intent);
-            }
-        });
-
-        //currently sends to user search class.  May be worth changing later
-        final Button button_Prof = findViewById(R.id.social_button);
-        button_Prof.setOnClickListener(new View.OnClickListener() {
-            /**
-             * function called when social button clicked
-             * @param view
-             *  current view
-             */
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DisplaySearch.this, UserSearch.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

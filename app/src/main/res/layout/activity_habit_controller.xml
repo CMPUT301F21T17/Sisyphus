@@ -68,12 +68,11 @@
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:padding="24dp"
         app:errorEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar">
+        app:layout_constraintTop_toBottomOf="@+id/privateSwitch">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/habitNameContainer"
@@ -166,25 +165,23 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/privatise"
-        android:layout_width="0dp"
-        android:layout_height="71dp"
-        android:layout_marginTop="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/commentLayout">
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/privateSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/privateSwitch"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@android:color/white"
-            android:checked="false"
-            android:gravity="top"
-            android:text="Private Habit"
-            tools:ignore="HardcodedText" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_marginTop="28dp"
+
+        android:layout_marginEnd="24dp"
+        android:layout_weight="1"
+        android:backgroundTint="@android:color/transparent"
+        android:fontFamily="@font/open_sans"
+        android:text="Private     "
+        android:textAlignment="textEnd"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/cancel"
