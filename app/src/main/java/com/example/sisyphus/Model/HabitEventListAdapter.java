@@ -78,7 +78,6 @@ public class HabitEventListAdapter extends ArrayAdapter<HabitEvent> {
         habitEventLocation.setText(habitEvent.getLocation());
         habitEventPhoto.setImageBitmap(decodeFromFirebase(habitEvent.getPhotoID()));
         return view;
-
     }
 
     /**

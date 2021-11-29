@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import static android.content.ContentValues.TAG;
 import static android.util.Base64.DEFAULT;
 
 
@@ -98,7 +99,7 @@ public class AddHabitEvent extends AppCompatActivity {
 
     // private float longitude;
     // private float latitude;
-    private String place;
+    private String place = "";
 
     /**
      * Activity result handler to receive data data from map activity
@@ -129,7 +130,6 @@ public class AddHabitEvent extends AppCompatActivity {
             encodeBitmap(takenPhoto);
         }
     }
-
 
     String TAG = "Query duplicate habit events";
 
@@ -357,10 +357,11 @@ public class AddHabitEvent extends AppCompatActivity {
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
         //if(i.resolveActivity(getPackageManager()) != null){
-            //System.out.println("ran");
-            //startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+        //System.out.println("ran");
+        //startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
         //}
     }
+
 
     /**
      * function to encode the image into a string and store in takenPhotoID

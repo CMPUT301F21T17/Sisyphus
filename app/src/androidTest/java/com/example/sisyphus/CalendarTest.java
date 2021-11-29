@@ -58,7 +58,7 @@ public class CalendarTest {
     public void clickCalender(){
         solo.assertCurrentActivity("Wrong Activity",MainActivity.class);
         solo.clickOnButton("Sign In");
-        solo.enterText((EditText) solo.getView(R.id.signInEmail),"intenttest@email.com");
+        solo.enterText((EditText) solo.getView(R.id.signInEmail),"intenttest@gmail.com");
         solo.enterText((EditText) solo.getView(R.id.signInPassword),"123456");
         solo.clickOnButton("Sign In");
         solo.clickOnView(solo.getView(R.id.calendar_button));
