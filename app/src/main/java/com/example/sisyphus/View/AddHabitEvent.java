@@ -99,7 +99,7 @@ public class AddHabitEvent extends AppCompatActivity {
 
     // private float longitude;
     // private float latitude;
-    private String place;
+    private String place = "";
 
     /**
      * Activity result handler to receive data data from map activity
@@ -356,6 +356,10 @@ public class AddHabitEvent extends AppCompatActivity {
     private void takePicture() {
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+        //if(i.resolveActivity(getPackageManager()) != null){
+        //System.out.println("ran");
+        //startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+        //}
     }
 
 

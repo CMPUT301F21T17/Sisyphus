@@ -1,6 +1,7 @@
 package com.example.sisyphus;
 import android.app.Activity;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -26,13 +27,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Test class for AllHabitListView,AddHabit and HabitController. All the UI tests are written here. Robotium test framework is
  used
+ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ !!!!!Please follow the order of testing !!!!!!Or it causes error!!!!!!
+ !!!!!Please finish all three tests before jump to other Test file!!!!!
+ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  */
 public class HabitListTest {
     private Solo solo;
+    Random rand = new Random();
+    Integer randomIn = rand.nextInt(100000);
+    private String randomString = randomIn.toString();
 
     @Rule
     public ActivityTestRule<MainActivity> rule =
@@ -62,22 +71,27 @@ public class HabitListTest {
     public void addHabit(){
         solo.assertCurrentActivity("Wrong Activity",MainActivity.class);
         solo.clickOnButton("Sign In");
-        solo.enterText((EditText) solo.getView(R.id.signInEmail),"intenttest@email.com");
+        solo.enterText((EditText) solo.getView(R.id.signInEmail),"intenttest@gmail.com");
         solo.enterText((EditText) solo.getView(R.id.signInPassword),"123456");
         solo.clickOnButton("Sign In");
         solo.clickOnView(solo.getView(R.id.allhabitlist_button));
-        assertTrue(solo.waitForText("My habits",1,2000));
         solo.clickOnView(solo.getView(R.id.add_habit_button));
-        assertTrue(solo.waitForText("Add/Edit Habit",1,2000));
-        solo.enterText((EditText) solo.getView("habitNameInput"), "addHabitTest");
-        solo.enterText((EditText) solo.getView("startDate"), "01/11/2021");
+        assertTrue(solo.waitForText("Add Habit",1,2000));
+        solo.enterText((EditText) solo.getView(R.id.habitNameInput), randomString);
+        solo.sleep(500);
+        solo.enterText((EditText) solo.getView(R.id.startDate), "01/11/2021");
         solo.clickOnButton("OK");
-        solo.enterText((EditText) solo.getView("reasonInput"), "addHabitTest");
-        int[] butPosition = new int[2];
-        View check = solo.getView("checkButton");
-        check.getLocationOnScreen(butPosition);
-        solo.clickOnScreen(butPosition[0],butPosition[1]);
-        assertTrue(solo.waitForText("addHabitTest",1,2000));
+        solo.sleep(500);
+        solo.clickOnView(solo.getView(R.id.frequency));
+        solo.sleep(500);
+        solo.clickOnView(solo.getView(R.id.frequency));
+        //solo.enterText((EditText) solo.getView(R.id.frequency), "SUNDAY,MONDAY");
+        //int[] butPosition = new int[2];
+        solo.sleep(500);
+        solo.clickOnButton("OK");
+        solo.enterText((EditText) solo.getView(R.id.reasonInput), "addHabitTest");
+        solo.clickOnView(solo.getView(R.id.checkButton));
+        assertTrue(solo.waitForText(randomString,1,2000));
     }
 
     /**
@@ -87,17 +101,22 @@ public class HabitListTest {
     public void editHabit(){
         solo.assertCurrentActivity("Wrong Activity",MainActivity.class);
         solo.clickOnButton("Sign In");
-        solo.enterText((EditText) solo.getView(R.id.signInEmail),"intenttest@email.com");
+        solo.enterText((EditText) solo.getView(R.id.signInEmail),"intenttest@gmail.com");
         solo.enterText((EditText) solo.getView(R.id.signInPassword),"123456");
         solo.clickOnButton("Sign In");
         solo.clickOnView(solo.getView(R.id.allhabitlist_button));
-        assertTrue(solo.waitForText("My habits",1,2000));
-        ListView habitList = (ListView) solo.getView(R.id.allhabit_list);
-        View item  = habitList.getChildAt(0);
+        //assertTrue(solo.waitForText("My habits",1,2000));
+        solo.sleep(500);
+        RecyclerView habitList = (RecyclerView) solo.getView(R.id.allhabit_list);
+        solo.sleep(500);
+        View item = habitList.getChildAt(0);
         solo.clickOnView(item);
-        solo.clickOnButton("Edit Habit");
-        solo.enterText((EditText) solo.getView("reason"), "edit");
-        solo.clickOnButton("Confirm");
+        //solo.waitForActivity("EditHabitEventView");
+        solo.clickOnView(solo.getView(R.id.search));
+        solo.clickOnMenuItem("Edit Habit");
+        solo.clearEditText((EditText) solo.getView(R.id.reasonContainer));
+        solo.enterText((EditText) solo.getView(R.id.reasonContainer), "edit");
+        solo.clickOnView(solo.getView(R.id.confirm));
         assertTrue(solo.waitForText("edit",1,2000));
     }
 
@@ -108,17 +127,21 @@ public class HabitListTest {
     public void deleteHabit(){
         solo.assertCurrentActivity("Wrong Activity",MainActivity.class);
         solo.clickOnButton("Sign In");
-        solo.enterText((EditText) solo.getView(R.id.signInEmail),"intenttest@email.com");
+        solo.enterText((EditText) solo.getView(R.id.signInEmail),"intenttest@gmail.com");
         solo.enterText((EditText) solo.getView(R.id.signInPassword),"123456");
         solo.clickOnButton("Sign In");
         solo.clickOnView(solo.getView(R.id.allhabitlist_button));
-        assertTrue(solo.waitForText("My habits",1,2000));
-        ListView habitList = (ListView) solo.getView(R.id.allhabit_list);
-        View item  = habitList.getChildAt(0);
+        //assertTrue(solo.waitForText("My habits",1,2000));
+        solo.sleep(500);
+        RecyclerView habitList = (RecyclerView) solo.getView(R.id.allhabit_list);
+        solo.sleep(500);
+        View item = habitList.getChildAt(0);
         solo.clickOnView(item);
-        solo.clickOnButton("Delete Habit");
+        //solo.waitForActivity("EditHabitEventView");
+        solo.clickOnView(solo.getView(R.id.search));
+        solo.clickOnMenuItem("Delete Habit");
         solo.clickOnButton("Yes");
-        assertFalse(solo.searchText("addHabitTest1"));
+        assertFalse(solo.searchText(randomString));
     }
 
     @After

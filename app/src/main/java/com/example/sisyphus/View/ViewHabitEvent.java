@@ -185,7 +185,6 @@ public class ViewHabitEvent extends AppCompatActivity {
             bundle.putString("selectedUser",receivedUser);
             dialog.setArguments(bundle);
             dialog.show(getSupportFragmentManager(), "DELETE");
-            finish();
 
         }
         return true;
