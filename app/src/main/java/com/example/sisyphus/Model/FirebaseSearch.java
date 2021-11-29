@@ -30,6 +30,13 @@ public class FirebaseSearch {
         //Default constructor
     }
 
+    /**
+     * Constructor for Firebase search
+     * @param userID
+     *  userID to search with
+     * @param db
+     *  firestore database to search with
+     */
     public FirebaseSearch(String userID, FirebaseFirestore db){
         this.userID = userID;
         this.db = db;
@@ -37,9 +44,11 @@ public class FirebaseSearch {
 
     /**
      * An example method for data retrieval.  Can be expanded in scope and complexity for
-     * sake of reusability.
+     * sake of re-usability.
      * @param ID
+     *  ID of user to search for
      * @return
+     *  User retrieved or empty user if not found
      */
     public User searchUser(String ID){
         DocumentReference docRef = db.collection("Users").document(ID);
@@ -57,7 +66,5 @@ public class FirebaseSearch {
         });
         return searchedUser[0];
     }
-
-
 
 }

@@ -90,7 +90,7 @@ public class AddHabitEvent extends AppCompatActivity {
 
 
     private TextView topbarText;
-    private Button add,cancel, back;
+    private Button add,cancel;
 
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -103,8 +103,11 @@ public class AddHabitEvent extends AppCompatActivity {
     /**
      * Activity result handler to receive data data from map activity
      * @param requestCode
+     *  code of activity request
      * @param resultCode
+     *  result code of request
      * @param data
+     *  data returned by request
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -134,6 +137,7 @@ public class AddHabitEvent extends AppCompatActivity {
     /**
      * function to create HabitEvent creation view
      * @param savedInstanceState
+     *  previous view
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +156,6 @@ public class AddHabitEvent extends AppCompatActivity {
         cancel = findViewById(R.id.buttonCancel);
 
         habitPhoto = findViewById(R.id.photoView);
-        back = findViewById(R.id.back);
 
 
         //getting name of habit event and setting UI to display it
@@ -207,10 +210,6 @@ public class AddHabitEvent extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
-
                 //getting input and creating date
                 Date newDate = null;
                 try {
@@ -342,13 +341,6 @@ public class AddHabitEvent extends AppCompatActivity {
         });
 
 
-        //returning to previous menu
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
         //onClick listener to cancel add and return to previous menu
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -362,7 +354,6 @@ public class AddHabitEvent extends AppCompatActivity {
      * function to start the camera activity
      */
     private void takePicture() {
-        System.out.println("Got here");
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
         //if(i.resolveActivity(getPackageManager()) != null){
@@ -374,6 +365,7 @@ public class AddHabitEvent extends AppCompatActivity {
     /**
      * function to encode the image into a string and store in takenPhotoID
      * @param bitmap
+     *  bitmap of image taken
      */
     public void encodeBitmap(Bitmap bitmap){
         System.out.println("Running");

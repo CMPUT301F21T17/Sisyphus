@@ -54,6 +54,11 @@ public class InfoEdit extends AppCompatActivity {
     User activeUser;
     String TAG = "editUser";
 
+    /**
+     * function called to create a view to allow users to edit their user information
+     * @param savedInstanceState
+     *  state of previous instances
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +102,11 @@ public class InfoEdit extends AppCompatActivity {
         back = findViewById(R.id.back);
 
         back.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when back button clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 finish();
@@ -105,6 +115,11 @@ public class InfoEdit extends AppCompatActivity {
 
         // Abandons the changes and just returns back to settings
         editCancel.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when cancel button clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 finish();
@@ -113,6 +128,11 @@ public class InfoEdit extends AppCompatActivity {
 
         //confirms edit and updates appropriate field in firebase
         editConfirm.setOnClickListener(new View.OnClickListener() {
+            /**
+             * function called when confirm button clicked
+             * @param view
+             *  current view
+             */
             @Override
             public void onClick(View view) {
                 // Send data to database that changes the item specified

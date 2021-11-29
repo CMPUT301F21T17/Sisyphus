@@ -60,22 +60,22 @@ public class AddHabit extends AppCompatActivity {
     //initializing firebase authentication (session) object
     private FirebaseAuth mAuth;
 
-
+    /**
+     * default constructor
+     */
     public AddHabit() {
     }
 
     /**
      * function to create a habit creation view
      * @param savedInstanceState
+     *  previous view
      */
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
-
-
-       
 
         //setting authentication object to current session (signed in user)
         mAuth = FirebaseAuth.getInstance();

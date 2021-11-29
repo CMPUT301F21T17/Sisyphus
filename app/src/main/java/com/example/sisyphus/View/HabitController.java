@@ -61,8 +61,8 @@ public class HabitController extends AppCompatActivity {
     /**
      * create view to get information for creating a habit
      * @param savedInstanceState
+     *  state of previous instances
      */
-
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +97,11 @@ public class HabitController extends AppCompatActivity {
         //getting habit info from database
         DocumentReference docRef = db.collection("Users").document(dummyUser).collection("Habits").document(dummyhabitname);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            /**
+             * function called when query complete
+             * @param documentSnapshot
+             *  values retrieved
+             */
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 //setting UI fields to display habit info
@@ -112,7 +117,7 @@ public class HabitController extends AppCompatActivity {
             }
         });
 
-            //Onclick for the the addHabit event button and storing data
+        //Onclick for the the addHabit event button and storing data
         confirm.setOnClickListener(view -> {
             //reads data from text-entry fields and stores this newly update data in firebase
             Date dateInput = null;
@@ -123,12 +128,11 @@ public class HabitController extends AppCompatActivity {
             }
             String reasonInput = reason.getText().toString().trim();
 
-
+            //Habit modifiedHabit = new Habit(dummyhabitname, privateToggle.isChecked() ,dateInput, days, reasonInput, -1);
             if((reasonInput.equals("") == false) && (dateInput != null)) {
                 Habit modifiedHabit = new Habit(dummyhabitname, privateToggle.isChecked(), dateInput, days, reasonInput, -1);
 
                 //stores habit created above in firebase and returns to previous menu
-
                 FirebaseStore fb = new FirebaseStore();
                 fb.storeHabit(dummyUser, modifiedHabit);
                 Intent intent = new Intent(view.getContext(), ViewHabit.class);
@@ -172,10 +176,9 @@ public class HabitController extends AppCompatActivity {
         boolean[] selectedDay;
         ArrayList<Integer> dayList = new ArrayList<>();
         String[] dayArray = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
+
         //creating a multiselect day picker for frequency
-
         selectedDay = new boolean[dayArray.length];
-
         frequency.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(HabitController.this);
             //Set title

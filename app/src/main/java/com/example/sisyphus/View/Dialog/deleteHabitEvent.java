@@ -27,6 +27,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class deleteHabitEvent extends DialogFragment {
     //log message
     final String deleteTAG = "Sample";
+
+    /**
+     * function called to create a view to delete a given habit event
+     * @param savedInstanceState
+     *  previous view
+     * @return
+     *  AlertDialog to delete habit event
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState){

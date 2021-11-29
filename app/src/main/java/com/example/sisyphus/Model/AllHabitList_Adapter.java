@@ -115,14 +115,9 @@ public class AllHabitList_Adapter extends RecyclerView.Adapter<AllHabitList_Adap
                 .collection("Habits").document(from.getHabitName());
         DocumentReference toRef = db.collection("Users").document(currentUserID)
                 .collection("Habits").document(to.getHabitName());
-
         batch.update(fromRef, "position", from.getPosition());
         batch.update(toRef, "position", to.getPosition());
-
-
-
         batch.commit();
-
         notifyItemMoved(from.getPosition(), to.getPosition());
     }
 
